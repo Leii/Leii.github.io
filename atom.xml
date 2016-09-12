@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hexo</title>
+  <title>Leii Blog</title>
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://leii.me/"/>
   <updated>2016-09-11T23:40:24.000Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://leii.me/</id>
   
   <author>
-    <name>John Doe</name>
+    <name>Leii</name>
     
   </author>
   
@@ -17,8 +17,8 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="http://yoursite.com/2016/09/12/hello-world/"/>
-    <id>http://yoursite.com/2016/09/12/hello-world/</id>
+    <link href="http://leii.me/2016/09/12/hello-world/"/>
+    <id>http://leii.me/2016/09/12/hello-world/</id>
     <published>2016-09-11T23:40:24.000Z</published>
     <updated>2016-09-11T23:40:24.000Z</updated>
     
@@ -44,8 +44,8 @@
   
   <entry>
     <title>Info.plist中常用的key</title>
-    <link href="http://yoursite.com/2016/06/11/Info-plist%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84key/"/>
-    <id>http://yoursite.com/2016/06/11/Info-plist中常用的key/</id>
+    <link href="http://leii.me/2016/06/11/Info-plist%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84key/"/>
+    <id>http://leii.me/2016/06/11/Info-plist中常用的key/</id>
     <published>2016-06-11T10:23:29.000Z</published>
     <updated>2016-09-11T11:29:40.000Z</updated>
     
