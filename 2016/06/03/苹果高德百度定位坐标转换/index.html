@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="leii.me, iOS, Unity, Design, Game" />
+  <meta name="keywords" content="笔记," />
 
 
 
@@ -86,15 +86,25 @@
 
 
 
-<meta name="description" content="iOS/Unity/Design">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Leii's Blog">
-<meta property="og:url" content="http://leii.me/index.html">
+<meta name="description" content="####苹果的CLLocationManager定位得到的是世界标准地理坐标(WGS-84)
+####高德SDK定位得到的是火星坐标（GCJ-02）
+####百度SDK定位得到的是百度地理坐标（BD-09）有的项目里因为老的代码或者第三方库用的SDK不一样，也可能后端使用的定位SDK更换，都会需要坐标的转换来兼容老版本。
+12345678910111213141516171819202122232">
+<meta property="og:type" content="article">
+<meta property="og:title" content="苹果高德百度定位坐标转换">
+<meta property="og:url" content="http://leii.me/2016/06/03/苹果高德百度定位坐标转换/index.html">
 <meta property="og:site_name" content="Leii's Blog">
-<meta property="og:description" content="iOS/Unity/Design">
+<meta property="og:description" content="####苹果的CLLocationManager定位得到的是世界标准地理坐标(WGS-84)
+####高德SDK定位得到的是火星坐标（GCJ-02）
+####百度SDK定位得到的是百度地理坐标（BD-09）有的项目里因为老的代码或者第三方库用的SDK不一样，也可能后端使用的定位SDK更换，都会需要坐标的转换来兼容老版本。
+12345678910111213141516171819202122232">
+<meta property="og:updated_time" content="2016-09-12T14:04:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Leii's Blog">
-<meta name="twitter:description" content="iOS/Unity/Design">
+<meta name="twitter:title" content="苹果高德百度定位坐标转换">
+<meta name="twitter:description" content="####苹果的CLLocationManager定位得到的是世界标准地理坐标(WGS-84)
+####高德SDK定位得到的是火星坐标（GCJ-02）
+####百度SDK定位得到的是百度地理坐标（BD-09）有的项目里因为老的代码或者第三方库用的SDK不一样，也可能后端使用的定位SDK更换，都会需要坐标的转换来兼容老版本。
+12345678910111213141516171819202122232">
 
 
 
@@ -115,9 +125,9 @@
 
 
 
-  <link rel="canonical" href="http://leii.me/"/>
+  <link rel="canonical" href="http://leii.me/2016/06/03/苹果高德百度定位坐标转换/"/>
 
-  <title> Leii's Blog </title>
+  <title> 苹果高德百度定位坐标转换 | Leii's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -138,9 +148,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -237,9 +245,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -259,336 +267,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/06/12/iOS常用判断/" itemprop="url">
-                  iOS常用判断
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-12T17:26:25+08:00" content="2016-06-12">
-              2016-06-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>[用到就记录下来，持续更新…]</p>
-<p>####判断一个对象中是否包含某个属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&#123;       </div><div class="line">	unsigned int outCount, i;</div><div class="line">  	Ivar *ivars = class_copyIvarList(myClass, &amp;outCount);</div><div class="line">  	for (i = 0; i &lt; outCount; i++) &#123;</div><div class="line">    	Ivar property = ivars[i];</div><div class="line">    	NSString *keyName = [NSString 		stringWithCString:ivar_getName(property) encoding:NSUTF8StringEncoding];</div><div class="line">	    keyName = [keyName stringByReplacingOccurrencesOfString:@&quot;_&quot; withString:@&quot;&quot;];</div><div class="line">    	if ([keyName isEqualToString:name]) &#123;</div><div class="line">      	return YES;</div><div class="line">    	&#125;</div><div class="line">  	&#125;</div><div class="line">  	return NO;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>####判断字符串是否为纯数字组成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (BOOL)isPureInt:(NSString*)string&#123;</div><div class="line">    NSScanner* scan = [NSScanner scannerWithString:string];</div><div class="line">    int val;</div><div class="line">    return[scan scanInt:&amp;val] &amp;&amp; [scan isAtEnd];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>####判断当天是星期几</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (void)weekDayJudge</div><div class="line">&#123;</div><div class="line">    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];</div><div class="line">    NSDate *now;</div><div class="line">    NSDateComponents *comps = [[NSDateComponents alloc] init];</div><div class="line">    NSInteger unitFlags =NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |</div><div class="line">    NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;</div><div class="line">    now=[NSDate date];</div><div class="line">    comps = [calendar components:unitFlags fromDate:now];</div><div class="line"></div><div class="line">    NSLog(@&quot;weekday is %ld&quot;,(long)[comps weekday]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>####iOS 判断是否开启定位</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">+ (BOOL)isLocationServiceOpen &#123;</div><div class="line">    if ([ CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) &#123;</div><div class="line">        return NO;</div><div class="line">    &#125; else</div><div class="line">        return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>####iOS 判断是否允许消息通知</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">+ (BOOL)isMessageNotificationServiceOpen &#123;</div><div class="line">    if (SYSTEM_VERSION_GREATER_THAN(@&quot;8.0&quot;)) &#123;</div><div class="line">        return [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];</div><div class="line">    &#125; else &#123;</div><div class="line">        return UIRemoteNotificationTypeNone != [[UIApplication sharedApplication] enabledRemoteNotificationTypes];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>####获取当前屏幕最顶层显示的viewcontroller<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (UIViewController *)getPresentedViewController</div><div class="line">&#123;</div><div class="line">    UIViewController *appRootVC = [UIApplication sharedApplication].keyWindow.rootViewController;</div><div class="line">    UIViewController *topVC = appRootVC;</div><div class="line">    if (topVC.presentedViewController) &#123;</div><div class="line">        topVC = topVC.presentedViewController;</div><div class="line">    &#125;</div><div class="line">    return topVC;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/11/Info-plist中常用的key/" itemprop="url">
-                  Info.plist中常用的key
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-11T18:23:29+08:00" content="2016-06-11">
-              2016-06-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <table>
-<thead>
-<tr>
-<th>Key</th>
-<th style="text-align:left">作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>App Transport Security</td>
-<td style="text-align:left">iOS9新增，如果不设置NSAllowsArbitraryLoads将默认强制使用了HTTPS协议进行传输</td>
-</tr>
-<tr>
-<td>UIRequiresPersistentWiFi</td>
-<td style="text-align:left">在程序中弹出wifi选择的key（系统设置中需要将wifi提示打开）</td>
-</tr>
-<tr>
-<td>UIAppFonts</td>
-<td style="text-align:left">内嵌字体</td>
-</tr>
-<tr>
-<td>UIApplicationExitsOnSuspend</td>
-<td style="text-align:left">程序是否在后台运行</td>
-</tr>
-<tr>
-<td>UIBackgroundModes</td>
-<td style="text-align:left">后台运行时的服务，具体看iOS4的后台介绍</td>
-</tr>
-<tr>
-<td>UIDeviceFamily</td>
-<td style="text-align:left">设备集合,array类型</td>
-</tr>
-<tr>
-<td>UIFileSharingEnabled</td>
-<td style="text-align:left">开启itunes共享document文件夹</td>
-</tr>
-<tr>
-<td>UILaunchImageFile</td>
-<td style="text-align:left">启动页图片</td>
-</tr>
-<tr>
-<td>UIPrerenderedIcon</td>
-<td style="text-align:left">icon上是否有高光</td>
-</tr>
-<tr>
-<td>UIRequiredDeviceCapabilities</td>
-<td style="text-align:left">设备需要的功能</td>
-</tr>
-<tr>
-<td>UIStatusBarHidden</td>
-<td style="text-align:left">状态栏隐藏（和程序内的区别是在于显示Default.png已经生效）</td>
-</tr>
-<tr>
-<td>UIStatusBarStyle</td>
-<td style="text-align:left">状态栏类型</td>
-</tr>
-<tr>
-<td>UIViewEdgeAntialiasing</td>
-<td style="text-align:left">是否开启抗锯齿</td>
-</tr>
-<tr>
-<td>CFBundleDisplayName</td>
-<td style="text-align:left">app显示名</td>
-</tr>
-<tr>
-<td>CFBundleIconFile</td>
-<td style="text-align:left">图标</td>
-</tr>
-<tr>
-<td>CFBundleName</td>
-<td style="text-align:left">app显示名短名16个字符以内</td>
-</tr>
-<tr>
-<td>CFBundleVersion</td>
-<td style="text-align:left">版本</td>
-</tr>
-<tr>
-<td>CFBundleURLTypes</td>
-<td style="text-align:left">自定义url，用于利用url弹回程序</td>
-</tr>
-<tr>
-<td>CFBundleLocalizations</td>
-<td style="text-align:left">本地资源的本地化语言，用于itunes页面左下角显示本地话语种</td>
-</tr>
-<tr>
-<td>CFBundleDevelopmentRegion</td>
-<td style="text-align:left">也是本地化相关，如果用户所在地没有相应的语言资源，则用这个key的value来作为默认</td>
-</tr>
-</tbody>
-</table>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/03/苹果高德百度定位坐标转换/" itemprop="url">
-                  苹果高德百度定位坐标转换
-                </a>
+                苹果高德百度定位坐标转换
               
             
           </h1>
@@ -647,274 +326,68 @@
       
 
       
-        
-          
-            <p>####苹果的CLLocationManager定位得到的是世界标准地理坐标(WGS-84)</p>
+        <p>####苹果的CLLocationManager定位得到的是世界标准地理坐标(WGS-84)</p>
 <p>####高德SDK定位得到的是火星坐标（GCJ-02）</p>
 <p>####百度SDK定位得到的是百度地理坐标（BD-09）<br>有的项目里因为老的代码或者第三方库用的SDK不一样，也可能后端使用的定位SDK更换，都会需要坐标的转换来兼容老版本。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div></pre></td><td class="code"><pre><div class="line">#define LAT_OFFSET_0(x,y) -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y + 0.1 * x * y + 0.2 * sqrt(fabs(x))  </div><div class="line">#define LAT_OFFSET_1 (20.0 * sin(6.0 * x * M_PI) + 20.0 * sin(2.0 * x * M_PI)) * 2.0 / 3.0  </div><div class="line">#define LAT_OFFSET_2 (20.0 * sin(y * M_PI) + 40.0 * sin(y / 3.0 * M_PI)) * 2.0 / 3.0  </div><div class="line">#define LAT_OFFSET_3 (160.0 * sin(y / 12.0 * M_PI) + 320 * sin(y * M_PI / 30.0)) * 2.0 / 3.0  </div><div class="line">  </div><div class="line">#define LON_OFFSET_0(x,y) 300.0 + x + 2.0 * y + 0.1 * x * x + 0.1 * x * y + 0.1 * sqrt(fabs(x))  </div><div class="line">#define LON_OFFSET_1 (20.0 * sin(6.0 * x * M_PI) + 20.0 * sin(2.0 * x * M_PI)) * 2.0 / 3.0  </div><div class="line">#define LON_OFFSET_2 (20.0 * sin(x * M_PI) + 40.0 * sin(x / 3.0 * M_PI)) * 2.0 / 3.0  </div><div class="line">#define LON_OFFSET_3 (150.0 * sin(x / 12.0 * M_PI) + 300.0 * sin(x / 30.0 * M_PI)) * 2.0 / 3.0  </div><div class="line">  </div><div class="line">#define RANGE_LON_MAX 137.8347  </div><div class="line">#define RANGE_LON_MIN 72.004  </div><div class="line">#define RANGE_LAT_MAX 55.8271  </div><div class="line">#define RANGE_LAT_MIN 0.8293  </div><div class="line">// jzA = 6378245.0, 1/f = 298.3  </div><div class="line">// b = a * (1 - f)  </div><div class="line">// ee = (a^2 - b^2) / a^2;  </div><div class="line">#define jzA 6378245.0  </div><div class="line">#define jzEE 0.00669342162296594323  </div><div class="line">  </div><div class="line">  </div><div class="line">  </div><div class="line">//判断是不是在中国  </div><div class="line">+(BOOL)isLocationOutOfChina:(CLLocationCoordinate2D)location  </div><div class="line">&#123;  </div><div class="line">    if (location.longitude &lt; 72.004 || location.longitude &gt; 137.8347 || location.latitude &lt; 0.8293 || location.latitude &gt; 55.8271)  </div><div class="line">        return YES;  </div><div class="line">    return NO;  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">+ (double)transformLat:(double)x BDLon:(double)y  </div><div class="line">&#123;  </div><div class="line">    double ret = LAT_OFFSET_0(x, y);  </div><div class="line">    ret += LAT_OFFSET_1;  </div><div class="line">    ret += LAT_OFFSET_2;  </div><div class="line">    ret += LAT_OFFSET_3;  </div><div class="line">    return ret;  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">+ (double)transformLon:(double)x BDLon:(double)y  </div><div class="line">&#123;  </div><div class="line">    double ret = LON_OFFSET_0(x, y);  </div><div class="line">    ret += LON_OFFSET_1;  </div><div class="line">    ret += LON_OFFSET_2;  </div><div class="line">    ret += LON_OFFSET_3;  </div><div class="line">    return ret;  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">+ (BOOL)outOfChina:(double)lat BDLon:(double)lon  </div><div class="line">&#123;  </div><div class="line">    if (lon &lt; RANGE_LON_MIN || lon &gt; RANGE_LON_MAX)  </div><div class="line">        return true;  </div><div class="line">    if (lat &lt; RANGE_LAT_MIN || lat &gt; RANGE_LAT_MAX)  </div><div class="line">        return true;  </div><div class="line">    return false;  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">+ (CLLocationCoordinate2D)GCJ02Encrypt:(double)ggLat BDLon:(double)ggLon  </div><div class="line">&#123;  </div><div class="line">    CLLocationCoordinate2D resPoint;  </div><div class="line">    double mgLat;  </div><div class="line">    double mgLon;  </div><div class="line">    if ([self outOfChina:ggLat BDLon:ggLon]) &#123;  </div><div class="line">        resPoint.latitude = ggLat;  </div><div class="line">        resPoint.longitude = ggLon;  </div><div class="line">        return resPoint;  </div><div class="line">    &#125;  </div><div class="line">    double dLat = [self transformLat:(ggLon - 105.0)BDLon:(ggLat - 35.0)];  </div><div class="line">    double dLon = [self transformLon:(ggLon - 105.0) BDLon:(ggLat - 35.0)];  </div><div class="line">    double radLat = ggLat / 180.0 * M_PI;  </div><div class="line">    double magic = sin(radLat);  </div><div class="line">    magic = 1 - jzEE * magic * magic;  </div><div class="line">    double sqrtMagic = sqrt(magic);  </div><div class="line">    dLat = (dLat * 180.0) / ((jzA * (1 - jzEE)) / (magic * sqrtMagic) * M_PI);  </div><div class="line">    dLon = (dLon * 180.0) / (jzA / sqrtMagic * cos(radLat) * M_PI);  </div><div class="line">    mgLat = ggLat + dLat;  </div><div class="line">    mgLon = ggLon + dLon;  </div><div class="line">      </div><div class="line">    resPoint.latitude = mgLat;  </div><div class="line">    resPoint.longitude = mgLon;  </div><div class="line">    return resPoint;  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">+ (CLLocationCoordinate2D)GCJ02Decrypt:(double)gjLat gjLon:(double)gjLon &#123;  </div><div class="line">    CLLocationCoordinate2D  gPt = [self GCJ02Encrypt:gjLat BDLon:gjLon];  </div><div class="line">    double dLon = gPt.longitude - gjLon;  </div><div class="line">    double dLat = gPt.latitude - gjLat;  </div><div class="line">    CLLocationCoordinate2D pt;  </div><div class="line">    pt.latitude = gjLat - dLat;  </div><div class="line">    pt.longitude = gjLon - dLon;  </div><div class="line">    return pt;  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">+ (CLLocationCoordinate2D)BD09Decrypt:(double)BDLat BDLon:(double)BDLon  </div><div class="line">&#123;  </div><div class="line">    CLLocationCoordinate2D GCJPt;  </div><div class="line">    double x = BDLon - 0.0065, y = BDLat - 0.006;  </div><div class="line">    double z = sqrt(x * x + y * y) - 0.00002 * sin(y * M_PI);  </div><div class="line">    double theta = atan2(y, x) - 0.000003 * cos(x * M_PI);  </div><div class="line">    GCJPt.longitude = z * cos(theta);  </div><div class="line">    GCJPt.latitude = z * sin(theta);  </div><div class="line">    return GCJPt;  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">+(CLLocationCoordinate2D)BD09Encrypt:(double)ggLat BDLon:(double)ggLon  </div><div class="line">&#123;  </div><div class="line">    CLLocationCoordinate2D BDPt;  </div><div class="line">    double x = ggLon, y = ggLat;  </div><div class="line">    double z = sqrt(x * x + y * y) + 0.00002 * sin(y * M_PI);  </div><div class="line">    double theta = atan2(y, x) + 0.000003 * cos(x * M_PI);  </div><div class="line">    BDPt.longitude = z * cos(theta) + 0.0065;  </div><div class="line">    BDPt.latitude = z * sin(theta) + 0.006;  </div><div class="line">    return BDPt;  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">  </div><div class="line">//6种转换</div><div class="line">  </div><div class="line">+ (CLLocationCoordinate2D)WGS84ToGCJ02:(CLLocationCoordinate2D)location  </div><div class="line">&#123;  </div><div class="line">    return [self GCJ02Encrypt:location.latitude BDLon:location.longitude];  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">+ (CLLocationCoordinate2D)GCJ02ToWGS84:(CLLocationCoordinate2D)location  </div><div class="line">&#123;  </div><div class="line">    return [self GCJ02Decrypt:location.latitude gjLon:location.longitude];  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">  </div><div class="line">+ (CLLocationCoordinate2D)WGS84ToBD09:(CLLocationCoordinate2D)location  </div><div class="line">&#123;  </div><div class="line">    CLLocationCoordinate2D GCJ02Pt = [self GCJ02Encrypt:location.latitude  </div><div class="line">                                                  BDLon:location.longitude];  </div><div class="line">    return [self BD09Encrypt:GCJ02Pt.latitude BDLon:GCJ02Pt.longitude] ;  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">+ (CLLocationCoordinate2D)GCJ02ToBD09:(CLLocationCoordinate2D)location  </div><div class="line">&#123;  </div><div class="line">    return  [self BD09Encrypt:location.latitude BDLon:location.longitude];  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">+ (CLLocationCoordinate2D)BD09ToGCJ02:(CLLocationCoordinate2D)location  </div><div class="line">&#123;  </div><div class="line">    return [self BD09Decrypt:location.latitude BDLon:location.longitude];  </div><div class="line">&#125;  </div><div class="line">  </div><div class="line">+ (CLLocationCoordinate2D)BD09ToWGS84:(CLLocationCoordinate2D)location  </div><div class="line">&#123;  </div><div class="line">    CLLocationCoordinate2D GCJ02 = [self BD09ToGCJ02:location];  </div><div class="line">    return [self GCJ02Decrypt:GCJ02.latitude gjLon:GCJ02.longitude];  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/18/大学时的渣画/" itemprop="url">
-                  大学时的渣画
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-18T19:39:42+08:00" content="2016-05-18">
-              2016-05-18
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Design/" itemprop="url" rel="index">
-                    <span itemprop="name">Design</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
+            <a href="/tags/笔记/" rel="tag">#笔记</a>
           
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>大一的暑假因为机缘巧合报了一个iOS的开发大赛，当时并没有任何iOS的设备，也不知道该用什么工具和语言开发，只有高中时学的flash的基础，然后就开始买了台刚出的iPod touch4把自己的联想笔记本装了个虚拟机开始搞了，当时准备做一个益智类小游戏，代码靠着一边百度一边问学长还能写出来，但是美术找了好久没有找到，于是就买了个数位板自己照着愤怒的小鸟、植物大战僵尸画，在用flash做点简单的动画，效果很渣不过第一次看到自己的作品在手机上跑起来还是很兴奋的…后来画画就成了大学除了写代码外最大的爱好了（虽然一直没有系统的学习过也没有什么进步…）</p>
-<p><img src="http://imglf2.nosdn.127.net/img/SnJLZEdtSzE0OVJrRWZFS1FsSmhHNE9lUnlXUnhDTEQ.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg"></p>
-<p><img src="http://imglf1.nosdn.127.net/img/SnJLZEdtSzE0OVRFblo1aGh4aE0rUUhSUkgyM2RhUVY.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/05/18/大学时的渣画/" rel="next" title="大学时的渣画">
+                <i class="fa fa-chevron-left"></i> 大学时的渣画
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/05/17/MASS/" itemprop="url">
-                  MASS
-                </a>
-              
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-17T09:04:15+08:00" content="2016-05-17">
-              2016-05-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Design/" itemprop="url" rel="index">
-                    <span itemprop="name">Design</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
+              <a href="/2016/06/11/Info-plist中常用的key/" rel="prev" title="Info.plist中常用的key">
+                Info.plist中常用的key <i class="fa fa-chevron-right"></i>
+              </a>
             
-          
-
-          
-
-          
-          
-
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <p>前段时间突然心血来潮画了这两张公司LOGO的同人画，唉~毕业了两年第一次翻出数位板，居然还没有坏，感觉像是和多年不见的老朋友又见面了，感慨万千，虽然画的还是这么渣不过这种创作的快感依然不减，以后码代码的时间需要平衡一下了，毕竟多维的人生才更有乐趣。</p>
-<p>CSDN简书博客园显然技术氛围太浓分享技术以外的东西都感觉很违和，以后各种类型的作品都可以放在这个个人博客里了哈哈哈</p>
-<p><img src="http://imglf1.nosdn.127.net/img/SnJLZEdtSzE0OVFaSzRVL1RTWXVaVm9KZ2xtdDJ5VVoyT0dhd3pWWmxXbVVxSUc0SmRrdG5RPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg"></p>
-<p><img src="http://imglf.nosdn.127.net/img/SnJLZEdtSzE0OVFaSzRVL1RTWXVaZGNhRmdYWGlsOGIwbEhPY052ZnhRZ0VZeDhxeU1acDJRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -922,6 +395,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -941,8 +418,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -1019,6 +505,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -1122,6 +619,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 

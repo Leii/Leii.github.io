@@ -86,70 +86,22 @@
 
 
 
-<meta name="description" content="Key
-作用
-
-
-
-
-App Transport Security
-iOS9新增，如果不设置NSAllowsArbitraryLoads将默认强制使用了HTTPS协议进行传输
-
-
-UIRequiresPersistentWiFi
-在程序中弹出wifi选择的key（系统设置中需要将wifi提示打开）
-
-
-UIAppFonts
-内嵌字体
-
-
-UIApplicationExitsOnSuspend">
+<meta name="description" content="[用到就记录下来，持续更新…]
+####判断一个对象中是否包含某个属性
+12345678910111213+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&amp;#123;       	unsigned int outCount, i;  	Ivar *ivars = class_copyIvarList(my">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Info.plist中常用的key">
-<meta property="og:url" content="http://leii.me/2016/06/11/Info-plist中常用的key/index.html">
+<meta property="og:title" content="iOS常用判断">
+<meta property="og:url" content="http://leii.me/2016/06/12/iOS常用判断/index.html">
 <meta property="og:site_name" content="Leii's Blog">
-<meta property="og:description" content="Key
-作用
-
-
-
-
-App Transport Security
-iOS9新增，如果不设置NSAllowsArbitraryLoads将默认强制使用了HTTPS协议进行传输
-
-
-UIRequiresPersistentWiFi
-在程序中弹出wifi选择的key（系统设置中需要将wifi提示打开）
-
-
-UIAppFonts
-内嵌字体
-
-
-UIApplicationExitsOnSuspend">
-<meta property="og:updated_time" content="2016-09-12T09:22:14.000Z">
+<meta property="og:description" content="[用到就记录下来，持续更新…]
+####判断一个对象中是否包含某个属性
+12345678910111213+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&amp;#123;       	unsigned int outCount, i;  	Ivar *ivars = class_copyIvarList(my">
+<meta property="og:updated_time" content="2016-09-12T14:04:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Info.plist中常用的key">
-<meta name="twitter:description" content="Key
-作用
-
-
-
-
-App Transport Security
-iOS9新增，如果不设置NSAllowsArbitraryLoads将默认强制使用了HTTPS协议进行传输
-
-
-UIRequiresPersistentWiFi
-在程序中弹出wifi选择的key（系统设置中需要将wifi提示打开）
-
-
-UIAppFonts
-内嵌字体
-
-
-UIApplicationExitsOnSuspend">
+<meta name="twitter:title" content="iOS常用判断">
+<meta name="twitter:description" content="[用到就记录下来，持续更新…]
+####判断一个对象中是否包含某个属性
+12345678910111213+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&amp;#123;       	unsigned int outCount, i;  	Ivar *ivars = class_copyIvarList(my">
 
 
 
@@ -170,9 +122,9 @@ UIApplicationExitsOnSuspend">
 
 
 
-  <link rel="canonical" href="http://leii.me/2016/06/11/Info-plist中常用的key/"/>
+  <link rel="canonical" href="http://leii.me/2016/06/12/iOS常用判断/"/>
 
-  <title> Info.plist中常用的key | Leii's Blog </title>
+  <title> iOS常用判断 | Leii's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -312,7 +264,7 @@ UIApplicationExitsOnSuspend">
             
             
               
-                Info.plist中常用的key
+                iOS常用判断
               
             
           </h1>
@@ -324,8 +276,8 @@ UIApplicationExitsOnSuspend">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-11T18:23:29+08:00" content="2016-06-11">
-              2016-06-11
+            <time itemprop="dateCreated" datetime="2016-06-12T17:26:25+08:00" content="2016-06-12">
+              2016-06-12
             </time>
           </span>
 
@@ -371,96 +323,18 @@ UIApplicationExitsOnSuspend">
       
 
       
-        <table>
-<thead>
-<tr>
-<th>Key</th>
-<th style="text-align:left">作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>App Transport Security</td>
-<td style="text-align:left">iOS9新增，如果不设置NSAllowsArbitraryLoads将默认强制使用了HTTPS协议进行传输</td>
-</tr>
-<tr>
-<td>UIRequiresPersistentWiFi</td>
-<td style="text-align:left">在程序中弹出wifi选择的key（系统设置中需要将wifi提示打开）</td>
-</tr>
-<tr>
-<td>UIAppFonts</td>
-<td style="text-align:left">内嵌字体</td>
-</tr>
-<tr>
-<td>UIApplicationExitsOnSuspend</td>
-<td style="text-align:left">程序是否在后台运行</td>
-</tr>
-<tr>
-<td>UIBackgroundModes</td>
-<td style="text-align:left">后台运行时的服务，具体看iOS4的后台介绍</td>
-</tr>
-<tr>
-<td>UIDeviceFamily</td>
-<td style="text-align:left">设备集合,array类型</td>
-</tr>
-<tr>
-<td>UIFileSharingEnabled</td>
-<td style="text-align:left">开启itunes共享document文件夹</td>
-</tr>
-<tr>
-<td>UILaunchImageFile</td>
-<td style="text-align:left">启动页图片</td>
-</tr>
-<tr>
-<td>UIPrerenderedIcon</td>
-<td style="text-align:left">icon上是否有高光</td>
-</tr>
-<tr>
-<td>UIRequiredDeviceCapabilities</td>
-<td style="text-align:left">设备需要的功能</td>
-</tr>
-<tr>
-<td>UIStatusBarHidden</td>
-<td style="text-align:left">状态栏隐藏（和程序内的区别是在于显示Default.png已经生效）</td>
-</tr>
-<tr>
-<td>UIStatusBarStyle</td>
-<td style="text-align:left">状态栏类型</td>
-</tr>
-<tr>
-<td>UIViewEdgeAntialiasing</td>
-<td style="text-align:left">是否开启抗锯齿</td>
-</tr>
-<tr>
-<td>CFBundleDisplayName</td>
-<td style="text-align:left">app显示名</td>
-</tr>
-<tr>
-<td>CFBundleIconFile</td>
-<td style="text-align:left">图标</td>
-</tr>
-<tr>
-<td>CFBundleName</td>
-<td style="text-align:left">app显示名短名16个字符以内</td>
-</tr>
-<tr>
-<td>CFBundleVersion</td>
-<td style="text-align:left">版本</td>
-</tr>
-<tr>
-<td>CFBundleURLTypes</td>
-<td style="text-align:left">自定义url，用于利用url弹回程序</td>
-</tr>
-<tr>
-<td>CFBundleLocalizations</td>
-<td style="text-align:left">本地资源的本地化语言，用于itunes页面左下角显示本地话语种</td>
-</tr>
-<tr>
-<td>CFBundleDevelopmentRegion</td>
-<td style="text-align:left">也是本地化相关，如果用户所在地没有相应的语言资源，则用这个key的value来作为默认</td>
-</tr>
-</tbody>
-</table>
+        <p>[用到就记录下来，持续更新…]</p>
+<p>####判断一个对象中是否包含某个属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&#123;       </div><div class="line">	unsigned int outCount, i;</div><div class="line">  	Ivar *ivars = class_copyIvarList(myClass, &amp;outCount);</div><div class="line">  	for (i = 0; i &lt; outCount; i++) &#123;</div><div class="line">    	Ivar property = ivars[i];</div><div class="line">    	NSString *keyName = [NSString 		stringWithCString:ivar_getName(property) encoding:NSUTF8StringEncoding];</div><div class="line">	    keyName = [keyName stringByReplacingOccurrencesOfString:@&quot;_&quot; withString:@&quot;&quot;];</div><div class="line">    	if ([keyName isEqualToString:name]) &#123;</div><div class="line">      	return YES;</div><div class="line">    	&#125;</div><div class="line">  	&#125;</div><div class="line">  	return NO;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>####判断字符串是否为纯数字组成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (BOOL)isPureInt:(NSString*)string&#123;</div><div class="line">    NSScanner* scan = [NSScanner scannerWithString:string];</div><div class="line">    int val;</div><div class="line">    return[scan scanInt:&amp;val] &amp;&amp; [scan isAtEnd];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>####判断当天是星期几</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (void)weekDayJudge</div><div class="line">&#123;</div><div class="line">    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];</div><div class="line">    NSDate *now;</div><div class="line">    NSDateComponents *comps = [[NSDateComponents alloc] init];</div><div class="line">    NSInteger unitFlags =NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |</div><div class="line">    NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;</div><div class="line">    now=[NSDate date];</div><div class="line">    comps = [calendar components:unitFlags fromDate:now];</div><div class="line"></div><div class="line">    NSLog(@&quot;weekday is %ld&quot;,(long)[comps weekday]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>####iOS 判断是否开启定位</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">+ (BOOL)isLocationServiceOpen &#123;</div><div class="line">    if ([ CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) &#123;</div><div class="line">        return NO;</div><div class="line">    &#125; else</div><div class="line">        return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>####iOS 判断是否允许消息通知</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">+ (BOOL)isMessageNotificationServiceOpen &#123;</div><div class="line">    if (SYSTEM_VERSION_GREATER_THAN(@&quot;8.0&quot;)) &#123;</div><div class="line">        return [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];</div><div class="line">    &#125; else &#123;</div><div class="line">        return UIRemoteNotificationTypeNone != [[UIApplication sharedApplication] enabledRemoteNotificationTypes];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>####获取当前屏幕最顶层显示的viewcontroller<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (UIViewController *)getPresentedViewController</div><div class="line">&#123;</div><div class="line">    UIViewController *appRootVC = [UIApplication sharedApplication].keyWindow.rootViewController;</div><div class="line">    UIViewController *topVC = appRootVC;</div><div class="line">    if (topVC.presentedViewController) &#123;</div><div class="line">        topVC = topVC.presentedViewController;</div><div class="line">    &#125;</div><div class="line">    return topVC;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -492,17 +366,13 @@ UIApplicationExitsOnSuspend">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/03/苹果高德百度定位坐标转换/" rel="next" title="苹果高德百度定位坐标转换">
-                <i class="fa fa-chevron-left"></i> 苹果高德百度定位坐标转换
+              <a href="/2016/06/11/Info-plist中常用的key/" rel="next" title="Info.plist中常用的key">
+                <i class="fa fa-chevron-left"></i> Info.plist中常用的key
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/06/12/iOS常用判断/" rel="prev" title="iOS常用判断">
-                iOS常用判断 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
