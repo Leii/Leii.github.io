@@ -43,6 +43,26 @@
   </entry>
   
   <entry>
+    <title>about</title>
+    <link href="http://leii.me/2016/06/12/about/"/>
+    <id>http://leii.me/2016/06/12/about/</id>
+    <published>2016-06-12T01:42:32.000Z</published>
+    <updated>2016-09-12T01:44:46.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>#god only knows.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;#god only knows.&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Info.plist中常用的key</title>
     <link href="http://leii.me/2016/06/11/Info-plist%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84key/"/>
     <id>http://leii.me/2016/06/11/Info-plist中常用的key/</id>
