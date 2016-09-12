@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Leii Blog</title>
+  <title>Leii&#39;s Blog</title>
   
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://leii.me/"/>
-  <updated>2016-09-11T23:40:24.000Z</updated>
+  <updated>2016-09-12T04:19:55.000Z</updated>
   <id>http://leii.me/</id>
   
   <author>
@@ -16,38 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hello World</title>
-    <link href="http://leii.me/2016/09/12/hello-world/"/>
-    <id>http://leii.me/2016/09/12/hello-world/</id>
-    <published>2016-09-11T23:40:24.000Z</published>
-    <updated>2016-09-11T23:40:24.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>Info.plist中常用的key</title>
     <link href="http://leii.me/2016/06/11/Info-plist%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84key/"/>
     <id>http://leii.me/2016/06/11/Info-plist中常用的key/</id>
     <published>2016-06-11T10:23:29.000Z</published>
-    <updated>2016-09-11T11:29:40.000Z</updated>
+    <updated>2016-09-12T04:19:55.000Z</updated>
     
     <content type="html"><![CDATA[<table>
 <thead>
@@ -58,16 +31,20 @@
 </thead>
 <tbody>
 <tr>
+<td>App Transport Security</td>
+<td style="text-align:center">iOS9新增，如果不设置NSAllowsArbitraryLoads将默认强制使用了HTTPS协议进行传输</td>
+</tr>
+<tr>
 <td>UIRequiresPersistentWiFi</td>
 <td style="text-align:center">在程序中弹出wifi选择的key（系统设置中需要将wifi提示打开）</td>
 </tr>
 <tr>
 <td>UIAppFonts</td>
-<td style="text-align:center">内嵌字体（<a href="http://www.minroad.com/?p=412" target="_blank" rel="external">http://www.minroad.com/?p=412</a> 有详细介绍）</td>
+<td style="text-align:center">内嵌字体</td>
 </tr>
 <tr>
 <td>UIApplicationExitsOnSuspend</td>
-<td style="text-align:center">程序是否在后台运行，自己在进入后台的时候exit(0)是很傻的办法</td>
+<td style="text-align:center">程序是否在后台运行</td>
 </tr>
 <tr>
 <td>UIBackgroundModes</td>
@@ -75,7 +52,7 @@
 </tr>
 <tr>
 <td>UIDeviceFamily</td>
-<td style="text-align:center">array类型（1为iPhone和iPod touch设备，2为iPad)</td>
+<td style="text-align:center">设备集合,array类型</td>
 </tr>
 <tr>
 <td>UIFileSharingEnabled</td>
@@ -83,7 +60,7 @@
 </tr>
 <tr>
 <td>UILaunchImageFile</td>
-<td style="text-align:center">相当于Default.png（更名而已）</td>
+<td style="text-align:center">启动页图片</td>
 </tr>
 <tr>
 <td>UIPrerenderedIcon</td>
@@ -91,7 +68,7 @@
 </tr>
 <tr>
 <td>UIRequiredDeviceCapabilities</td>
-<td style="text-align:center">设备需要的功能（具体点击这里查看）</td>
+<td style="text-align:center">设备需要的功能</td>
 </tr>
 <tr>
 <td>UIStatusBarHidden</td>
@@ -133,9 +110,6 @@
 <td>CFBundleDevelopmentRegion</td>
 <td style="text-align:center">也是本地化相关，如果用户所在地没有相应的语言资源，则用这个key的value来作为默认</td>
 </tr>
-<tr>
-<td>App Transport Security</td>
-</tr>
 </tbody>
 </table>
 ]]></content>
@@ -151,10 +125,30 @@
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td&gt;UIRequiresPersistentWiFi&lt;/td&gt;
-&lt;td st
+&lt;td&gt;App Transport Security&lt;/td&gt;
+&lt;td styl
     
     </summary>
+    
+      <category term="iOS" scheme="http://leii.me/categories/iOS/"/>
+    
+    
+      <category term="笔记" scheme="http://leii.me/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hybrid 笔记</title>
+    <link href="http://leii.me/2016/06/03/Hybrid-%E7%AC%94%E8%AE%B0/"/>
+    <id>http://leii.me/2016/06/03/Hybrid-笔记/</id>
+    <published>2016-06-03T08:35:25.000Z</published>
+    <updated>2016-09-12T04:39:25.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://leii.me/categories/iOS/"/>
     
     
   </entry>
