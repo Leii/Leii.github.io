@@ -86,22 +86,19 @@
 
 
 
-<meta name="description" content="[用到就记录下来，持续更新…]
-####判断一个对象中是否包含某个属性
-12345678910111213+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&amp;#123;       	unsigned int outCount, i;  	Ivar *ivars = class_copyIvarList(my">
+<meta name="description" content="[用到就记录下来…]
+判断一个对象中是否包含某个属性12345678910111213+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&amp;#123;       	unsigned int outCount, i;  	Ivar *ivars = class_copyIvarList(myClass, &amp;am">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS常用判断">
 <meta property="og:url" content="http://leii.me/2016/06/12/iOS常用判断/index.html">
 <meta property="og:site_name" content="Leii's Blog">
-<meta property="og:description" content="[用到就记录下来，持续更新…]
-####判断一个对象中是否包含某个属性
-12345678910111213+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&amp;#123;       	unsigned int outCount, i;  	Ivar *ivars = class_copyIvarList(my">
-<meta property="og:updated_time" content="2016-09-12T14:04:37.000Z">
+<meta property="og:description" content="[用到就记录下来…]
+判断一个对象中是否包含某个属性12345678910111213+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&amp;#123;       	unsigned int outCount, i;  	Ivar *ivars = class_copyIvarList(myClass, &amp;am">
+<meta property="og:updated_time" content="2016-09-12T14:26:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS常用判断">
-<meta name="twitter:description" content="[用到就记录下来，持续更新…]
-####判断一个对象中是否包含某个属性
-12345678910111213+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&amp;#123;       	unsigned int outCount, i;  	Ivar *ivars = class_copyIvarList(my">
+<meta name="twitter:description" content="[用到就记录下来…]
+判断一个对象中是否包含某个属性12345678910111213+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&amp;#123;       	unsigned int outCount, i;  	Ivar *ivars = class_copyIvarList(myClass, &amp;am">
 
 
 
@@ -323,18 +320,13 @@
       
 
       
-        <p>[用到就记录下来，持续更新…]</p>
-<p>####判断一个对象中是否包含某个属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&#123;       </div><div class="line">	unsigned int outCount, i;</div><div class="line">  	Ivar *ivars = class_copyIvarList(myClass, &amp;outCount);</div><div class="line">  	for (i = 0; i &lt; outCount; i++) &#123;</div><div class="line">    	Ivar property = ivars[i];</div><div class="line">    	NSString *keyName = [NSString 		stringWithCString:ivar_getName(property) encoding:NSUTF8StringEncoding];</div><div class="line">	    keyName = [keyName stringByReplacingOccurrencesOfString:@&quot;_&quot; withString:@&quot;&quot;];</div><div class="line">    	if ([keyName isEqualToString:name]) &#123;</div><div class="line">      	return YES;</div><div class="line">    	&#125;</div><div class="line">  	&#125;</div><div class="line">  	return NO;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>####判断字符串是否为纯数字组成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (BOOL)isPureInt:(NSString*)string&#123;</div><div class="line">    NSScanner* scan = [NSScanner scannerWithString:string];</div><div class="line">    int val;</div><div class="line">    return[scan scanInt:&amp;val] &amp;&amp; [scan isAtEnd];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>####判断当天是星期几</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (void)weekDayJudge</div><div class="line">&#123;</div><div class="line">    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];</div><div class="line">    NSDate *now;</div><div class="line">    NSDateComponents *comps = [[NSDateComponents alloc] init];</div><div class="line">    NSInteger unitFlags =NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |</div><div class="line">    NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;</div><div class="line">    now=[NSDate date];</div><div class="line">    comps = [calendar components:unitFlags fromDate:now];</div><div class="line"></div><div class="line">    NSLog(@&quot;weekday is %ld&quot;,(long)[comps weekday]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>####iOS 判断是否开启定位</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">+ (BOOL)isLocationServiceOpen &#123;</div><div class="line">    if ([ CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) &#123;</div><div class="line">        return NO;</div><div class="line">    &#125; else</div><div class="line">        return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>####iOS 判断是否允许消息通知</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">+ (BOOL)isMessageNotificationServiceOpen &#123;</div><div class="line">    if (SYSTEM_VERSION_GREATER_THAN(@&quot;8.0&quot;)) &#123;</div><div class="line">        return [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];</div><div class="line">    &#125; else &#123;</div><div class="line">        return UIRemoteNotificationTypeNone != [[UIApplication sharedApplication] enabledRemoteNotificationTypes];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>####获取当前屏幕最顶层显示的viewcontroller<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (UIViewController *)getPresentedViewController</div><div class="line">&#123;</div><div class="line">    UIViewController *appRootVC = [UIApplication sharedApplication].keyWindow.rootViewController;</div><div class="line">    UIViewController *topVC = appRootVC;</div><div class="line">    if (topVC.presentedViewController) &#123;</div><div class="line">        topVC = topVC.presentedViewController;</div><div class="line">    &#125;</div><div class="line">    return topVC;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        <p>[用到就记录下来…]</p>
+<h4 id="判断一个对象中是否包含某个属性"><a href="#判断一个对象中是否包含某个属性" class="headerlink" title="判断一个对象中是否包含某个属性"></a>判断一个对象中是否包含某个属性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&#123;       </div><div class="line">	unsigned int outCount, i;</div><div class="line">  	Ivar *ivars = class_copyIvarList(myClass, &amp;outCount);</div><div class="line">  	for (i = 0; i &lt; outCount; i++) &#123;</div><div class="line">    	Ivar property = ivars[i];</div><div class="line">    	NSString *keyName = [NSString 		stringWithCString:ivar_getName(property) encoding:NSUTF8StringEncoding];</div><div class="line">	    keyName = [keyName stringByReplacingOccurrencesOfString:@&quot;_&quot; withString:@&quot;&quot;];</div><div class="line">    	if ([keyName isEqualToString:name]) &#123;</div><div class="line">      	return YES;</div><div class="line">    	&#125;</div><div class="line">  	&#125;</div><div class="line">  	return NO;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="判断字符串是否为纯数字组成"><a href="#判断字符串是否为纯数字组成" class="headerlink" title="判断字符串是否为纯数字组成"></a>判断字符串是否为纯数字组成</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (BOOL)isPureInt:(NSString*)string&#123;</div><div class="line">    NSScanner* scan = [NSScanner scannerWithString:string];</div><div class="line">    int val;</div><div class="line">    return[scan scanInt:&amp;val] &amp;&amp; [scan isAtEnd];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="判断当天是星期几"><a href="#判断当天是星期几" class="headerlink" title="判断当天是星期几"></a>判断当天是星期几</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (void)weekDayJudge</div><div class="line">&#123;</div><div class="line">    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];</div><div class="line">    NSDate *now;</div><div class="line">    NSDateComponents *comps = [[NSDateComponents alloc] init];</div><div class="line">    NSInteger unitFlags =NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |</div><div class="line">    NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;</div><div class="line">    now=[NSDate date];</div><div class="line">    comps = [calendar components:unitFlags fromDate:now];</div><div class="line"></div><div class="line">    NSLog(@&quot;weekday is %ld&quot;,(long)[comps weekday]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="iOS-判断是否开启定位"><a href="#iOS-判断是否开启定位" class="headerlink" title="iOS 判断是否开启定位"></a>iOS 判断是否开启定位</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">+ (BOOL)isLocationServiceOpen &#123;</div><div class="line">    if ([ CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) &#123;</div><div class="line">        return NO;</div><div class="line">    &#125; else</div><div class="line">        return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="iOS-判断是否允许消息通知"><a href="#iOS-判断是否允许消息通知" class="headerlink" title="iOS 判断是否允许消息通知"></a>iOS 判断是否允许消息通知</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">+ (BOOL)isMessageNotificationServiceOpen &#123;</div><div class="line">    if (SYSTEM_VERSION_GREATER_THAN(@&quot;8.0&quot;)) &#123;</div><div class="line">        return [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];</div><div class="line">    &#125; else &#123;</div><div class="line">        return UIRemoteNotificationTypeNone != [[UIApplication sharedApplication] enabledRemoteNotificationTypes];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="获取当前屏幕最顶层显示的viewcontroller"><a href="#获取当前屏幕最顶层显示的viewcontroller" class="headerlink" title="获取当前屏幕最顶层显示的viewcontroller"></a>获取当前屏幕最顶层显示的viewcontroller</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (UIViewController *)getPresentedViewController</div><div class="line">&#123;</div><div class="line">    UIViewController *appRootVC = [UIApplication sharedApplication].keyWindow.rootViewController;</div><div class="line">    UIViewController *topVC = appRootVC;</div><div class="line">    if (topVC.presentedViewController) &#123;</div><div class="line">        topVC = topVC.presentedViewController;</div><div class="line">    &#125;</div><div class="line">    return topVC;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -373,6 +365,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/12/OC之-property/" rel="prev" title="OC之@property">
+                OC之@property <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -440,7 +436,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-count">6</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -457,7 +453,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -513,7 +509,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#判断一个对象中是否包含某个属性"><span class="nav-number">1.</span> <span class="nav-text">判断一个对象中是否包含某个属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#判断字符串是否为纯数字组成"><span class="nav-number">2.</span> <span class="nav-text">判断字符串是否为纯数字组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#判断当天是星期几"><span class="nav-number">3.</span> <span class="nav-text">判断当天是星期几</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#iOS-判断是否开启定位"><span class="nav-number">4.</span> <span class="nav-text">iOS 判断是否开启定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#iOS-判断是否允许消息通知"><span class="nav-number">5.</span> <span class="nav-text">iOS 判断是否允许消息通知</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取当前屏幕最顶层显示的viewcontroller"><span class="nav-number">6.</span> <span class="nav-text">获取当前屏幕最顶层显示的viewcontroller</span></a></li></ol></div>
             
           </div>
         </section>
