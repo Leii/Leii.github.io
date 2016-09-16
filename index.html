@@ -323,7 +323,30 @@
       
         
           
-            
+            <p>OC的@property本质是一种支持快捷访问成员变量的方法，自动生成setter和getter方法。</p>
+<p>声明：在@interface 里声明</p>
+<p>声明格式 @property (attributes) type propertyName;</p>
+<p>合成：在.m文件里合成</p>
+<p>合成格式 @synthesize name = _name;(Xcode4.4之后版本不需要写，系统会自动合成)</p>
+<p>访问权限：在.h中声明成员变量，默认是protected，在.m文件中声明默认是private的。</p>
+<p>@synthesize  propertyName = _name；如果变量_name没有声明，系统会自动生成该成员变量且为private权限。如果_name已声明，它们会自动合成。</p>
+<p>默认读取方法名为-(type)name 和 -(void)setName也可以改变setter和getter的访问名称。</p>
+<p>如：@property  (setter=setMyValue, getter=getBool) NSInteger  value; 此时setValue的方法就会被覆盖。</p>
+<h4 id="property的修饰属性-attributes"><a href="#property的修饰属性-attributes" class="headerlink" title="@property的修饰属性(attributes)"></a>@property的修饰属性(attributes)</h4><p>可读性：readwrite/readonly，不写默认为readwrite</p>
+<pre><code>readwrite：同时生成setter与getter方法
+readonly：只生成getter方法
+</code></pre><p>原子性：nonatomic/atomic，不写默认是atomic</p>
+<pre><code>atomic：线程安全，表示多线程中只有一个线程能对它访问
+nonatomic：非线程安全，但访问速度快
+</code></pre><p>内存：assign/retain/copy/weak/strong/unsafe_unretaunied</p>
+<p>（Xcode4.2(iOS sdk4.3和以下版本)和以前的版本用retain和assign<br>　　Xcode4.3(iOS 5和以上版本)或之后有了ARC用strong和weak）</p>
+<pre><code>assign：简单赋值，不更改引用计数，基础数据类型(如NSInteger,CGFloat)和C数据类型(如int,float)的默认值，非ARC的默认值
+retain：使用了引用计数，retain+1，release-1，当引用计数为0时，调用dealloc，内存释放
+copy：用于非共享内存，每个指针有自己的内存空间
+weak：只作用于ARC,不更改引用计数，作用于对象，当引用计数为0时会将对象置为nil
+strong：只作用于ARC，引用计数加1，是对象的默认值
+unsafe_unretained：作用于ARC，功能与assign一样，引用计数为0时不会置为nil，可能出现野指针，所以不安全
+</code></pre>
           
         
       
