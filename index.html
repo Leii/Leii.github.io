@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion">
+<html class="theme-next mist use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -101,7 +101,7 @@
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Pisces',
+    scheme: 'Mist',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
@@ -238,141 +238,6 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/12/OC之-property/" itemprop="url">
-                  OC之@property
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-12T22:13:51+08:00" content="2016-09-12">
-              2016-09-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>OC的@property本质是一种支持快捷访问成员变量的方法，自动生成setter和getter方法。</p>
-<p>声明：在@interface 里声明</p>
-<p>声明格式 @property (attributes) type propertyName;</p>
-<p>合成：在.m文件里合成</p>
-<p>合成格式 @synthesize name = _name;(Xcode4.4之后版本不需要写，系统会自动合成)</p>
-<p>访问权限：在.h中声明成员变量，默认是protected，在.m文件中声明默认是private的。</p>
-<p>@synthesize  propertyName = _name；如果变量_name没有声明，系统会自动生成该成员变量且为private权限。如果_name已声明，它们会自动合成。</p>
-<p>默认读取方法名为-(type)name 和 -(void)setName也可以改变setter和getter的访问名称。</p>
-<p>如：@property  (setter=setMyValue, getter=getBool) NSInteger  value; 此时setValue的方法就会被覆盖。</p>
-<h4 id="property的修饰属性-attributes"><a href="#property的修饰属性-attributes" class="headerlink" title="@property的修饰属性(attributes)"></a>@property的修饰属性(attributes)</h4><p>可读性：readwrite/readonly，不写默认为readwrite</p>
-<pre><code>readwrite：同时生成setter与getter方法
-readonly：只生成getter方法
-</code></pre><p>原子性：nonatomic/atomic，不写默认是atomic</p>
-<pre><code>atomic：线程安全，表示多线程中只有一个线程能对它访问
-nonatomic：非线程安全，但访问速度快
-</code></pre><p>内存：assign/retain/copy/weak/strong/unsafe_unretaunied</p>
-<p>（Xcode4.2(iOS sdk4.3和以下版本)和以前的版本用retain和assign<br>　　Xcode4.3(iOS 5和以上版本)或之后有了ARC用strong和weak）</p>
-<pre><code>assign：简单赋值，不更改引用计数，基础数据类型(如NSInteger,CGFloat)和C数据类型(如int,float)的默认值，非ARC的默认值
-retain：使用了引用计数，retain+1，release-1，当引用计数为0时，调用dealloc，内存释放
-copy：用于非共享内存，每个指针有自己的内存空间
-weak：只作用于ARC,不更改引用计数，作用于对象，当引用计数为0时会将对象置为nil
-strong：只作用于ARC，引用计数加1，是对象的默认值
-unsafe_unretained：作用于ARC，功能与assign一样，引用计数为0时不会置为nil，可能出现野指针，所以不安全
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
     
       
 
@@ -782,6 +647,161 @@ unsafe_unretained：作用于ARC，功能与assign一样，引用计数为0时�
 </tr>
 </tbody>
 </table>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/06/04/OC之-property/" itemprop="url">
+                  OC之@property
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-04T22:13:51+08:00" content="2016-06-04">
+              2016-06-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>OC的@property本质是一种支持快捷访问成员变量的方法，自动生成setter和getter方法。</p>
+<p>声明：在@interface 里声明</p>
+<p>声明格式 @property (attributes) type propertyName;</p>
+<p>合成：在.m文件里合成</p>
+<p>合成格式 @synthesize name = _name;(自动合成，Xcode4.4之后版本不需要写，系统会自动合成)或通过@dynamic，自己</p>
+<p>访问权限：在.h中声明成员变量，默认是protected，在.m文件中声明默认是private的。</p>
+<p>@synthesize  propertyName = _name；如果变量_name没有声明，系统会自动生成该成员变量且为private权限。如果_name已声明，它们会自动合成。</p>
+<p>默认读取方法名为-(type)name 和 -(void)setName也可以改变setter和getter的访问名称。</p>
+<p>如：@property  (setter=setMyValue, getter=getBool) NSInteger  value; 此时setValue的方法就会被覆盖。</p>
+<h4 id="property的修饰属性-attributes"><a href="#property的修饰属性-attributes" class="headerlink" title="@property的修饰属性(attributes)"></a>@property的修饰属性(attributes)</h4><p>可读性：readwrite/readonly，不写默认为readwrite</p>
+<pre><code>readwrite：同时生成setter与getter方法
+readonly：只生成getter方法
+</code></pre><p>原子性：nonatomic/atomic，不写默认是atomic</p>
+<pre><code>atomic：线程安全，表示多线程中只有一个线程能对它访问
+nonatomic：非线程安全，但访问速度快
+</code></pre><p>内存：assign/retain/copy/weak/strong/unsafe_unretaunied</p>
+<p>（Xcode4.2(iOS sdk4.3和以下版本)和以前的版本用retain和assign<br>　　Xcode4.3(iOS 5和以上版本)或之后有了ARC用strong和weak）</p>
+<pre><code>assign：简单赋值，不更改引用计数，基础数据类型(如NSInteger,CGFloat)和C数据类型(如int,float)的默认值，非ARC的默认值
+retain：使用了引用计数，retain+1，release-1，当引用计数为0时，调用dealloc，内存释放
+copy：用于非共享内存，每个指针有自己的内存空间
+weak：只作用于ARC,不更改引用计数，作用于对象，当引用计数为0时会将对象置为nil
+strong：只作用于ARC，引用计数加1，是对象的默认值
+unsafe_unretained：作用于ARC，功能与assign一样，引用计数为0时不会置为nil，可能出现野指针，所以不安全
+</code></pre><p>Nullability Annotations：nonnull/nullable/null_resettable，多数为nonnull，包在NS_ASSUME_NONNULL_BEGIN与NS_ASSUME_NONNULL_END中间的默认为nonnull</p>
+<p>（llvm 6.1 Xcode6.3中加入，表示是否可以为nil或者NULL，对应swift的？ ！）</p>
+<pre><code>nonnull：不能为空
+nullable：可以为空
+null_resettable：表示 setter nullable，但是 getter nonnull，如@property (null_resettable, nonatomic, strong) UIView *view; 可以被设为nil，但是getter的时候会调用-loadView创建一个非nil的view
+</code></pre><p> 为了安全起见，苹果还制定了几条规则：</p>
+<blockquote>
+<p>1.typedef定义的类型的nullability特性通常依赖于上下文，即使是在Audited Regions中，也不能假定它为nonnull。</p>
+<p>2.复杂的指针类型(如id <em>)必须显示去指定是nonnull还是nullable。例如，指定一个指向nullable对象的nonnull指针，可以使用”__nullable id </em> __nonnull”。</p>
+<p>3.我们经常使用的NSError **通常是被假定为一个指向nullable NSError对象的nullable指针。</p>
+</blockquote>
+<p>Nullability Annotations的兼容性：</p>
+<blockquote>
+<p>1.老代码仍然能正常工作，即使对nonnull对象使用了nil也没有问题。</p>
+<p>2.老代码在需要和swift混编时，在新的swift编译器下会给出一个警告。</p>
+<p>3.nonnull不会影响性能。事实上，我们仍然可以在运行时去判断我们的对象是否为nil。</p>
+<p>事实上，我们可以将nonnull/nullable与我们的断言和异常一起看待，其需要处理的问题都是同一个：违反约定是一个程序员的错误。特别是，返回值是我们可控的东西，如果返回值是nonnull的，则我们不应该返回nil，除非是为了向后兼容。</p>
+</blockquote>
+<h4 id="声明临时变量"><a href="#声明临时变量" class="headerlink" title="声明临时变量"></a>声明临时变量</h4><p>用<strong>strong,  </strong>weak, <strong>unsafe_unretained,  </strong>autoreleasing等，用法与上面一样</p>
+<p><strong>autoreleasing用法介绍：可以使对象延迟释放。通过传递</strong>autoreleaseing的对象，可以做到在函数内部申请空间，函数外部也可以使用。具体的释放时间取决于runloop创建的autorelease pool，如果autorelease pool释放，则__autorelease 声明的变量都会被释放。</p>
 
           
         
@@ -1488,7 +1508,7 @@ unsafe_unretained：作用于ARC，功能与assign一样，引用计数为0时�
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
+    NexT.Mist
   </a>
 </div>
 
@@ -1553,13 +1573,6 @@ unsafe_unretained：作用于ARC，功能与assign一样，引用计数为0时�
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
-
-
 
   
 

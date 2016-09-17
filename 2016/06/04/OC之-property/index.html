@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="笔记," />
+  <meta name="keywords" content="格物," />
 
 
 
@@ -86,70 +86,28 @@
 
 
 
-<meta name="description" content="Key
-作用
-
-
-
-
-App Transport Security
-iOS9新增，如果不设置NSAllowsArbitraryLoads将默认强制使用了HTTPS协议进行传输
-
-
-UIRequiresPersistentWiFi
-在程序中弹出wifi选择的key（系统设置中需要将wifi提示打开）
-
-
-UIAppFonts
-内嵌字体
-
-
-UIApplicationExitsOnSuspend">
+<meta name="description" content="OC的@property本质是一种支持快捷访问成员变量的方法，自动生成setter和getter方法。
+声明：在@interface 里声明
+声明格式 @property (attributes) type propertyName;
+合成：在.m文件里合成
+合成格式 @synthesize name = _name;(自动合成，Xcode4.4之后版本不需要写，系统会自动合成)或通过@dynam">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Info.plist中常用的key">
-<meta property="og:url" content="http://leii.me/2016/06/11/Info-plist中常用的key/index.html">
+<meta property="og:title" content="OC之@property">
+<meta property="og:url" content="http://leii.me/2016/06/04/OC之-property/index.html">
 <meta property="og:site_name" content="Leii's Blog">
-<meta property="og:description" content="Key
-作用
-
-
-
-
-App Transport Security
-iOS9新增，如果不设置NSAllowsArbitraryLoads将默认强制使用了HTTPS协议进行传输
-
-
-UIRequiresPersistentWiFi
-在程序中弹出wifi选择的key（系统设置中需要将wifi提示打开）
-
-
-UIAppFonts
-内嵌字体
-
-
-UIApplicationExitsOnSuspend">
-<meta property="og:updated_time" content="2016-09-12T09:22:14.000Z">
+<meta property="og:description" content="OC的@property本质是一种支持快捷访问成员变量的方法，自动生成setter和getter方法。
+声明：在@interface 里声明
+声明格式 @property (attributes) type propertyName;
+合成：在.m文件里合成
+合成格式 @synthesize name = _name;(自动合成，Xcode4.4之后版本不需要写，系统会自动合成)或通过@dynam">
+<meta property="og:updated_time" content="2016-09-17T03:46:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Info.plist中常用的key">
-<meta name="twitter:description" content="Key
-作用
-
-
-
-
-App Transport Security
-iOS9新增，如果不设置NSAllowsArbitraryLoads将默认强制使用了HTTPS协议进行传输
-
-
-UIRequiresPersistentWiFi
-在程序中弹出wifi选择的key（系统设置中需要将wifi提示打开）
-
-
-UIAppFonts
-内嵌字体
-
-
-UIApplicationExitsOnSuspend">
+<meta name="twitter:title" content="OC之@property">
+<meta name="twitter:description" content="OC的@property本质是一种支持快捷访问成员变量的方法，自动生成setter和getter方法。
+声明：在@interface 里声明
+声明格式 @property (attributes) type propertyName;
+合成：在.m文件里合成
+合成格式 @synthesize name = _name;(自动合成，Xcode4.4之后版本不需要写，系统会自动合成)或通过@dynam">
 
 
 
@@ -170,9 +128,9 @@ UIApplicationExitsOnSuspend">
 
 
 
-  <link rel="canonical" href="http://leii.me/2016/06/11/Info-plist中常用的key/"/>
+  <link rel="canonical" href="http://leii.me/2016/06/04/OC之-property/"/>
 
-  <title> Info.plist中常用的key | Leii's Blog </title>
+  <title> OC之@property | Leii's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -312,7 +270,7 @@ UIApplicationExitsOnSuspend">
             
             
               
-                Info.plist中常用的key
+                OC之@property
               
             
           </h1>
@@ -324,8 +282,8 @@ UIApplicationExitsOnSuspend">
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-11T18:23:29+08:00" content="2016-06-11">
-              2016-06-11
+            <time itemprop="dateCreated" datetime="2016-06-04T22:13:51+08:00" content="2016-06-04">
+              2016-06-04
             </time>
           </span>
 
@@ -371,96 +329,49 @@ UIApplicationExitsOnSuspend">
       
 
       
-        <table>
-<thead>
-<tr>
-<th>Key</th>
-<th style="text-align:left">作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>App Transport Security</td>
-<td style="text-align:left">iOS9新增，如果不设置NSAllowsArbitraryLoads将默认强制使用了HTTPS协议进行传输</td>
-</tr>
-<tr>
-<td>UIRequiresPersistentWiFi</td>
-<td style="text-align:left">在程序中弹出wifi选择的key（系统设置中需要将wifi提示打开）</td>
-</tr>
-<tr>
-<td>UIAppFonts</td>
-<td style="text-align:left">内嵌字体</td>
-</tr>
-<tr>
-<td>UIApplicationExitsOnSuspend</td>
-<td style="text-align:left">程序是否在后台运行</td>
-</tr>
-<tr>
-<td>UIBackgroundModes</td>
-<td style="text-align:left">后台运行时的服务，具体看iOS4的后台介绍</td>
-</tr>
-<tr>
-<td>UIDeviceFamily</td>
-<td style="text-align:left">设备集合,array类型</td>
-</tr>
-<tr>
-<td>UIFileSharingEnabled</td>
-<td style="text-align:left">开启itunes共享document文件夹</td>
-</tr>
-<tr>
-<td>UILaunchImageFile</td>
-<td style="text-align:left">启动页图片</td>
-</tr>
-<tr>
-<td>UIPrerenderedIcon</td>
-<td style="text-align:left">icon上是否有高光</td>
-</tr>
-<tr>
-<td>UIRequiredDeviceCapabilities</td>
-<td style="text-align:left">设备需要的功能</td>
-</tr>
-<tr>
-<td>UIStatusBarHidden</td>
-<td style="text-align:left">状态栏隐藏（和程序内的区别是在于显示Default.png已经生效）</td>
-</tr>
-<tr>
-<td>UIStatusBarStyle</td>
-<td style="text-align:left">状态栏类型</td>
-</tr>
-<tr>
-<td>UIViewEdgeAntialiasing</td>
-<td style="text-align:left">是否开启抗锯齿</td>
-</tr>
-<tr>
-<td>CFBundleDisplayName</td>
-<td style="text-align:left">app显示名</td>
-</tr>
-<tr>
-<td>CFBundleIconFile</td>
-<td style="text-align:left">图标</td>
-</tr>
-<tr>
-<td>CFBundleName</td>
-<td style="text-align:left">app显示名短名16个字符以内</td>
-</tr>
-<tr>
-<td>CFBundleVersion</td>
-<td style="text-align:left">版本</td>
-</tr>
-<tr>
-<td>CFBundleURLTypes</td>
-<td style="text-align:left">自定义url，用于利用url弹回程序</td>
-</tr>
-<tr>
-<td>CFBundleLocalizations</td>
-<td style="text-align:left">本地资源的本地化语言，用于itunes页面左下角显示本地话语种</td>
-</tr>
-<tr>
-<td>CFBundleDevelopmentRegion</td>
-<td style="text-align:left">也是本地化相关，如果用户所在地没有相应的语言资源，则用这个key的value来作为默认</td>
-</tr>
-</tbody>
-</table>
+        <p>OC的@property本质是一种支持快捷访问成员变量的方法，自动生成setter和getter方法。</p>
+<p>声明：在@interface 里声明</p>
+<p>声明格式 @property (attributes) type propertyName;</p>
+<p>合成：在.m文件里合成</p>
+<p>合成格式 @synthesize name = _name;(自动合成，Xcode4.4之后版本不需要写，系统会自动合成)或通过@dynamic，自己</p>
+<p>访问权限：在.h中声明成员变量，默认是protected，在.m文件中声明默认是private的。</p>
+<p>@synthesize  propertyName = _name；如果变量_name没有声明，系统会自动生成该成员变量且为private权限。如果_name已声明，它们会自动合成。</p>
+<p>默认读取方法名为-(type)name 和 -(void)setName也可以改变setter和getter的访问名称。</p>
+<p>如：@property  (setter=setMyValue, getter=getBool) NSInteger  value; 此时setValue的方法就会被覆盖。</p>
+<h4 id="property的修饰属性-attributes"><a href="#property的修饰属性-attributes" class="headerlink" title="@property的修饰属性(attributes)"></a>@property的修饰属性(attributes)</h4><p>可读性：readwrite/readonly，不写默认为readwrite</p>
+<pre><code>readwrite：同时生成setter与getter方法
+readonly：只生成getter方法
+</code></pre><p>原子性：nonatomic/atomic，不写默认是atomic</p>
+<pre><code>atomic：线程安全，表示多线程中只有一个线程能对它访问
+nonatomic：非线程安全，但访问速度快
+</code></pre><p>内存：assign/retain/copy/weak/strong/unsafe_unretaunied</p>
+<p>（Xcode4.2(iOS sdk4.3和以下版本)和以前的版本用retain和assign<br>　　Xcode4.3(iOS 5和以上版本)或之后有了ARC用strong和weak）</p>
+<pre><code>assign：简单赋值，不更改引用计数，基础数据类型(如NSInteger,CGFloat)和C数据类型(如int,float)的默认值，非ARC的默认值
+retain：使用了引用计数，retain+1，release-1，当引用计数为0时，调用dealloc，内存释放
+copy：用于非共享内存，每个指针有自己的内存空间
+weak：只作用于ARC,不更改引用计数，作用于对象，当引用计数为0时会将对象置为nil
+strong：只作用于ARC，引用计数加1，是对象的默认值
+unsafe_unretained：作用于ARC，功能与assign一样，引用计数为0时不会置为nil，可能出现野指针，所以不安全
+</code></pre><p>Nullability Annotations：nonnull/nullable/null_resettable，多数为nonnull，包在NS_ASSUME_NONNULL_BEGIN与NS_ASSUME_NONNULL_END中间的默认为nonnull</p>
+<p>（llvm 6.1 Xcode6.3中加入，表示是否可以为nil或者NULL，对应swift的？ ！）</p>
+<pre><code>nonnull：不能为空
+nullable：可以为空
+null_resettable：表示 setter nullable，但是 getter nonnull，如@property (null_resettable, nonatomic, strong) UIView *view; 可以被设为nil，但是getter的时候会调用-loadView创建一个非nil的view
+</code></pre><p> 为了安全起见，苹果还制定了几条规则：</p>
+<blockquote>
+<p>1.typedef定义的类型的nullability特性通常依赖于上下文，即使是在Audited Regions中，也不能假定它为nonnull。</p>
+<p>2.复杂的指针类型(如id <em>)必须显示去指定是nonnull还是nullable。例如，指定一个指向nullable对象的nonnull指针，可以使用”__nullable id </em> __nonnull”。</p>
+<p>3.我们经常使用的NSError **通常是被假定为一个指向nullable NSError对象的nullable指针。</p>
+</blockquote>
+<p>Nullability Annotations的兼容性：</p>
+<blockquote>
+<p>1.老代码仍然能正常工作，即使对nonnull对象使用了nil也没有问题。</p>
+<p>2.老代码在需要和swift混编时，在新的swift编译器下会给出一个警告。</p>
+<p>3.nonnull不会影响性能。事实上，我们仍然可以在运行时去判断我们的对象是否为nil。</p>
+<p>事实上，我们可以将nonnull/nullable与我们的断言和异常一起看待，其需要处理的问题都是同一个：违反约定是一个程序员的错误。特别是，返回值是我们可控的东西，如果返回值是nonnull的，则我们不应该返回nil，除非是为了向后兼容。</p>
+</blockquote>
+<h4 id="声明临时变量"><a href="#声明临时变量" class="headerlink" title="声明临时变量"></a>声明临时变量</h4><p>用<strong>strong,  </strong>weak, <strong>unsafe_unretained,  </strong>autoreleasing等，用法与上面一样</p>
+<p><strong>autoreleasing用法介绍：可以使对象延迟释放。通过传递</strong>autoreleaseing的对象，可以做到在函数内部申请空间，函数外部也可以使用。具体的释放时间取决于runloop创建的autorelease pool，如果autorelease pool释放，则__autorelease 声明的变量都会被释放。</p>
 
       
     </div>
@@ -483,7 +394,7 @@ UIApplicationExitsOnSuspend">
       
         <div class="post-tags">
           
-            <a href="/tags/笔记/" rel="tag">#笔记</a>
+            <a href="/tags/格物/" rel="tag">#格物</a>
           
         </div>
       
@@ -492,16 +403,16 @@ UIApplicationExitsOnSuspend">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/04/OC之-property/" rel="next" title="OC之@property">
-                <i class="fa fa-chevron-left"></i> OC之@property
+              <a href="/2016/06/03/转-http的session与cookie/" rel="next" title="[转]http的session与cookie">
+                <i class="fa fa-chevron-left"></i> [转]http的session与cookie
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/06/12/iOS常用判断/" rel="prev" title="iOS常用判断">
-                iOS常用判断 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/06/11/Info-plist中常用的key/" rel="prev" title="Info.plist中常用的key">
+                Info.plist中常用的key <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -643,7 +554,7 @@ UIApplicationExitsOnSuspend">
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#property的修饰属性-attributes"><span class="nav-number">1.</span> <span class="nav-text">@property的修饰属性(attributes)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#声明临时变量"><span class="nav-number">2.</span> <span class="nav-text">声明临时变量</span></a></li></ol></div>
             
           </div>
         </section>
