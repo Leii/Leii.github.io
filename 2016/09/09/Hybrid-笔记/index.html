@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion">
+<html class="theme-next pisces use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -88,27 +88,29 @@
 
 <meta name="description" content="Hybrid App优势明显，发版不用审核，页面可以随时调整和修复，通用于3个平台节省开发成本等，很多公司都在用，类型主要分Web主体型、多View混合型、单View混合型。
 我们公司则经历了从最早的Web主体型APP向多view混合型的过渡，公司早期人员少，业务变化快的情况下，业务代码都放在前端非常方便，不过后期随着用户量的增多，对性能和用户体验开始精益求精，将部分高频的页面native化。
-与">
+H">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hybrid 笔记">
 <meta property="og:url" content="http://leii.me/2016/09/09/Hybrid-笔记/index.html">
 <meta property="og:site_name" content="Leii's Blog">
 <meta property="og:description" content="Hybrid App优势明显，发版不用审核，页面可以随时调整和修复，通用于3个平台节省开发成本等，很多公司都在用，类型主要分Web主体型、多View混合型、单View混合型。
 我们公司则经历了从最早的Web主体型APP向多view混合型的过渡，公司早期人员少，业务变化快的情况下，业务代码都放在前端非常方便，不过后期随着用户量的增多，对性能和用户体验开始精益求精，将部分高频的页面native化。
-与">
-<meta property="og:updated_time" content="2016-09-14T13:29:52.000Z">
+H">
+<meta property="og:image" content="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/URLLoadingSystem/Art/nsobject_hierarchy_2x.png">
+<meta property="og:updated_time" content="2016-09-19T15:50:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hybrid 笔记">
 <meta name="twitter:description" content="Hybrid App优势明显，发版不用审核，页面可以随时调整和修复，通用于3个平台节省开发成本等，很多公司都在用，类型主要分Web主体型、多View混合型、单View混合型。
 我们公司则经历了从最早的Web主体型APP向多view混合型的过渡，公司早期人员少，业务变化快的情况下，业务代码都放在前端非常方便，不过后期随着用户量的增多，对性能和用户体验开始精益求精，将部分高频的页面native化。
-与">
+H">
+<meta name="twitter:image" content="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/URLLoadingSystem/Art/nsobject_hierarchy_2x.png">
 
 
 
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Mist',
+    scheme: 'Pisces',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
@@ -325,7 +327,11 @@
       
         <p>Hybrid App优势明显，发版不用审核，页面可以随时调整和修复，通用于3个平台节省开发成本等，很多公司都在用，类型主要分Web主体型、多View混合型、单View混合型。</p>
 <p>我们公司则经历了从最早的Web主体型APP向多view混合型的过渡，公司早期人员少，业务变化快的情况下，业务代码都放在前端非常方便，不过后期随着用户量的增多，对性能和用户体验开始精益求精，将部分高频的页面native化。</p>
-<p>与H5的交互在实现上除了最常用的webview的</p>
+<p>Hybrid APP的核心就是Native和H5之间的交互</p>
+<p>H5调用native用的是webview的shouldStartLoadWithRequest方法里面捕获url，解析出需要的参数，看是否有约定的异步桥接的字符串，然后传给一个统一的处理方法。native调用h5用的是UIWebView的 stringByEvaluatingJavaScriptFromString方法。</p>
+<p>除此之外我们还用了同步桥接，主要是通过NSURLProtocol的拦截，先在canInitWithRequest方法里判断是否要拦截，然后再startLoading里实现拦截，并标示该request为已经处理过了，防止无限循环执行，[NSURLProtocol setProperty:@YES forKey:URLProtocolHandledKey inRequest:mutableReqeust];<br>通过url里面是否包含约定的同步桥接字符串，如果有就执行同步桥接。</p>
+<p>同时因为有大量的操作是在网络连接的部分，所以Foundation库的URL加载系统也是经常要用到的，比如下图这些类：</p>
+<p><img src="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/URLLoadingSystem/Art/nsobject_hierarchy_2x.png" alt="url loading system"></p>
 
       
     </div>
@@ -364,6 +370,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/18/证书与打包与APNs/" rel="prev" title="证书与打包与APNs">
+                证书与打包与APNs <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -431,7 +441,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -537,7 +547,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
+    NexT.Pisces
   </a>
 </div>
 
@@ -602,6 +612,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>

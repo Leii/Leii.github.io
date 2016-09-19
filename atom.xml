@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://leii.me/"/>
-  <updated>2016-09-14T13:29:52.000Z</updated>
+  <updated>2016-09-19T15:55:29.000Z</updated>
   <id>http://leii.me/</id>
   
   <author>
@@ -16,15 +16,61 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>URL Loading System</title>
+    <link href="http://leii.me/2016/09/19/URL-Loading-System/"/>
+    <id>http://leii.me/2016/09/19/URL-Loading-System/</id>
+    <published>2016-09-19T15:55:29.000Z</published>
+    <updated>2016-09-19T15:55:29.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>AFNetWorking(OC)与Alamofire(swift)</title>
+    <link href="http://leii.me/2016/09/18/AFNetWorking-OC-%E4%B8%8EAlamofire-swift/"/>
+    <id>http://leii.me/2016/09/18/AFNetWorking-OC-与Alamofire-swift/</id>
+    <published>2016-09-18T10:49:37.000Z</published>
+    <updated>2016-09-18T10:49:37.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>证书与打包与APNs</title>
+    <link href="http://leii.me/2016/09/18/%E8%AF%81%E4%B9%A6%E4%B8%8E%E6%89%93%E5%8C%85%E4%B8%8EAPNs/"/>
+    <id>http://leii.me/2016/09/18/证书与打包与APNs/</id>
+    <published>2016-09-18T10:10:49.000Z</published>
+    <updated>2016-09-18T10:10:49.000Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Hybrid 笔记</title>
     <link href="http://leii.me/2016/09/09/Hybrid-%E7%AC%94%E8%AE%B0/"/>
     <id>http://leii.me/2016/09/09/Hybrid-笔记/</id>
     <published>2016-09-09T08:35:25.000Z</published>
-    <updated>2016-09-14T13:29:52.000Z</updated>
+    <updated>2016-09-19T15:50:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>Hybrid App优势明显，发版不用审核，页面可以随时调整和修复，通用于3个平台节省开发成本等，很多公司都在用，类型主要分Web主体型、多View混合型、单View混合型。</p>
 <p>我们公司则经历了从最早的Web主体型APP向多view混合型的过渡，公司早期人员少，业务变化快的情况下，业务代码都放在前端非常方便，不过后期随着用户量的增多，对性能和用户体验开始精益求精，将部分高频的页面native化。</p>
-<p>与H5的交互在实现上除了最常用的webview的</p>
+<p>Hybrid APP的核心就是Native和H5之间的交互</p>
+<p>H5调用native用的是webview的shouldStartLoadWithRequest方法里面捕获url，解析出需要的参数，看是否有约定的异步桥接的字符串，然后传给一个统一的处理方法。native调用h5用的是UIWebView的 stringByEvaluatingJavaScriptFromString方法。</p>
+<p>除此之外我们还用了同步桥接，主要是通过NSURLProtocol的拦截，先在canInitWithRequest方法里判断是否要拦截，然后再startLoading里实现拦截，并标示该request为已经处理过了，防止无限循环执行，[NSURLProtocol setProperty:@YES forKey:URLProtocolHandledKey inRequest:mutableReqeust];<br>通过url里面是否包含约定的同步桥接字符串，如果有就执行同步桥接。</p>
+<p>同时因为有大量的操作是在网络连接的部分，所以Foundation库的URL加载系统也是经常要用到的，比如下图这些类：</p>
+<p><img src="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/URLLoadingSystem/Art/nsobject_hierarchy_2x.png" alt="url loading system"></p>
 ]]></content>
     
     <summary type="html">
