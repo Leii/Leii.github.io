@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="leii.me, iOS, Unity, Design, Game" />
+  <meta name="keywords" content="笔记," />
 
 
 
@@ -86,16 +86,29 @@
 
 
 
-<meta name="description" content="iOS/Unity/Design">
+<meta name="description" content="URL Loading System的类主要有以下几种： 
+
+其中最重要的3个类分别是NSURLConnection、NSURLSession、NSURLProtocol。
+NSURLConnectionNSURLConnection 作为 Core Foundation / CFNetwork 框架的 API 之上的一个抽象，在 2003 年，随着第一版的 Safari 的发布就发布了。NSUR">
 <meta property="og:type" content="article">
 <meta property="og:title" content="URL Loading System">
 <meta property="og:url" content="http://leii.me/2016/09/19/URL-Loading-System/index.html">
 <meta property="og:site_name" content="Leii's Blog">
-<meta property="og:description" content="iOS/Unity/Design">
-<meta property="og:updated_time" content="2016-09-19T15:55:29.000Z">
+<meta property="og:description" content="URL Loading System的类主要有以下几种： 
+
+其中最重要的3个类分别是NSURLConnection、NSURLSession、NSURLProtocol。
+NSURLConnectionNSURLConnection 作为 Core Foundation / CFNetwork 框架的 API 之上的一个抽象，在 2003 年，随着第一版的 Safari 的发布就发布了。NSUR">
+<meta property="og:image" content="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/URLLoadingSystem/Art/nsobject_hierarchy_2x.png">
+<meta property="og:image" content="http://images.cnitblog.com/i/450136/201406/281617337427186.png">
+<meta property="og:image" content="http://img.blog.csdn.net/20140205121918203">
+<meta property="og:updated_time" content="2016-09-20T10:29:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="URL Loading System">
-<meta name="twitter:description" content="iOS/Unity/Design">
+<meta name="twitter:description" content="URL Loading System的类主要有以下几种： 
+
+其中最重要的3个类分别是NSURLConnection、NSURLSession、NSURLProtocol。
+NSURLConnectionNSURLConnection 作为 Core Foundation / CFNetwork 框架的 API 之上的一个抽象，在 2003 年，随着第一版的 Safari 的发布就发布了。NSUR">
+<meta name="twitter:image" content="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/URLLoadingSystem/Art/nsobject_hierarchy_2x.png">
 
 
 
@@ -276,6 +289,25 @@
           </span>
 
           
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
 
           
             
@@ -298,7 +330,87 @@
       
 
       
-        
+        <p>URL Loading System的类主要有以下几种： </p>
+<p><img src="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/URLLoadingSystem/Art/nsobject_hierarchy_2x.png" alt="url loading system"></p>
+<p>其中最重要的3个类分别是NSURLConnection、NSURLSession、NSURLProtocol。</p>
+<h5 id="NSURLConnection"><a href="#NSURLConnection" class="headerlink" title="NSURLConnection"></a>NSURLConnection</h5><p>NSURLConnection 作为 Core Foundation / CFNetwork 框架的 API 之上的一个抽象，在 2003 年，随着第一版的 Safari 的发布就发布了。NSURLConnection 这个名字，实际上是指代的 Foundation 框架的 URL 加载系统中一系列有关联的组件：NSURLRequest、NSURLResponse、NSURLProtocol、 NSURLCache、 NSHTTPCookieStorage、NSURLCredentialStorage 以及同名类 NSURLConnection。</p>
+<p>NSURLRequest 被传递给 NSURLConnection。被委托对象（遵守以前的非正式协议 <nsurlconnectiondelegate> 和 <nsurlconnectiondatadelegate>）异步地返回一个 NSURLResponse 以及包含服务器返回信息的 NSData。</nsurlconnectiondatadelegate></nsurlconnectiondelegate></p>
+<p>在一个请求被发送到服务器之前，系统会先查询共享的缓存信息，然后根据策略（policy）以及可用性（availability）的不同，一个已经被缓存的响应可能会被立即返回。如果没有缓存的响应可用，则这个请求将根据我们指定的策略来缓存它的响应以便将来的请求可以使用。</p>
+<p><img src="http://images.cnitblog.com/i/450136/201406/281617337427186.png" alt="NSURLConnection Pic1"></p>
+<p>下面是GET同步请求与异步请求的实例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">//    GET请求：请求行\请求头\请求体</div><div class="line">//</div><div class="line">//    1.设置请求路径</div><div class="line">     NSString *urlStr= [NSString stringWithFormat: @&quot;http://leii.me/login?username=%@&amp;pwd=%@&quot;,self.username.text,self.pwd.text];</div><div class="line">     NSURL *url=[NSURL URLWithString:urlStr];</div><div class="line">//    2.创建请求对象</div><div class="line">    NSURLRequest *request=[NSURLRequest requestWithURL:url];</div><div class="line">//    3.发送请求</div><div class="line">    //发送同步请求，在主线程执行</div><div class="line">    NSData *data=[NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];</div><div class="line">    //（一直在等待服务器返回数据，这行代码会卡住，如果服务器没有返回数据，那么在主线程UI会卡住不能继续执行操作）</div><div class="line">    NSLog(@&quot;同步请求结果：--%d--&quot;,data.length);</div><div class="line">    </div><div class="line">    //发送异步请求</div><div class="line">    //创建一个队列（默认添加到该队列中的任务异步执行）</div><div class="line">//    NSOperationQueue *queue=[[NSOperationQueue alloc]init];</div><div class="line">    //获取一个主队列</div><div class="line">    NSOperationQueue *queue=[NSOperationQueue mainQueue];</div><div class="line">    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) &#123;</div><div class="line">    //通过block异步获取response</div><div class="line">        NSLog(@&quot;--block异步回调数据--%@---%d&quot;, [NSThread currentThread],data.length);</div><div class="line">    &#125;）；</div></pre></td></tr></table></figure>
+<p>还可以使用代理方法发送异步请求</p>
+<p>要监听服务器返回的data，所以使用<nsurlconnectiondatadelegate>协议</nsurlconnectiondatadelegate></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">#pragma mark- NSURLConnectionDataDelegate代理方法</div><div class="line"></div><div class="line">//当接收到服务器的响应（连通了服务器）时会调用</div><div class="line"></div><div class="line">-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response</div><div class="line"></div><div class="line">//当接收到服务器的数据时会调用（可能会被调用多次，每次只传递部分数据）</div><div class="line"></div><div class="line">-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data</div><div class="line"></div><div class="line">//当服务器的数据加载完毕时就会调用</div><div class="line"></div><div class="line">-(void)connectionDidFinishLoading:(NSURLConnection *)connection</div><div class="line"></div><div class="line">//请求错误（失败）的时候调用（请求超时\断网\没有网\，一般指客户端错误）</div><div class="line"></div><div class="line">-(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error</div></pre></td></tr></table></figure>
+<h5 id="NSURLSession"><a href="#NSURLSession" class="headerlink" title="NSURLSession"></a>NSURLSession</h5><p>在WWDC 2013中，Apple的团队对NSURLConnection进行了重构，并推出了NSURLSession作为替代。</p>
+<p>NSURLSession也是一组相互依赖的类，它的大部分组件和NSURLConnection中的组件相同如NSURLRequest，NSURLCache等。而NSURLSession的不同之处在于，它将NSURLConnection替换为NSURLSession和NSURLSessionConfiguration，以及3个NSURLSessionTask的子类：NSURLSessionDataTask, NSURLSessionUploadTask, 和NSURLSessionDownloadTask。</p>
+<p>下面是新推出的类：</p>
+<p>1.NSURLSessionConfiguration类</p>
+<p>其中NSURLSessionConfiguration用于配置会话的属性，可以通过该类配置会话的工作模式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">+ (NSURLSessionConfiguration *)defaultSessionConfiguration;  </div><div class="line">+ (NSURLSessionConfiguration *)ephemeralSessionConfiguration;  </div><div class="line">+ (NSURLSessionConfiguration *)backgroundSessionConfiguration:(NSString *)identifier;</div></pre></td></tr></table></figure>
+<p>在backgroundSessionConfiguration:方法中的identifier参数指定了会话的ID，用于标记后台的session。<br>该类的其中两个属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/* allow request to route over cellular. */  </div><div class="line">@property BOOL allowsCellularAccess;  </div><div class="line">  </div><div class="line">/* allows background tasks to be scheduled at the discretion of the system for optimal performance. */  </div><div class="line">@property (getter=isDiscretionary) BOOL discretionary NS_AVAILABLE(NA, 7_0);</div></pre></td></tr></table></figure>
+<p>allowsCellularAccess 属性指定是否允许使用蜂窝连接， discretionary属性为YES时表示当程序在后台运作时由系统自己选择最佳的网络连接配置，该属性可以节省通过蜂窝连接的带宽。在使用后台传输数据的时候，建议使用discretionary属性，而不是allowsCellularAccess属性，因为它会把WiFi和电源可用性考虑在内。补充：这个标志允许系统为分配任务进行性能优化。这意味着只有当设备有足够电量时，设备才通过Wifi进行数据传输。如果电量低，或者只仅有一个蜂窝连接，传输任务是不会运行的。后台传输总是在discretionary模式下运行。</p>
+<p>2.NSURLSession类</p>
+<p>获取NSURLSession类对象有几种方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">+ (NSURLSession *)sharedSession;  </div><div class="line">  </div><div class="line">+ (NSURLSession *)sessionWithConfiguration:(NSURLSessionConfiguration *)configuration; </div><div class="line"> </div><div class="line">+ (NSURLSession *)sessionWithConfiguration:(NSURLSessionConfiguration *)configuration delegate:(id &lt;NSURLSessionDelegate&gt;)delegate delegateQueue:(NSOperationQueue *)queue;</div></pre></td></tr></table></figure>
+<p>第一种方式是使用静态的sharedSession方法，该类使用共享的会话，该会话使用全局的Cache，Cookie和证书。</p>
+<p>第二种方式是通过sessionWithConfiguration:方法创建对象，也就是创建对应配置的会话，与NSURLSessionConfiguration合作使用。</p>
+<p>第三种方式是通过sessionWithConfiguration:delegate:delegateQueue方法创建对象，二三两种方式可以创建一个新会话并定制其会话类型。该方式中指定了session的委托和委托所处的队列。当不再需要连接时，可以调用Session的invalidateAndCancel直接关闭，或者调用finishTasksAndInvalidate等待当前Task结束后关闭。这时Delegate会收到URLSession:didBecomeInvalidWithError:这个事件。Delegate收到这个事件之后会被解引用。</p>
+<p>3.NSURLSessionTask类</p>
+<p>NSURLSessionTask是一个抽象子类，它有三个子类：NSURLSessionDataTask，NSURLSessionUploadTask和NSURLSessionDownloadTask。这三个类封装了现代应用程序的三个基本网络任务：获取数据，比如JSON或XML，以及上传和下载文件。</p>
+<blockquote>
+<p>与 NSURLConnection 相比，NSURLsession 最直接的改进就是可以配置每个 session 的缓存，协议，cookie，以及证书策略（credential policy），甚至跨程序共享这些信息。这将允许程序和网络基础框架之间相互独立，不会发生干扰。每个 NSURLSession 对象都由一个 NSURLSessionConfiguration 对象来进行初始化，后者指定了刚才提到的那些策略以及一些用来增强移动设备上性能的新选项。</p>
+</blockquote>
+<p>NSURLSession 中另一大块就是 session task。它负责处理数据的加载以及文件和数据在客户端与服务端之间的上传和下载。NSURLSessionTask 与 NSURLConnection 最大的相似之处在于它也负责数据的加载，最大的不同之处在于所有的 task 共享其创造者 NSURLSession 这一公共委托者（common delegate）。</p>
+<p>下面是其继承关系：<br><img src="http://img.blog.csdn.net/20140205121918203" alt="pic2"></p>
+<p>有多种方法创建对应的任务对象：</p>
+<p>（1）NSURLSessionDataTask</p>
+<p>通过request对象或url创建：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/* Creates a data task with the given request.  The request may have a body stream. */  </div><div class="line">- (NSURLSessionDataTask *)dataTaskWithRequest:(NSURLRequest *)request;  </div><div class="line">  </div><div class="line">/* Creates a data task to retrieve the contents of the given URL. */  </div><div class="line">- (NSURLSessionDataTask *)dataTaskWithURL:(NSURL *)url;</div></pre></td></tr></table></figure>
+<p>通过request对象或url创建，同时指定任务完成后通过completionHandler指定回调的代码块：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- (NSURLSessionDataTask *)dataTaskWithRequest:(NSURLRequest *)request completionHandler:(void (^)(NSData *data, NSURLResponse *response, NSError *error))completionHandler;  </div><div class="line">- (NSURLSessionDataTask *)dataTaskWithURL:(NSURL *)url completionHandler:(void (^)(NSData *data, NSURLResponse *response, NSError *error))completionHandler;</div></pre></td></tr></table></figure>
+<p>（2）NSURLSessionUploadTask<br>通过request创建，在上传时指定文件源或数据源。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/* Creates an upload task with the given request.  The body of the request will be created from the file referenced by fileURL */  </div><div class="line">- (NSURLSessionUploadTask *)uploadTaskWithRequest:(NSURLRequest *)request fromFile:(NSURL *)fileURL;  </div><div class="line">  </div><div class="line">/* Creates an upload task with the given request.  The body of the request is provided from the bodyData. */  </div><div class="line">- (NSURLSessionUploadTask *)uploadTaskWithRequest:(NSURLRequest *)request fromData:(NSData *)bodyData;  </div><div class="line">  </div><div class="line">/* Creates an upload task with the given request.  The previously set body stream of the request (if any) is ignored and the URLSession:task:needNewBodyStream: delegate will be called when the body payload is required. */  </div><div class="line">- (NSURLSessionUploadTask *)uploadTaskWithStreamedRequest:(NSURLRequest *)request;</div></pre></td></tr></table></figure>
+<p>在创建upload task对象时，通过completionHandler指定任务完成后的回调代码块：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/* </div><div class="line"> * upload convenience method. </div><div class="line"> */  </div><div class="line">- (NSURLSessionUploadTask *)uploadTaskWithRequest:(NSURLRequest *)request fromFile:(NSURL *)fileURL completionHandler:(void (^)(NSData *data, NSURLResponse *response, NSError *error))completionHandler;  </div><div class="line">- (NSURLSessionUploadTask *)uploadTaskWithRequest:(NSURLRequest *)request fromData:(NSData *)bodyData completionHandler:(void (^)(NSData *data, NSURLResponse *response, NSError *error))completionHandler;</div></pre></td></tr></table></figure>
+<p>（3）NSURLSessionDownloadTask</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/* Creates a download task with the given request. */  </div><div class="line">- (NSURLSessionDownloadTask *)downloadTaskWithRequest:(NSURLRequest *)request;  </div><div class="line">  </div><div class="line">/* Creates a download task to download the contents of the given URL. */  </div><div class="line">- (NSURLSessionDownloadTask *)downloadTaskWithURL:(NSURL *)url;  </div><div class="line">  </div><div class="line">/* Creates a download task with the resume data.  If the download cannot be successfully resumed, URLSession:task:didCompleteWithError: will be called. */  </div><div class="line">- (NSURLSessionDownloadTask *)downloadTaskWithResumeData:(NSData *)resumeData;</div></pre></td></tr></table></figure>
+<p>下载任务支持断点续传，第三种方式是通过之前已经下载的数据来创建下载任务。<br>同样地可以通过completionHandler指定任务完成后的回调代码块：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (NSURLSessionDownloadTask *)downloadTaskWithRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURL *location, NSURLResponse *response, NSError *error))completionHandler;  </div><div class="line">- (NSURLSessionDownloadTask *)downloadTaskWithURL:(NSURL *)url completionHandler:(void (^)(NSURL *location, NSURLResponse *response, NSError *error))completionHandler;  </div><div class="line">- (NSURLSessionDownloadTask *)downloadTaskWithResumeData:(NSData *)resumeData completionHandler:(void (^)(NSURL *location, NSURLResponse *response, NSError *error))completionHandler;</div></pre></td></tr></table></figure>
+<p>4.NSURLSessionDelegate和NSURLSessionTaskDelegate协议</p>
+<p>在协议的方法中可以完成各种各样的回调动作，如身份验证、完成任务后的动作、错误处理和后台任务完成的动作等。委托方法指定在NSURLSession中一定数量的字节传输使用int64_t类型的参数。</p>
+<p>这里只说下后台任务的一个委托方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session NS_AVAILABLE_IOS(7_0);</div></pre></td></tr></table></figure>
+<p>合作使用的ApplicationDelegate方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler NS_AVAILABLE_IOS(7_0);</div></pre></td></tr></table></figure>
+<p>将任务切换到后台之后，Session的Delegate不会再收到和Task相关的消息。当所有Task全都完成后，程序将被唤醒，并调用ApplicationDelegate的application:handleEventsForBackgroundURLSession:completionHandler:回调，在这里要为后台session（由background session的identifier标识）指定对应的回调代码块。<br>随后，对于每一个完成的后台Task调用该Session的Delegate中的URLSession:downloadTask:didFinishDownloadingToURL:（成功的话）和URLSession:task:didCompleteWithError:（成功或者失败都会调用）方法做处理，以上的回调代码块可以在这里调用。</p>
+<h4 id="NSURLSession与NSURLConnection区别"><a href="#NSURLSession与NSURLConnection区别" class="headerlink" title="NSURLSession与NSURLConnection区别"></a>NSURLSession与NSURLConnection区别</h4><p>总结一下两者主要的区别：</p>
+<p>1, 使用现状</p>
+<p>从iOS9.0开始， NSURLConnection中发送请求的两个方法已过期（同步请求，异步请求），初始化网络连接（initWithRequest: delegate:）的方法也被设置为过期，系统不再推荐使用，建议使用NSURLSession发送网络请求。</p>
+<p>2, 普通任务和上传</p>
+<p>NSURLSession针对下载/上传等复杂的网络操作提供了专门的解决方案，针对普通、上传和下载分别对应三种不同的网络请求任务：NSURLSessionDataTask, NSURLSessionUploadTask和NSURLSessionDownloadTask.。创建的task都是挂起状态，需要resume才能执行。</p>
+<p>当服务器返回的数据较小时，NSURLSession与NSURLConnection执行普通任务的操作步骤没有区别。</p>
+<p>执行上传任务时，NSURLSession与NSURLConnection一样同样需要设置POST请求的请求体进行上传。</p>
+<p>3, 下载任务方式<br>NSURLConnection下载文件时，先将整个文件下载到内存，然后再写入沙盒，如果文件比较大，就会出现内存暴涨的情况。而使用NSURLSessionUploadTask下载文件，会默认下载到沙盒中的tem文件夹中，不会出现内存暴涨的情况，但在下载完成后会将tem中的临时文件删除，需要在初始化任务方法时，在completionHandler回调中增加保存文件的代码。</p>
+<p>以下代码是实例化网络下载任务时将下载的文件保存到沙盒的caches文件夹中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[NSURLSessionDownloadTask [NSURLSessionDownloadTask *task = [session downloadTaskWithURL:[NSURL URLWithString:@&quot;http://127.0.0.1/dawenjian.zip&quot;] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) &#123;</div><div class="line"></div><div class="line">   //获取沙盒的caches路径</div><div class="line"></div><div class="line">   NSString *path = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)lastObject]stringByAppendingPathComponent:@&quot;kkk.dmg&quot;];</div><div class="line"></div><div class="line">   //生成URL路径</div><div class="line"></div><div class="line">   NSURL *DCurl = [NSURL fileURLWithPath:path];</div><div class="line"></div><div class="line">   //将文件保存到指定文件目录下</div><div class="line"></div><div class="line">   [[NSFileManager defaultManager]moveItemAtURL:location toURL:DCurl error:nil];   &#125;]resume];</div></pre></td></tr></table></figure>
+<p>4, 请求方法的控制</p>
+<p>NSURLConnection实例化对象，实例化开始，默认请求就发送（同步发送），不需要调用start方法。而cancel 可以停止请求的发送，停止后不能继续访问，需要创建新的请求。</p>
+<p>NSURLSession有三个控制方法，取消（cancel），暂停（suspend），继续（resume），暂停后可以通过继续恢复当前的请求任务。</p>
+<p>5, 断点续传的方式<br>NSURLConnection进行断点下载，通过设置访问请求的HTTPHeaderField的Range属性，开启运行循环，NSURLConnection的代理方法作为运行循环的事件源，接收到下载数据时代理方法就会持续调用，并使用NSOutputStream管道流进行数据保存。</p>
+<p>NSURLSession进行断点下载，当暂停下载任务后，如果 downloadTask （下载任务）为非空，调用 cancelByProducingResumeData:(void (^)(NSData *resumeData))completionHandler 这个方法，这个方法接收一个参数，完成处理代码块，这个代码块有一个 NSData 参数 resumeData，如果 resumeData 非空，我们就保存这个对象到视图控制器的 resumeData 属性中。在点击再次下载时，通过调用 [ [self.session downloadTaskWithResumeData:self.resumeData]resume]方法进行继续下载操作。   </p>
+<p>经过以上比较可以发现，使用NSURLSession进行断点下载更加便捷。</p>
+<p>6,  配置信息</p>
+<p>NSURLSession的构造方法（sessionWithConfiguration:delegate:delegateQueue）中有一个 NSURLSessionConfiguration类的参数可以设置配置信息，其决定了cookie，安全和高速缓存策略，最大主机连接数，资源管理，网络超时等配置。NSURLConnection不能进行这个配置，相比于 NSURLConnection 依赖于一个全局的配置对象，缺乏灵活性而言，NSURLSession 有很大的改进了。</p>
+<p>[由于篇幅已经很长了，NSProtocol另外创建一篇文章介绍吧… ]</p>
+<hr>
+<p>参考：</p>
+<p><a href="http://blog.csdn.net/jymn_chen/article/details/18937819" target="_blank" rel="external"> NSURLSession学习笔记（一）简介</a></p>
+<p><a href="http://www.cnblogs.com/wendingding/p/3813572.html" target="_blank" rel="external">iOS开发网络篇—NSURLConnection基本使用</a></p>
+<p><a href="http://www.cnblogs.com/kakaluote123/articles/5426923.html" target="_blank" rel="external">NSURLSession与NSURLConnection区别
+</a></p>
+
       
     </div>
 
@@ -317,6 +429,12 @@
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag">#笔记</a>
+          
+        </div>
       
 
       
@@ -405,7 +523,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -470,7 +588,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#NSURLConnection"><span class="nav-number">1.</span> <span class="nav-text">NSURLConnection</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#NSURLSession"><span class="nav-number">2.</span> <span class="nav-text">NSURLSession</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSURLSession与NSURLConnection区别"><span class="nav-number"></span> <span class="nav-text">NSURLSession与NSURLConnection区别</span></a></div>
             
           </div>
         </section>
