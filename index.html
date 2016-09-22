@@ -192,12 +192,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
-            关于
+            标签
           </a>
         </li>
       
@@ -212,12 +212,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
-            标签
+            关于
           </a>
         </li>
       
@@ -260,7 +260,181 @@
             
               
                 
-                <a class="post-title-link" href="/2016/09/19/URL-Loading-System/" itemprop="url">
+                <a class="post-title-link" href="/2016/09/20/iOS上使用OpenCV/" itemprop="url">
+                  [转]iOS上使用OpenCV
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-20T15:12:13+08:00" content="2016-09-20">
+              2016-09-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/CG/" itemprop="url" rel="index">
+                    <span itemprop="name">CG</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>转自<a href="https://objccn.io/issue-21-9/" target="_blank" rel="external">基于 OpenCV 的人脸识别</a></p>
+<h4 id="OpenCV-概述"><a href="#OpenCV-概述" class="headerlink" title="OpenCV 概述"></a>OpenCV 概述</h4><h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><p>OpenCV 的 API 是 C++ 的。它由不同的模块组成，这些模块中包含范围极为广泛的各种方法，从底层的图像颜色空间转换到高层的机器学习工具。</p>
+<p>OC和Swift不能直接调用OpenCV，这篇<a href="http://docs.opencv.org/2.4/doc/tutorials/ios/video_processing/video_processing.html#opencviosvideoprocessing" target="_blank" rel="external">OpenCV的iOS教程</a>讲解了把OpenCV的类的文件名后缀都改成.mm然后用Objective-C++调用的方法，但是功能好的方法是给所有你要在 app 中使用到的 OpenCV 功能写一层 Objective-C++ 封装。这些 Objective-C++ 封装把 OpenCV 的 C++ API 转化为安全的 Objective-C API，以方便地在所有 Objective-C 类中使用。</p>
+<h5 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h5><p>下面是在<a href="http://docs.opencv.org/2.4/modules/core/doc/intro.html" target="_blank" rel="external">官方文档</a>中列出的最重要的模块。</p>
+<ul>
+<li>core：简洁的核心模块，定义了基本的数据结构，包括稠密多维数组 Mat 和其他模块需要的基本函数。</li>
+<li>imgproc：图像处理模块，包括线性和非线性图像滤波、几何图像转换 (缩放、仿射与透视变换、一般性基于表的重映射)、颜色空间转换、直方图等等。</li>
+<li>video：视频分析模块，包括运动估计、背景消除、物体跟踪算法。</li>
+<li>calib3d：包括基本的多视角几何算法、单体和立体相机的标定、对象姿态估计、双目立体匹配算法和元素的三维重建。</li>
+<li>features2d：包含了显著特征检测算法、描述算子和算子匹配算法。</li>
+<li>objdetect：物体检测和一些预定义的物体的检测 (如人脸、眼睛、杯子、人、汽车等)。</li>
+<li>ml：多种机器学习算法，如 K 均值、支持向量机和神经网络。</li>
+<li>highgui：一个简单易用的接口，提供视频捕捉、图像和视频编码等功能，还有简单的 UI 接口 (iOS 上可用的仅是其一个子集)。</li>
+<li>gpu：OpenCV 中不同模块的 GPU 加速算法 (iOS 上不可用)。</li>
+<li>ocl：使用 OpenCL 实现的通用算法 (iOS 上不可用)。<br>一些其它辅助模块，如 Python 绑定和用户贡献的算法。</li>
+</ul>
+<h5 id="基础类和操作"><a href="#基础类和操作" class="headerlink" title="基础类和操作"></a>基础类和操作</h5><p>OpenCV 包含几百个类。为简便起见，我们只看几个基础的类和操作，进一步阅读请参考<a href="http://docs.opencv.org/2.4/modules/core/doc/core.html" target="_blank" rel="external">全部文档</a>。过一遍这几个核心类应该足以对这个库的机理产生一些感觉认识。</p>
+<h6 id="cv-Mat"><a href="#cv-Mat" class="headerlink" title="cv::Mat"></a>cv::Mat</h6><p>cv::Mat 是 OpenCV 的核心数据结构，用来表示任意 N 维矩阵。因为图像只是 2 维矩阵的一个特殊场景，所以也是使用 cv::Mat 来表示的。也就是说，cv::Mat 将是你在 OpenCV 中用到最多的类。</p>
+<p>一个 cv::Mat 实例的作用就像是图像数据的头，其中包含着描述图像格式的信息。图像数据只是被引用，并能为多个 cv::Mat 实例共享。OpenCV 使用类似于 ARC 的引用计数方法，以保证当最后一个来自 cv::Mat 的引用也消失的时候，图像数据会被释放。图像数据本身是图像连续的行的数组 (对 N 维矩阵来说，这个数据是由连续的 N-1 维数据组成的数组)。使用 step[] 数组中包含的值，图像的任一像素地址都可通过下面的指针运算得到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">uchar *pixelPtr = cvMat.data + rowIndex * cvMat.step[0] + colIndex * cvMat.step[1]</div></pre></td></tr></table></figure>
+<p>每个像素的数据格式可以通过 type() 方法获得。除了常用的每通道 8 位无符号整数的灰度图 (1 通道，CV_8UC1) 和彩色图 (3 通道，CV_8UC3)，OpenCV 还支持很多不常用的格式，例如 CV_16SC3 (每像素 3 通道，每通道使用 16 位有符号整数)，甚至 CV_64FC4 (每像素 4 通道，每通道使用 64 位浮点数)。</p>
+<h6 id="cv-Algorithm"><a href="#cv-Algorithm" class="headerlink" title="cv::Algorithm"></a>cv::Algorithm</h6><p>Algorithm 是 OpenCV 中实现的很多算法的抽象基类，包括将在我们的 demo 工程中用到的 FaceRecognizer。它提供的 API 与苹果的 Core Image 框架中的 CIFilter 有些相似之处。创建一个 Algorithm 的时候使用算法的名字来调用 Algorithm::create()，并且可以通过 get() 和 set()方法来获取和设置各个参数，这有点像是键值编码。另外，Algorithm 从底层就支持从/向 XML 或 YAML 文件加载/保存参数的功能。</p>
+<h4 id="在-iOS-上使用-OpenCV"><a href="#在-iOS-上使用-OpenCV" class="headerlink" title="在 iOS 上使用 OpenCV"></a>在 iOS 上使用 OpenCV</h4><h5 id="添加-OpenCV-到你的工程中"><a href="#添加-OpenCV-到你的工程中" class="headerlink" title="添加 OpenCV 到你的工程中"></a>添加 OpenCV 到你的工程中</h5><p>集成 OpenCV 到你的工程中有三种方法：</p>
+<p>*使用 CocoaPods 就好： pod “OpenCV”。</p>
+<p>*下载官方 <a href="http://opencv.org/downloads.html" target="_blank" rel="external">iOS 框架发行包</a>，并把它添加到工程里。</p>
+<p>*从 <a href="https://github.com/Itseez/opencv" target="_blank" rel="external">GitHub</a> 拉下代码，并根据<a href="http://docs.opencv.org/2.4/doc/tutorials/introduction/ios_install/ios_install.html#ios-installation" target="_blank" rel="external">教程</a>自己编译 OpenCV 库。</p>
+<h5 id="Objective-C"><a href="#Objective-C" class="headerlink" title="Objective-C++"></a>Objective-C++</h5><p>如前面所说，OpenCV 是一个 C++ 的 API，因此不能直接在 Swift 和 Objective-C 代码中使用，但能在 Objective-C++ 文件中使用。</p>
+<p>Objective-C++ 是 Objective-C 和 C++ 的混合物，让你可以在 Objective-C 类中使用 C++ 对象。clang 编译器会把所有后缀名为 .mm 的文件都当做是 Objective-C++。一般来说，它会如你所期望的那样运行，但还是有一些使用 Objective-C++ 的注意事项。内存管理是你最应该格外注意的点，因为 ARC 只对 Objective-C 对象有效。当你使用一个 C++ 对象作为类属性的时候，其唯一有效的属性就是 assign。因此，你的 dealloc 函数应确保 C++ 对象被正确地释放了。</p>
+<p>第二重要的点就是，如果你在 Objective-C++ 头文件中引入了 C++ 头文件，当你在工程中使用该 Objective-C++ 文件的时候就泄露了 C++ 的依赖。任何引入你的 Objective-C++ 类的 Objective-C 类也会引入该 C++ 类，因此该 Objective-C 文件也要被声明为 Objective-C++ 的文件。这会像森林大火一样在工程中迅速蔓延。所以，应该把你引入 C++ 文件的地方都用 #ifdef __cplusplus 包起来，并且只要可能，就尽量只在 .mm 实现文件中引入 C++ 头文件。</p>
+<p>要获得更多如何混用 C++ 和 Objective-C 的细节，请查看 Matt Galloway 写的这篇<a href="http://www.raywenderlich.com/62989/introduction-c-ios-developers-part-1" target="_blank" rel="external">教程</a>。</p>
+<h4 id="Demo：人脸检测与识别"><a href="#Demo：人脸检测与识别" class="headerlink" title="Demo：人脸检测与识别"></a>Demo：人脸检测与识别</h4><p>现在，我们对 OpenCV 及如何把它集成到我们的应用中有了大概认识，那让我们来做一个小 demo 应用：从 iPhone 的摄像头获取视频流，对它持续进行人脸检测，并在屏幕上标出来。当用户点击一个脸孔时，应用会尝试识别这个人。如果识别结果正确，用户必须点击 “Correct”。如果识别错误，用户必须选择正确的人名来纠正错误。我们的人脸识别器就会从错误中学习，变得越来越好。</p>
+<p><img src="https://objccn.io/images/issues/issue-21/blocks-face-recognition-objcio.jpg" alt="pic 1"></p>
+<p>本 demo 应用的源码可从 <a href="https://github.com/objcio/issue-21-OpenCV-FaceRec" target="_blank" rel="external">GitHub</a> 获得。</p>
+<h5 id="视频拍摄"><a href="#视频拍摄" class="headerlink" title="视频拍摄"></a>视频拍摄</h5><p>OpenCV 的 highgui 模块中有个类，CvVideoCamera，它把 iPhone 的摄像机抽象出来，让我们的 app 通过一个代理函数 - (void)processImage:(cv::Mat&amp;)image 来获得视频流。CvVideoCamera 实例可像下面这样进行设置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">CvVideoCamera *videoCamera = [[CvVideoCamera alloc] initWithParentView:view];</div><div class="line">videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;</div><div class="line">videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;</div><div class="line">videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;</div><div class="line">videoCamera.defaultFPS = 30;</div><div class="line">videoCamera.grayscaleMode = NO;</div><div class="line">videoCamera.delegate = self;</div></pre></td></tr></table></figure>
+<p>摄像头的帧率被设置为 30 帧每秒， 我们实现的 processImage 函数将每秒被调用 30 次。因为我们的 app 要持续不断地检测人脸，所以我们应该在这个函数里实现人脸的检测。要注意的是，如果对某一帧进行人脸检测的时间超过 1/30 秒，就会产生掉帧现象。</p>
+<h5 id="人脸检测"><a href="#人脸检测" class="headerlink" title="人脸检测"></a>人脸检测</h5><p>其实你并不需要使用 OpenCV 来做人脸检测，因为 Core Image 已经提供了 CIDetector 类。用它来做人脸检测已经相当好了，并且它已经被优化过，使用起来也很容易：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">CIDetector *faceDetector = [CIDetector detectorOfType:CIDetectorTypeFace context:context options:@&#123;CIDetectorAccuracy: CIDetectorAccuracyHigh&#125;];</div><div class="line"></div><div class="line">NSArray *faces = [faceDetector featuresInImage:image];</div></pre></td></tr></table></figure>
+<p>从该图片中检测到的每一张面孔都在数组 faces 中保存着一个 CIFaceFeature 实例。这个实例中保存着这张面孔的所处的位置和宽高，除此之外，眼睛和嘴的位置也是可选的。</p>
+<p>另一方面，OpenCV 也提供了一套物体检测功能，经过训练后能够检测出任何你需要的物体。该库为多个场景自带了可以直接拿来用的检测参数，如人脸、眼睛、嘴、身体、上半身、下半身和笑脸。检测引擎由一些非常简单的检测器的级联组成。这些检测器被称为 Haar 特征检测器，它们各自具有不同的尺度和权重。在训练阶段，决策树会通过已知的正确和错误的图片进行优化。关于训练与检测过程的详情可参考此<a href="http://www.multimedia-computing.de/mediawiki//images/5/52/MRL-TR-May02-revised-Dec02.pdf" target="_blank" rel="external">原始论文</a>。当正确的特征级联及其尺度与权重通过训练确立以后，这些参数就可被加载并初始化级联分类器了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// 正面人脸检测器训练参数的文件路径</div><div class="line">NSString *faceCascadePath = [[NSBundle mainBundle] pathForResource:@&quot;haarcascade_frontalface_alt2&quot;</div><div class="line">                                                   ofType:@&quot;xml&quot;];</div><div class="line"></div><div class="line">const CFIndex CASCADE_NAME_LEN = 2048;</div><div class="line">char *CASCADE_NAME = (char *) malloc(CASCADE_NAME_LEN);</div><div class="line">CFStringGetFileSystemRepresentation( (CFStringRef)faceCascadePath, CASCADE_NAME, CASCADE_NAME_LEN);</div><div class="line"></div><div class="line">CascadeClassifier faceDetector;</div><div class="line">faceDetector.load(CASCADE_NAME);</div></pre></td></tr></table></figure>
+<p>这些参数文件可在 OpenCV 发行包里的 data/haarcascades 文件夹中找到。</p>
+<p>在使用所需要的参数对人脸检测器进行初始化后，就可以用它进行人脸检测了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">cv::Mat img;</div><div class="line">vector&lt;cv::Rect&gt; faceRects;</div><div class="line">double scalingFactor = 1.1;</div><div class="line">int minNeighbors = 2;</div><div class="line">int flags = 0;</div><div class="line">cv::Size minimumSize(30,30);</div><div class="line">faceDetector.detectMultiScale(img, faceRects,</div><div class="line">                              scalingFactor, minNeighbors, flags</div><div class="line">                              cv::Size(30, 30) );</div></pre></td></tr></table></figure>
+<p>检测过程中，已训练好的分类器会用不同的尺度遍历输入图像的每一个像素，以检测不同大小的人脸。参数 scalingFactor 决定每次遍历分类器后尺度会变大多少倍。参数 minNeighbors 指定一个符合条件的人脸区域应该有多少个符合条件的邻居像素才被认为是一个可能的人脸区域；如果一个符合条件的人脸区域只移动了一个像素就不再触发分类器，那么这个区域非常可能并不是我们想要的结果。拥有少于 minNeighbors 个符合条件的邻居像素的人脸区域会被拒绝掉。如果 minNeighbors 被设置为 0，所有可能的人脸区域都会被返回回来。参数 flags 是 OpenCV 1.x 版本 API 的遗留物，应该始终把它设置为 0。最后，参数 minimumSize 指定我们所寻找的人脸区域大小的最小值。faceRects 向量中将会包含对 img 进行人脸识别获得的所有人脸区域。识别的人脸图像可以通过 cv::Mat 的 () 运算符提取出来，调用方式很简单：cv::Mat faceImg = img(aFaceRect)。</p>
+<p>不管是使用 CIDetector 还是 OpenCV 的 CascadeClassifier，只要我们获得了至少一个人脸区域，我们就可以对图像中的人进行识别了。</p>
+<h5 id="人脸识别"><a href="#人脸识别" class="headerlink" title="人脸识别"></a>人脸识别</h5><p>OpenCV 自带了三个人脸识别算法：Eigenfaces，Fisherfaces 和局部二值模式直方图 (LBPH)。如果你想知道它们的工作原理及相互之间的区别，请阅读 OpenCV 的<a href="http://docs.opencv.org/2.4/modules/contrib/doc/facerec/facerec_tutorial.html#local-binary-patterns-histograms" target="_blank" rel="external">详细文档</a>。</p>
+<p>针对于我们的 demo app，我们将采用 LBPH 算法。因为它会根据用户的输入自动更新，而不需要在每添加一个人或纠正一次出错的判断的时候都要重新进行一次彻底的训练。</p>
+<p>要使用 LBPH 识别器，我们也用 Objective-C++ 把它封装起来。这个封装中暴露以下函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">+ (FJFaceRecognizer *)faceRecognizerWithFile:(NSString *)path;</div><div class="line">- (NSString *)predict:(UIImage*)img confidence:(double *)confidence;</div><div class="line">- (void)updateWithFace:(UIImage *)img name:(NSString *)name;</div></pre></td></tr></table></figure>
+<p>像下面这样用工厂方法来创建一个 LBPH 实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">+ (FJFaceRecognizer *)faceRecognizerWithFile:(NSString *)path &#123;</div><div class="line">    FJFaceRecognizer *fr = [FJFaceRecognizer new];</div><div class="line">    fr-&gt;_faceClassifier = createLBPHFaceRecognizer();</div><div class="line">    fr-&gt;_faceClassifier-&gt;load(path.UTF8String);</div><div class="line">    return fr;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>预测函数可以像下面这样实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (NSString *)predict:(UIImage*)img confidence:(double *)confidence &#123;</div><div class="line">    cv::Mat src = [img cvMatRepresentationGray];</div><div class="line">    int label;</div><div class="line">    self-&gt;_faceClassifier-&gt;predict(src, label, *confidence);</div><div class="line">    return _labelsArray[label];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>请注意，我们要使用一个类别方法把 UIImage 转化为 cv::Mat。此转换本身倒是相当简单直接：使用 CGBitmapContextCreate 创建一个指向 cv::Image 中的 data 指针所指向的数据的 CGContextRef。当我们在此图形上下文中绘制此 UIImage 的时候，cv::Image 的 data 指针所指就是所需要的数据。更有趣的是，我们能对一个 Objective-C 类创建一个 Objective-C++ 的类别，并且确实管用。</p>
+<p>另外，OpenCV 的人脸识别器仅支持整数标签，但是我们想使用人的名字作标签，所以我们得通过一个 NSArray 属性来对二者实现简单的转换。</p>
+<p>一旦识别器给了我们一个识别出来的标签，我们把此标签给用户看，这时候就需要用户给识别器一个反馈。用户可以选择，“是的，识别正确”，也可以选择，“不，这是 Y，不是 X”。在这两种情况下，我们都可以通过人脸图像和正确的标签来更新 LBPH 模型，以提高未来识别的性能。使用用户的反馈来更新人脸识别器的方式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">- (void)updateWithFace:(UIImage *)img name:(NSString *)name &#123;</div><div class="line">    cv::Mat src = [img cvMatRepresentationGray];</div><div class="line">    NSInteger label = [_labelsArray indexOfObject:name];</div><div class="line">    if (label == NSNotFound) &#123;</div><div class="line">        [_labelsArray addObject:name];</div><div class="line">        label = [_labelsArray indexOfObject:name];</div><div class="line">    &#125;</div><div class="line">    vector&lt;cv::Mat&gt; images = vector&lt;cv::Mat&gt;();</div><div class="line">    images.push_back(src);</div><div class="line">    vector&lt;int&gt; labels = vector&lt;int&gt;();</div><div class="line">    labels.push_back((int)label);</div><div class="line">    self-&gt;_faceClassifier-&gt;update(images, labels);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里，我们又做了一次了从 UIImage 到 cv::Mat、int 到 NSString 标签的转换。我们还得如 OpenCV 的 FaceRecognizer::update API所期望的那样，把我们的参数放到 std::vector 实例中去。</p>
+<p>如此“预测，获得反馈，更新循环”，就是文献上所说的<a href="http://zh.wikipedia.org/wiki/%E7%9B%A3%E7%9D%A3%E5%BC%8F%E5%AD%B8%E7%BF%92" target="_blank" rel="external">监督式学习</a>。</p>
+<hr>
+<p>英文原文 <a href="https://www.objc.io/issues/21-camera-and-photos/face-recognition-with-opencv/" target="_blank" rel="external"> Face Recognition with OpenCV</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/09/15/URL-Loading-System/" itemprop="url">
                   URL Loading System
                 </a>
               
@@ -274,8 +448,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-19T23:55:29+08:00" content="2016-09-19">
-              2016-09-19
+            <time itemprop="dateCreated" datetime="2016-09-15T23:55:29+08:00" content="2016-09-15">
+              2016-09-15
             </time>
           </span>
 
@@ -452,8 +626,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/09/18/AFNetWorking-OC-与Alamofire-swift/" itemprop="url">
-                  AFNetWorking(OC)与Alamofire(swift)
+                <a class="post-title-link" href="/2016/09/11/域名解析优化/" itemprop="url">
+                  [转]域名解析使用HTTPDNS优化
                 </a>
               
             
@@ -466,8 +640,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-18T18:49:37+08:00" content="2016-09-18">
-              2016-09-18
+            <time itemprop="dateCreated" datetime="2016-09-11T22:43:38+08:00" content="2016-09-11">
+              2016-09-11
             </time>
           </span>
 
@@ -480,8 +654,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
+                  <a href="/categories/Base/" itemprop="url" rel="index">
+                    <span itemprop="name">Base</span>
                   </a>
                 </span>
 
@@ -515,8 +689,38 @@
       
         
           
-            <p>AFNetWorking与Alamofire现在分别是OC与Swift开发最流行的网络请求第三方库，他们都是基于对Foundation中的NSURLConnect以及所以NSURLSession的封装，所以我们会先NSURLConnect和NSURLSession开始分析。</p>
-<h4 id="NSURLConnect与NSURLSession"><a href="#NSURLConnect与NSURLSession" class="headerlink" title="NSURLConnect与NSURLSession"></a>NSURLConnect与NSURLSession</h4><p>NSURLConnect是早期苹果提供的用于</p>
+            <p>总结了部分关于传统DNS解析会存在的一些问题和HTTPDNS的解决方案，更详细的介绍可以看原文 <a href="http://www.cnblogs.com/aliyunblogs/p/5749177.html" target="_blank" rel="external">阿里云官方博客</a></p>
+<h4 id="DNS概念"><a href="#DNS概念" class="headerlink" title="DNS概念"></a>DNS概念</h4><p>根域、顶级域、二级域:</p>
+<p>DNS系统一般采用树状结构进行组织，以ru.wikipedia.org为例，org为顶级域名，wikipedia为二级域名，ru为三级域名</p>
+<p>权威DNS：</p>
+<p>权威DNS即最终决定域名解析结果的服务器，开发者可以在权威DNS上配置、变更、删除具体域名的对应解析结果信息。</p>
+<p>递归DNS：</p>
+<p>递归DNS又称为Local DNS，它没有域名解析结果的决定权，但代理了用户向权威DNS获取域名解析结果的过程。递归DNS上有缓存模块，当目标域名存在缓存解析结果并且TTL未过期时（每个域名都有TTL时间，即有效生存时间，若域名解析结果缓存的时间超过TTL，需要重新向权威DNS获取解析结果），递归DNS会返回缓存结果，否则，递归DNS会一级一级地查询各个层级域名的权威DNS直至获取最终完整域名的解析结果。</p>
+<p>公共DNS：</p>
+<p>公共DNS是递归DNS的一种特例，它是一种全网开放的递归DNS服务，而传统的递归DNS信息一般由运营商分发给用户。一个比较典型的公共DNS即Google的8.8.8.8，我们可以通过在操作系统配置文件中配置公共DNS来代替Local DNS完成域名解析流程。</p>
+<p>以访问www.taobao.com为例，一次完整的域名解析流程包括：</p>
+<p>终端向Local DNS发起域名解析请求；<br>Local DNS在获取到域名解析请求后首先从Root hints获取根域名服务器的地址（Root hints包含了互联网DNS根服务器的地址信息）；<br>获取了根域名服务器地址后Local DNS向根域名服务器发起DNS解析请求，根域名服务器返回com顶级域名服务器地址；<br>随后Local DNS向com域名服务器发起解析请求，并得到taobao.com二级域名服务器的地址；<br>Local DNS向taobao.com二级域名服务器发起解析请求，并最终获得了www.taobao.com的IP地址信息；<br>Local DNS将递归查询获得的IP地址信息缓存并返回给客户端；</p>
+<blockquote>
+<p>Local DNS服务器包含缓存模块，在实际域名解析过程中Local DNS服务器会首先查询缓存，缓存命中且解析结果TTL未过期的情况下直接返回，否则才启动递归查询的流程。</p>
+</blockquote>
+<h4 id="传统的域名解析面临的问题"><a href="#传统的域名解析面临的问题" class="headerlink" title="传统的域名解析面临的问题"></a>传统的域名解析面临的问题</h4><p>了解了域名解析的基本概念和整体流程，我们再一起来探究一下传统域名解析存在的一系列问题。</p>
+<h5 id="域名劫持"><a href="#域名劫持" class="headerlink" title="域名劫持"></a>域名劫持</h5><p>域名劫持一直是困扰许多开发者的问题之一，其表现即域名A应该返回的DNS解析结果IP1被恶意替换为了IP2，导致A的访问失败或访问了一个不安全的站点。下面我们一起看看几种常见的域名劫持的场景。</p>
+<p>一种可能的域名劫持方式即黑客侵入了宽带路由器并对终端用户的Local DNS进行篡改，指向黑客自己伪造的Local DNS，进而通过控制Local DNS的逻辑返回错误的IP信息进行域名劫持。另一方面，由于DNS解析主要是基于UDP协议，除了上述攻击行为外，攻击者还可以监听终端用户的域名解析请求，并在Local DNS返回正确结果之前将伪造的DNS解析响应传递给终端用户，进而控制终端用户的域名访问行为。</p>
+<p>上述攻击行为的影响面相对比较有限，另一种我们最常碰到的域名劫持现象是缓存污染。我们知道在接收到域名解析请求时，Local DNS首先会查找缓存，如果缓存命中就会直接返回缓存结果，不再进行递归DNS查询。这时候如果Local DNS针对部分域名的缓存进行更改，比如将缓存结果指向第三方的广告页，就会导致用户的访问请求被引导到这些广告页地址上。</p>
+<p>对比第一种攻击，这类缓存污染往往能带来更明显的群体伤害，比如某个省份某个运营商的用户群可能因为该地区Local DNS的缓存污染而导致访问服务异常。这类缓存污染行为往往是间歇性、局部性发生的，没有明显的规律，导致开发者很难对其进行量化、评估、预防。</p>
+<p>有的同学可能会问，“我使用了HTTPS，是否就可以避免域名劫持的问题”，答案是否定的。域名解析环节发生在网络加密请求交互之前，试想一下，如果客户端还没有服务端的确切地址信息，我们又如何知道应该和谁进行加密的握手协商与通信呢？</p>
+<h5 id="调度不精准"><a href="#调度不精准" class="headerlink" title="调度不精准"></a>调度不精准</h5><p>除了域名劫持问题，基于传统Local DNS的域名解析还会带来域名调度精准性的问题。对于类似CDN域名访问这类需要按地域、运营商进行智能解析调度的场景，精准调度的诉求是十分强烈的。</p>
+<p>关于调度不精准的原因，我们主要可以从两个方面来探究一下。第一个常见的问题即解析转发。</p>
+<p>部分Local DNS供应商为了降低运营成本，会将请求到自己节点的域名解析请求转发给其他供应商的Local DNS节点，如上图所示。假如用户请求解析一个CDN域名cdn.aliyun.com，用户分配到的Local DNS A为了节省成本，把该次请求转发给了另一运营商的Local DNS B，权威DNS在进行域名解析时会根据Local DNS的IP信息进行智能调度，即权威DNS会根据Local DNS B的IP78.29.29.1进行调度，分配与78.29.29.1相同运营商并且地理位置最近的CDN节点78.29.29.2，然而这个CDN节点对于终端135.35.35.1而言并不是最优的CDN节点，他们分属不同的运营商，并且地理位置上可能相隔很远。这类解析转发行为会严重影响域名解析的精准性并对用户业务访问延迟带来影响。</p>
+<p>除了解析转发对调度精准性带来的影响外，Local DNS的布署情况同样影响着域名智能解析的精准性。</p>
+<h5 id="解析生效滞后"><a href="#解析生效滞后" class="headerlink" title="解析生效滞后"></a>解析生效滞后</h5><p>部分业务场景下开发者对域名解析结果变更的生效时间非常敏感（这部分变更操作是开发者在权威DNS上完成的），比如当业务服务器受到攻击时，我们需要最快速地将业务IP切换到另一组集群上，这样的诉求在传统域名解析体系下是无法完成的。</p>
+<h5 id="延迟大"><a href="#延迟大" class="headerlink" title="延迟大"></a>延迟大</h5><p>DNS首次查询或缓存过期后的查询，需要递归遍历多个DNS服务器以获取最终的解析结果，这增加了网络请求的前置延时时间。特别是在移动互联网场景下，移动网络质量参差不齐，弱网环境的RTT时间可能高达数百毫秒，对于一次普通的业务请求而言，上述延时是非常沉重的负担。另一方面，弱网环境下的解析超时、解析失败等现象屡见不鲜，如何合理优化DNS解析对于整体网络访问质量的提升至关重要。</p>
+<h4 id="HTTPDNS解决方案"><a href="#HTTPDNS解决方案" class="headerlink" title="HTTPDNS解决方案"></a>HTTPDNS解决方案</h4><h5 id="防域名劫持"><a href="#防域名劫持" class="headerlink" title="防域名劫持"></a>防域名劫持</h5><p>HTTPDNS使用HTTP协议进行域名解析，代替现有基于UDP的DNS协议，域名解析请求直接发送到HTTPDNS服务端，从而绕过运营商的Local DNS，如下图所示。</p>
+<p><img src="https://yqfile.alicdn.com/6c4402618b6f9580255ba88ea28fa518947629ae.png?_=0.3877227769572087" alt="tu1"></p>
+<p>HTTPDNS代替了传统的LocalDNS完成递归解析的功能，基于HTTP协议的设计可以适用于几乎所有的网络环境，同时保留了鉴权、HTTPS等更高安全性的扩展能力，避免恶意攻击劫持行为。另一方面，商业化的HTTPDNS服务（<a href="https://www.aliyun.com/product/httpdns" target="_blank" rel="external">https://www.aliyun.com/product/httpdns</a> ）缓存管理有严格的SLA保障，避免了类似Local DNS的缓存污染的问题。</p>
+<h5 id="精准调度"><a href="#精准调度" class="headerlink" title="精准调度"></a>精准调度</h5><p>传统域名解析的调度精准性问题，本质根源在于Local DNS的部署和分配机制上。由于碎片化的管理方式，这些环节的服务质量同样很难得到保障。HTTPDNS在递归解析实现上优化了与权威DNS的交互，通过edns-client-subnet协议（<a href="https://datatracker.ietf.org/doc/rfc7871" target="_blank" rel="external">https://datatracker.ietf.org/doc/rfc7871</a> ）将终端用户的IP信息直接交付给权威DNS，这样权威DNS就可以忽略Local DNS IP信息，根据终端用户的IP信息进行精准调度，避免Local DNS的坐标干扰（当然上述精准调度方案的前提是权威DNS需要支持edns-client-subnet，可喜的是当前主流的权威DNS服务都已支持该协议）。</p>
+<h5 id="实时生效"><a href="#实时生效" class="headerlink" title="实时生效"></a>实时生效</h5><p>在域名解析生效周期方面，HTTPDNS也有着传统域名解析体系所无法具备的能力。前文中我们提到由于各个地区的Local DNS是独立维护的，服务质量参差不齐，缓存实现不一，因此导致的解析变更全网生效滞后的问题，在商业化的HTTPDNS服务上就不会存在（HTTPDNS严格遵循DNS TTL限制进行缓存更新）。另一方面，即便我们假设Local DNS严格遵循域名TTL时间进行缓存管理（这里我们假设开发者配置的域名TTL时间为5min），当开发者业务受到攻击并需要快速进行切换时，Local DNS也会遵循域名TTL，在持续5min的时间段内返回旧IP信息，这5min的业务影响对于中大型企业而言是一个不小的损失（对于电商类的大型企业，5min的访问异常可能意味着几百万的交易额下跌）。以阿里云HTTPDNS服务（<a href="https://www.aliyun.com/product/httpdns" target="_blank" rel="external">https://www.aliyun.com/product/httpdns</a> ）为例，HTTPDNS在快速生效方面有专有的方案，配合阿里云的权威DNS服务云解析（ <a href="https://wanwang.aliyun.com/domain/dns" target="_blank" rel="external">https://wanwang.aliyun.com/domain/dns</a> ），用户在权威DNS变更的解析结果将快速同步给HTTPDNS，覆盖原有的缓存记录，帮助用户实现秒级的域名解析切换。</p>
+<p>在DNS解析延迟方面，由于HTTPDNS基于HTTP协议，而HTTP基于TCP协议，对比传统的UDP传输多了一些冗余的握手环节，因此从原理上而言网络请求方面的开销并没有降低。但在实际使用过程中，我们可以通过端上的策略来实现一个零延迟DNS解析的方案。接下来我们一起来看看HTTPDNS服务在移动端的最佳实践方案。</p>
 
           
         
@@ -566,7 +770,7 @@
             
               
                 
-                <a class="post-title-link" href="/2016/09/18/证书与打包与APNs/" itemprop="url">
+                <a class="post-title-link" href="/2016/09/10/证书与打包与APNs/" itemprop="url">
                   证书与打包与APNs
                 </a>
               
@@ -580,11 +784,30 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-18T18:10:49+08:00" content="2016-09-18">
-              2016-09-18
+            <time itemprop="dateCreated" datetime="2016-09-10T18:10:49+08:00" content="2016-09-10">
+              2016-09-10
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
@@ -610,7 +833,38 @@
       
         
           
-            
+            <p>APNs 是 Apple Push Notification service 的简称，是苹果提供的Push服务器，Push流程如下：</p>
+<p><img src="http://img.blog.csdn.net/20131210220624265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYWJlbF90dQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="pic 1"></p>
+<p>1、应用程序注册消息推送。</p>
+<p>2、iOS从APNs Server获取device token，应用程序接收device token。</p>
+<p>3、应用程序将device token发送给PUSH服务端程序。</p>
+<p>4、服务端程序向APNs服务发送消息。</p>
+<p>5、APNs服务将消息发送给iPhone应用程序。</p>
+<p>其中iOS客户端到APNs Server到APNs都需要证书连接。</p>
+<p>下面是需要用到几个证书文件：</p>
+<p>1，CSR文件：CertificateSigningRequest.certSigningRequest</p>
+<p>2，p12文件：Push.p12（文件名可自定义）</p>
+<p>3，SSL certificate文件：aps_development.cer（文件名可自定义）</p>
+<p>通过这3个文件可以生产APNs的服务器证书，具体的生成步骤可以看<a href="http://www.fx114.net/qa-202-108331.aspx" target="_blank" rel="external">这篇文章</a>，其中php服务器与Java服务器需要的证书的格式有区别。</p>
+<p>APNs 协议在近两年的 WWDC 上改过两次，2015年12月17日更是推出了革命性的新特性，改掉了很多长期被用户诟病的问题:</p>
+<p>2014年6月份WWDC搭载iOS8及以上系统的iOS设备，能够接收的最大playload大小提升到2KB。低于iOS8的设备以及OS X设备维持256字节。参考文档：<a href="https://developer.apple.com/videos/play/wwdc2014/713/" target="_blank" rel="external">What’s New in Notifications - WWDC 2014 - Session 713 - iOS</a></p>
+<p>2015年6月份WWDC宣布将在不久的将来发布 “基于 HTTP/2 的全新 APNs 协议”，并在大会上发布了仅仅支持测试证书的版本。参考文档：<a href="https://developer.apple.com/videos/play/wwdc2015/720/" target="_blank" rel="external">What’s New in Notifications - WWDC 2015 - Session 720 - iOS, OS X </a></p>
+<p>2015年12月17日起，发布 “基于 HTTP/2 的全新 APNs 协议”,iOS 系统以及 OS X 系统，统一将最大 playload 大小提升到4KB。参考文档：<a href="https://developer.apple.com/news/?id=12172015b" target="_blank" rel="external">Apple Push Notification Service Update 12-17 2015</a></p>
+<p>下面是APNs新旧版本的对比：</p>
+<p><img src="http://cc.cocimg.com/api/uploads/20160425/1461567499300714.jpg" alt="pic 2"></p>
+<p>送分发的服务器要打开一个同 APNs 网关服务器的</p>
+<p>连接，并保持这个连接。但在旧的协议下，APNs 服务却不保证 socket 能维持这个连接。如果通道上没有消息往来，空闲下来到话，socket将被路由掐断。在旧的协议下，如果服务器响应成功的话，你将不会收到任何回应，但是如果服务器响应失败（例如，使用了一个非法的 Push token），服务器将返回了一个错误编码，并关闭这个socket。最重要的是，你必须重新发送使用这个无效 token 以后发送的所有推送。因此，你可能一直不能确定你的推送是否成功的被 APNs 服务器接收。</p>
+<p>基于上述问题新版本的APNs有如下特征：</p>
+<p>1，Request 和 Response 支持JSON网络协议</p>
+<p>2，APNs支持状态码和返回 error 信息</p>
+<p>APNs推送成功时 Response 将返回状态码200，远程通知是否发送成功再也不用靠猜了！<br>APNs推送失败时，Response 将返回 JSON 格式的 Error 信息。<br>3，最大推送长度提升到4096字节（4Kb）</p>
+<p>4，可以通过 “HTTP/2 PING ” 心跳包功能检测当前 APNs 连接是否可用，并能维持当前长连接。</p>
+<p>5，支持为不同的推送类型定义 “topic” 主题</p>
+<p>6，不同推送类型，只需要一种推送证书 Universal Push Notification Client SSL 证书。</p>
+<p>其中最大的变化就是基于了 HTTP/2 协议，采用了长连接设计，并提供 “HTTP/2 PING ” 心跳包功能检测、维持当前 APNs 连接，解决了老 APNs 无法维持连接的问题。而且新增的状态码特性，也解决了这个问题：无法获知消息是否成功地从你们的推送系统投递到了 APNs 上。理论上，你们可以保证消息是100%投递到了APNs的，因为你可以准确的知道哪条消息到达了APNs，哪些没到。重发特定失败消息成为可能。</p>
+<hr>
+<p>参考：<a href="http://www.cocoachina.com/ios/20160426/16013.html" target="_blank" rel="external">国内90%以上的 iOS 开发者，对 APNs 的认识都是错的</a></p>
+
           
         
       
@@ -1578,121 +1832,6 @@ null_resettable：表示 setter nullable，但是 getter nonnull，如@property 
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/18/大学时的渣画/" itemprop="url">
-                  大学时的渣画
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-18T19:39:42+08:00" content="2016-05-18">
-              2016-05-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Design/" itemprop="url" rel="index">
-                    <span itemprop="name">Design</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>好怀念当初在校自己做手游找不到美术，然后一手键盘一手数位板的日子，虽然一直没有什么进步也没时间系统的学一下 ╮(╯_╰)╭  </p>
-<p><img src="http://imglf2.nosdn.127.net/img/SnJLZEdtSzE0OVJrRWZFS1FsSmhHNE9lUnlXUnhDTEQ.png?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg"></p>
-<p><img src="http://imglf1.nosdn.127.net/img/SnJLZEdtSzE0OVRFblo1aGh4aE0rUUhSUkgyM2RhUVY.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1738,7 +1877,7 @@ null_resettable：表示 setter nullable，但是 getter nonnull，如@property 
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1746,7 +1885,7 @@ null_resettable：表示 setter nullable，但是 getter nonnull，如@property 
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>

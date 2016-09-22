@@ -86,19 +86,37 @@
 
 
 
-<meta name="description" content="[用到就记录下来…]
-判断一个对象中是否包含某个属性12345678910111213+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&amp;#123;       	unsigned int outCount, i;  	Ivar *ivars = class_copyIvarList(myClass, &amp;am">
+<meta name="description" content="APNs 是 Apple Push Notification service 的简称，是苹果提供的Push服务器，Push流程如下：
+
+1、应用程序注册消息推送。
+2、iOS从APNs Server获取device token，应用程序接收device token。
+3、应用程序将device token发送给PUSH服务端程序。
+4、服务端程序向APNs服务发送消息。
+5、APNs服务将消息发送">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS常用判断">
-<meta property="og:url" content="http://leii.me/2016/06/12/iOS常用判断/index.html">
+<meta property="og:title" content="证书与打包与APNs">
+<meta property="og:url" content="http://leii.me/2016/09/10/证书与打包与APNs/index.html">
 <meta property="og:site_name" content="Leii's Blog">
-<meta property="og:description" content="[用到就记录下来…]
-判断一个对象中是否包含某个属性12345678910111213+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&amp;#123;       	unsigned int outCount, i;  	Ivar *ivars = class_copyIvarList(myClass, &amp;am">
-<meta property="og:updated_time" content="2016-09-12T14:26:38.000Z">
+<meta property="og:description" content="APNs 是 Apple Push Notification service 的简称，是苹果提供的Push服务器，Push流程如下：
+
+1、应用程序注册消息推送。
+2、iOS从APNs Server获取device token，应用程序接收device token。
+3、应用程序将device token发送给PUSH服务端程序。
+4、服务端程序向APNs服务发送消息。
+5、APNs服务将消息发送">
+<meta property="og:image" content="http://img.blog.csdn.net/20131210220624265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYWJlbF90dQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://cc.cocimg.com/api/uploads/20160425/1461567499300714.jpg">
+<meta property="og:updated_time" content="2016-09-22T09:28:37.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS常用判断">
-<meta name="twitter:description" content="[用到就记录下来…]
-判断一个对象中是否包含某个属性12345678910111213+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&amp;#123;       	unsigned int outCount, i;  	Ivar *ivars = class_copyIvarList(myClass, &amp;am">
+<meta name="twitter:title" content="证书与打包与APNs">
+<meta name="twitter:description" content="APNs 是 Apple Push Notification service 的简称，是苹果提供的Push服务器，Push流程如下：
+
+1、应用程序注册消息推送。
+2、iOS从APNs Server获取device token，应用程序接收device token。
+3、应用程序将device token发送给PUSH服务端程序。
+4、服务端程序向APNs服务发送消息。
+5、APNs服务将消息发送">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20131210220624265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYWJlbF90dQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
 
 
 
@@ -119,9 +137,9 @@
 
 
 
-  <link rel="canonical" href="http://leii.me/2016/06/12/iOS常用判断/"/>
+  <link rel="canonical" href="http://leii.me/2016/09/10/证书与打包与APNs/"/>
 
-  <title> iOS常用判断 | Leii's Blog </title>
+  <title> 证书与打包与APNs | Leii's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -261,7 +279,7 @@
             
             
               
-                iOS常用判断
+                证书与打包与APNs
               
             
           </h1>
@@ -273,8 +291,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-12T17:26:25+08:00" content="2016-06-12">
-              2016-06-12
+            <time itemprop="dateCreated" datetime="2016-09-10T18:10:49+08:00" content="2016-09-10">
+              2016-09-10
             </time>
           </span>
 
@@ -320,13 +338,37 @@
       
 
       
-        <p>[用到就记录下来…]</p>
-<h4 id="判断一个对象中是否包含某个属性"><a href="#判断一个对象中是否包含某个属性" class="headerlink" title="判断一个对象中是否包含某个属性"></a>判断一个对象中是否包含某个属性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&#123;       </div><div class="line">	unsigned int outCount, i;</div><div class="line">  	Ivar *ivars = class_copyIvarList(myClass, &amp;outCount);</div><div class="line">  	for (i = 0; i &lt; outCount; i++) &#123;</div><div class="line">    	Ivar property = ivars[i];</div><div class="line">    	NSString *keyName = [NSString 		stringWithCString:ivar_getName(property) encoding:NSUTF8StringEncoding];</div><div class="line">	    keyName = [keyName stringByReplacingOccurrencesOfString:@&quot;_&quot; withString:@&quot;&quot;];</div><div class="line">    	if ([keyName isEqualToString:name]) &#123;</div><div class="line">      	return YES;</div><div class="line">    	&#125;</div><div class="line">  	&#125;</div><div class="line">  	return NO;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="判断字符串是否为纯数字组成"><a href="#判断字符串是否为纯数字组成" class="headerlink" title="判断字符串是否为纯数字组成"></a>判断字符串是否为纯数字组成</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (BOOL)isPureInt:(NSString*)string&#123;</div><div class="line">    NSScanner* scan = [NSScanner scannerWithString:string];</div><div class="line">    int val;</div><div class="line">    return[scan scanInt:&amp;val] &amp;&amp; [scan isAtEnd];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="判断当天是星期几"><a href="#判断当天是星期几" class="headerlink" title="判断当天是星期几"></a>判断当天是星期几</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (void)weekDayJudge</div><div class="line">&#123;</div><div class="line">    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];</div><div class="line">    NSDate *now;</div><div class="line">    NSDateComponents *comps = [[NSDateComponents alloc] init];</div><div class="line">    NSInteger unitFlags =NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |</div><div class="line">    NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;</div><div class="line">    now=[NSDate date];</div><div class="line">    comps = [calendar components:unitFlags fromDate:now];</div><div class="line"></div><div class="line">    NSLog(@&quot;weekday is %ld&quot;,(long)[comps weekday]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="iOS-判断是否开启定位"><a href="#iOS-判断是否开启定位" class="headerlink" title="iOS 判断是否开启定位"></a>iOS 判断是否开启定位</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">+ (BOOL)isLocationServiceOpen &#123;</div><div class="line">    if ([ CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) &#123;</div><div class="line">        return NO;</div><div class="line">    &#125; else</div><div class="line">        return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="iOS-判断是否允许消息通知"><a href="#iOS-判断是否允许消息通知" class="headerlink" title="iOS 判断是否允许消息通知"></a>iOS 判断是否允许消息通知</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">+ (BOOL)isMessageNotificationServiceOpen &#123;</div><div class="line">    if (SYSTEM_VERSION_GREATER_THAN(@&quot;8.0&quot;)) &#123;</div><div class="line">        return [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];</div><div class="line">    &#125; else &#123;</div><div class="line">        return UIRemoteNotificationTypeNone != [[UIApplication sharedApplication] enabledRemoteNotificationTypes];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="获取当前屏幕最顶层显示的viewcontroller"><a href="#获取当前屏幕最顶层显示的viewcontroller" class="headerlink" title="获取当前屏幕最顶层显示的viewcontroller"></a>获取当前屏幕最顶层显示的viewcontroller</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (UIViewController *)getPresentedViewController</div><div class="line">&#123;</div><div class="line">    UIViewController *appRootVC = [UIApplication sharedApplication].keyWindow.rootViewController;</div><div class="line">    UIViewController *topVC = appRootVC;</div><div class="line">    if (topVC.presentedViewController) &#123;</div><div class="line">        topVC = topVC.presentedViewController;</div><div class="line">    &#125;</div><div class="line">    return topVC;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <p>APNs 是 Apple Push Notification service 的简称，是苹果提供的Push服务器，Push流程如下：</p>
+<p><img src="http://img.blog.csdn.net/20131210220624265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYWJlbF90dQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="pic 1"></p>
+<p>1、应用程序注册消息推送。</p>
+<p>2、iOS从APNs Server获取device token，应用程序接收device token。</p>
+<p>3、应用程序将device token发送给PUSH服务端程序。</p>
+<p>4、服务端程序向APNs服务发送消息。</p>
+<p>5、APNs服务将消息发送给iPhone应用程序。</p>
+<p>其中iOS客户端到APNs Server到APNs都需要证书连接。</p>
+<p>下面是需要用到几个证书文件：</p>
+<p>1，CSR文件：CertificateSigningRequest.certSigningRequest</p>
+<p>2，p12文件：Push.p12（文件名可自定义）</p>
+<p>3，SSL certificate文件：aps_development.cer（文件名可自定义）</p>
+<p>通过这3个文件可以生产APNs的服务器证书，具体的生成步骤可以看<a href="http://www.fx114.net/qa-202-108331.aspx" target="_blank" rel="external">这篇文章</a>，其中php服务器与Java服务器需要的证书的格式有区别。</p>
+<p>APNs 协议在近两年的 WWDC 上改过两次，2015年12月17日更是推出了革命性的新特性，改掉了很多长期被用户诟病的问题:</p>
+<p>2014年6月份WWDC搭载iOS8及以上系统的iOS设备，能够接收的最大playload大小提升到2KB。低于iOS8的设备以及OS X设备维持256字节。参考文档：<a href="https://developer.apple.com/videos/play/wwdc2014/713/" target="_blank" rel="external">What’s New in Notifications - WWDC 2014 - Session 713 - iOS</a></p>
+<p>2015年6月份WWDC宣布将在不久的将来发布 “基于 HTTP/2 的全新 APNs 协议”，并在大会上发布了仅仅支持测试证书的版本。参考文档：<a href="https://developer.apple.com/videos/play/wwdc2015/720/" target="_blank" rel="external">What’s New in Notifications - WWDC 2015 - Session 720 - iOS, OS X </a></p>
+<p>2015年12月17日起，发布 “基于 HTTP/2 的全新 APNs 协议”,iOS 系统以及 OS X 系统，统一将最大 playload 大小提升到4KB。参考文档：<a href="https://developer.apple.com/news/?id=12172015b" target="_blank" rel="external">Apple Push Notification Service Update 12-17 2015</a></p>
+<p>下面是APNs新旧版本的对比：</p>
+<p><img src="http://cc.cocimg.com/api/uploads/20160425/1461567499300714.jpg" alt="pic 2"></p>
+<p>送分发的服务器要打开一个同 APNs 网关服务器的</p>
+<p>连接，并保持这个连接。但在旧的协议下，APNs 服务却不保证 socket 能维持这个连接。如果通道上没有消息往来，空闲下来到话，socket将被路由掐断。在旧的协议下，如果服务器响应成功的话，你将不会收到任何回应，但是如果服务器响应失败（例如，使用了一个非法的 Push token），服务器将返回了一个错误编码，并关闭这个socket。最重要的是，你必须重新发送使用这个无效 token 以后发送的所有推送。因此，你可能一直不能确定你的推送是否成功的被 APNs 服务器接收。</p>
+<p>基于上述问题新版本的APNs有如下特征：</p>
+<p>1，Request 和 Response 支持JSON网络协议</p>
+<p>2，APNs支持状态码和返回 error 信息</p>
+<p>APNs推送成功时 Response 将返回状态码200，远程通知是否发送成功再也不用靠猜了！<br>APNs推送失败时，Response 将返回 JSON 格式的 Error 信息。<br>3，最大推送长度提升到4096字节（4Kb）</p>
+<p>4，可以通过 “HTTP/2 PING ” 心跳包功能检测当前 APNs 连接是否可用，并能维持当前长连接。</p>
+<p>5，支持为不同的推送类型定义 “topic” 主题</p>
+<p>6，不同推送类型，只需要一种推送证书 Universal Push Notification Client SSL 证书。</p>
+<p>其中最大的变化就是基于了 HTTP/2 协议，采用了长连接设计，并提供 “HTTP/2 PING ” 心跳包功能检测、维持当前 APNs 连接，解决了老 APNs 无法维持连接的问题。而且新增的状态码特性，也解决了这个问题：无法获知消息是否成功地从你们的推送系统投递到了 APNs 上。理论上，你们可以保证消息是100%投递到了APNs的，因为你可以准确的知道哪条消息到达了APNs，哪些没到。重发特定失败消息成为可能。</p>
+<hr>
+<p>参考：<a href="http://www.cocoachina.com/ios/20160426/16013.html" target="_blank" rel="external">国内90%以上的 iOS 开发者，对 APNs 的认识都是错的</a></p>
 
       
     </div>
@@ -358,16 +400,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/11/Info-plist中常用的key/" rel="next" title="Info.plist中常用的key">
-                <i class="fa fa-chevron-left"></i> Info.plist中常用的key
+              <a href="/2016/09/09/Hybrid-笔记/" rel="next" title="Hybrid 笔记">
+                <i class="fa fa-chevron-left"></i> Hybrid 笔记
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/09/09/Hybrid-笔记/" rel="prev" title="Hybrid 笔记">
-                Hybrid 笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/09/11/域名解析优化/" rel="prev" title="[转]域名解析使用HTTPDNS优化">
+                [转]域名解析使用HTTPDNS优化 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -509,7 +551,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#判断一个对象中是否包含某个属性"><span class="nav-number">1.</span> <span class="nav-text">判断一个对象中是否包含某个属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#判断字符串是否为纯数字组成"><span class="nav-number">2.</span> <span class="nav-text">判断字符串是否为纯数字组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#判断当天是星期几"><span class="nav-number">3.</span> <span class="nav-text">判断当天是星期几</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#iOS-判断是否开启定位"><span class="nav-number">4.</span> <span class="nav-text">iOS 判断是否开启定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#iOS-判断是否允许消息通知"><span class="nav-number">5.</span> <span class="nav-text">iOS 判断是否允许消息通知</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取当前屏幕最顶层显示的viewcontroller"><span class="nav-number">6.</span> <span class="nav-text">获取当前屏幕最顶层显示的viewcontroller</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
         </section>

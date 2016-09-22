@@ -1,0 +1,706 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="转," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Leii's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="转自基于 OpenCV 的人脸识别
+OpenCV 概述概念OpenCV 的 API 是 C++ 的。它由不同的模块组成，这些模块中包含范围极为广泛的各种方法，从底层的图像颜色空间转换到高层的机器学习工具。
+OC和Swift不能直接调用OpenCV，这篇OpenCV的iOS教程讲解了把OpenCV的类的文件名后缀都改成.mm然后用Objective-C++调用的方法，但是功能好的方法是给所有你要在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[转]iOS上使用OpenCV">
+<meta property="og:url" content="http://leii.me/2016/09/20/iOS上使用OpenCV/index.html">
+<meta property="og:site_name" content="Leii's Blog">
+<meta property="og:description" content="转自基于 OpenCV 的人脸识别
+OpenCV 概述概念OpenCV 的 API 是 C++ 的。它由不同的模块组成，这些模块中包含范围极为广泛的各种方法，从底层的图像颜色空间转换到高层的机器学习工具。
+OC和Swift不能直接调用OpenCV，这篇OpenCV的iOS教程讲解了把OpenCV的类的文件名后缀都改成.mm然后用Objective-C++调用的方法，但是功能好的方法是给所有你要在">
+<meta property="og:image" content="https://objccn.io/images/issues/issue-21/blocks-face-recognition-objcio.jpg">
+<meta property="og:updated_time" content="2016-09-22T09:29:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[转]iOS上使用OpenCV">
+<meta name="twitter:description" content="转自基于 OpenCV 的人脸识别
+OpenCV 概述概念OpenCV 的 API 是 C++ 的。它由不同的模块组成，这些模块中包含范围极为广泛的各种方法，从底层的图像颜色空间转换到高层的机器学习工具。
+OC和Swift不能直接调用OpenCV，这篇OpenCV的iOS教程讲解了把OpenCV的类的文件名后缀都改成.mm然后用Objective-C++调用的方法，但是功能好的方法是给所有你要在">
+<meta name="twitter:image" content="https://objccn.io/images/issues/issue-21/blocks-face-recognition-objcio.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://leii.me/2016/09/20/iOS上使用OpenCV/"/>
+
+  <title> [转]iOS上使用OpenCV | Leii's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Leii's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [转]iOS上使用OpenCV
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-20T15:12:13+08:00" content="2016-09-20">
+              2016-09-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/CG/" itemprop="url" rel="index">
+                    <span itemprop="name">CG</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>转自<a href="https://objccn.io/issue-21-9/" target="_blank" rel="external">基于 OpenCV 的人脸识别</a></p>
+<h4 id="OpenCV-概述"><a href="#OpenCV-概述" class="headerlink" title="OpenCV 概述"></a>OpenCV 概述</h4><h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><p>OpenCV 的 API 是 C++ 的。它由不同的模块组成，这些模块中包含范围极为广泛的各种方法，从底层的图像颜色空间转换到高层的机器学习工具。</p>
+<p>OC和Swift不能直接调用OpenCV，这篇<a href="http://docs.opencv.org/2.4/doc/tutorials/ios/video_processing/video_processing.html#opencviosvideoprocessing" target="_blank" rel="external">OpenCV的iOS教程</a>讲解了把OpenCV的类的文件名后缀都改成.mm然后用Objective-C++调用的方法，但是功能好的方法是给所有你要在 app 中使用到的 OpenCV 功能写一层 Objective-C++ 封装。这些 Objective-C++ 封装把 OpenCV 的 C++ API 转化为安全的 Objective-C API，以方便地在所有 Objective-C 类中使用。</p>
+<h5 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h5><p>下面是在<a href="http://docs.opencv.org/2.4/modules/core/doc/intro.html" target="_blank" rel="external">官方文档</a>中列出的最重要的模块。</p>
+<ul>
+<li>core：简洁的核心模块，定义了基本的数据结构，包括稠密多维数组 Mat 和其他模块需要的基本函数。</li>
+<li>imgproc：图像处理模块，包括线性和非线性图像滤波、几何图像转换 (缩放、仿射与透视变换、一般性基于表的重映射)、颜色空间转换、直方图等等。</li>
+<li>video：视频分析模块，包括运动估计、背景消除、物体跟踪算法。</li>
+<li>calib3d：包括基本的多视角几何算法、单体和立体相机的标定、对象姿态估计、双目立体匹配算法和元素的三维重建。</li>
+<li>features2d：包含了显著特征检测算法、描述算子和算子匹配算法。</li>
+<li>objdetect：物体检测和一些预定义的物体的检测 (如人脸、眼睛、杯子、人、汽车等)。</li>
+<li>ml：多种机器学习算法，如 K 均值、支持向量机和神经网络。</li>
+<li>highgui：一个简单易用的接口，提供视频捕捉、图像和视频编码等功能，还有简单的 UI 接口 (iOS 上可用的仅是其一个子集)。</li>
+<li>gpu：OpenCV 中不同模块的 GPU 加速算法 (iOS 上不可用)。</li>
+<li>ocl：使用 OpenCL 实现的通用算法 (iOS 上不可用)。<br>一些其它辅助模块，如 Python 绑定和用户贡献的算法。</li>
+</ul>
+<h5 id="基础类和操作"><a href="#基础类和操作" class="headerlink" title="基础类和操作"></a>基础类和操作</h5><p>OpenCV 包含几百个类。为简便起见，我们只看几个基础的类和操作，进一步阅读请参考<a href="http://docs.opencv.org/2.4/modules/core/doc/core.html" target="_blank" rel="external">全部文档</a>。过一遍这几个核心类应该足以对这个库的机理产生一些感觉认识。</p>
+<h6 id="cv-Mat"><a href="#cv-Mat" class="headerlink" title="cv::Mat"></a>cv::Mat</h6><p>cv::Mat 是 OpenCV 的核心数据结构，用来表示任意 N 维矩阵。因为图像只是 2 维矩阵的一个特殊场景，所以也是使用 cv::Mat 来表示的。也就是说，cv::Mat 将是你在 OpenCV 中用到最多的类。</p>
+<p>一个 cv::Mat 实例的作用就像是图像数据的头，其中包含着描述图像格式的信息。图像数据只是被引用，并能为多个 cv::Mat 实例共享。OpenCV 使用类似于 ARC 的引用计数方法，以保证当最后一个来自 cv::Mat 的引用也消失的时候，图像数据会被释放。图像数据本身是图像连续的行的数组 (对 N 维矩阵来说，这个数据是由连续的 N-1 维数据组成的数组)。使用 step[] 数组中包含的值，图像的任一像素地址都可通过下面的指针运算得到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">uchar *pixelPtr = cvMat.data + rowIndex * cvMat.step[0] + colIndex * cvMat.step[1]</div></pre></td></tr></table></figure>
+<p>每个像素的数据格式可以通过 type() 方法获得。除了常用的每通道 8 位无符号整数的灰度图 (1 通道，CV_8UC1) 和彩色图 (3 通道，CV_8UC3)，OpenCV 还支持很多不常用的格式，例如 CV_16SC3 (每像素 3 通道，每通道使用 16 位有符号整数)，甚至 CV_64FC4 (每像素 4 通道，每通道使用 64 位浮点数)。</p>
+<h6 id="cv-Algorithm"><a href="#cv-Algorithm" class="headerlink" title="cv::Algorithm"></a>cv::Algorithm</h6><p>Algorithm 是 OpenCV 中实现的很多算法的抽象基类，包括将在我们的 demo 工程中用到的 FaceRecognizer。它提供的 API 与苹果的 Core Image 框架中的 CIFilter 有些相似之处。创建一个 Algorithm 的时候使用算法的名字来调用 Algorithm::create()，并且可以通过 get() 和 set()方法来获取和设置各个参数，这有点像是键值编码。另外，Algorithm 从底层就支持从/向 XML 或 YAML 文件加载/保存参数的功能。</p>
+<h4 id="在-iOS-上使用-OpenCV"><a href="#在-iOS-上使用-OpenCV" class="headerlink" title="在 iOS 上使用 OpenCV"></a>在 iOS 上使用 OpenCV</h4><h5 id="添加-OpenCV-到你的工程中"><a href="#添加-OpenCV-到你的工程中" class="headerlink" title="添加 OpenCV 到你的工程中"></a>添加 OpenCV 到你的工程中</h5><p>集成 OpenCV 到你的工程中有三种方法：</p>
+<p>*使用 CocoaPods 就好： pod “OpenCV”。</p>
+<p>*下载官方 <a href="http://opencv.org/downloads.html" target="_blank" rel="external">iOS 框架发行包</a>，并把它添加到工程里。</p>
+<p>*从 <a href="https://github.com/Itseez/opencv" target="_blank" rel="external">GitHub</a> 拉下代码，并根据<a href="http://docs.opencv.org/2.4/doc/tutorials/introduction/ios_install/ios_install.html#ios-installation" target="_blank" rel="external">教程</a>自己编译 OpenCV 库。</p>
+<h5 id="Objective-C"><a href="#Objective-C" class="headerlink" title="Objective-C++"></a>Objective-C++</h5><p>如前面所说，OpenCV 是一个 C++ 的 API，因此不能直接在 Swift 和 Objective-C 代码中使用，但能在 Objective-C++ 文件中使用。</p>
+<p>Objective-C++ 是 Objective-C 和 C++ 的混合物，让你可以在 Objective-C 类中使用 C++ 对象。clang 编译器会把所有后缀名为 .mm 的文件都当做是 Objective-C++。一般来说，它会如你所期望的那样运行，但还是有一些使用 Objective-C++ 的注意事项。内存管理是你最应该格外注意的点，因为 ARC 只对 Objective-C 对象有效。当你使用一个 C++ 对象作为类属性的时候，其唯一有效的属性就是 assign。因此，你的 dealloc 函数应确保 C++ 对象被正确地释放了。</p>
+<p>第二重要的点就是，如果你在 Objective-C++ 头文件中引入了 C++ 头文件，当你在工程中使用该 Objective-C++ 文件的时候就泄露了 C++ 的依赖。任何引入你的 Objective-C++ 类的 Objective-C 类也会引入该 C++ 类，因此该 Objective-C 文件也要被声明为 Objective-C++ 的文件。这会像森林大火一样在工程中迅速蔓延。所以，应该把你引入 C++ 文件的地方都用 #ifdef __cplusplus 包起来，并且只要可能，就尽量只在 .mm 实现文件中引入 C++ 头文件。</p>
+<p>要获得更多如何混用 C++ 和 Objective-C 的细节，请查看 Matt Galloway 写的这篇<a href="http://www.raywenderlich.com/62989/introduction-c-ios-developers-part-1" target="_blank" rel="external">教程</a>。</p>
+<h4 id="Demo：人脸检测与识别"><a href="#Demo：人脸检测与识别" class="headerlink" title="Demo：人脸检测与识别"></a>Demo：人脸检测与识别</h4><p>现在，我们对 OpenCV 及如何把它集成到我们的应用中有了大概认识，那让我们来做一个小 demo 应用：从 iPhone 的摄像头获取视频流，对它持续进行人脸检测，并在屏幕上标出来。当用户点击一个脸孔时，应用会尝试识别这个人。如果识别结果正确，用户必须点击 “Correct”。如果识别错误，用户必须选择正确的人名来纠正错误。我们的人脸识别器就会从错误中学习，变得越来越好。</p>
+<p><img src="https://objccn.io/images/issues/issue-21/blocks-face-recognition-objcio.jpg" alt="pic 1"></p>
+<p>本 demo 应用的源码可从 <a href="https://github.com/objcio/issue-21-OpenCV-FaceRec" target="_blank" rel="external">GitHub</a> 获得。</p>
+<h5 id="视频拍摄"><a href="#视频拍摄" class="headerlink" title="视频拍摄"></a>视频拍摄</h5><p>OpenCV 的 highgui 模块中有个类，CvVideoCamera，它把 iPhone 的摄像机抽象出来，让我们的 app 通过一个代理函数 - (void)processImage:(cv::Mat&amp;)image 来获得视频流。CvVideoCamera 实例可像下面这样进行设置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">CvVideoCamera *videoCamera = [[CvVideoCamera alloc] initWithParentView:view];</div><div class="line">videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;</div><div class="line">videoCamera.defaultAVCaptureSessionPreset = AVCaptureSessionPreset640x480;</div><div class="line">videoCamera.defaultAVCaptureVideoOrientation = AVCaptureVideoOrientationPortrait;</div><div class="line">videoCamera.defaultFPS = 30;</div><div class="line">videoCamera.grayscaleMode = NO;</div><div class="line">videoCamera.delegate = self;</div></pre></td></tr></table></figure>
+<p>摄像头的帧率被设置为 30 帧每秒， 我们实现的 processImage 函数将每秒被调用 30 次。因为我们的 app 要持续不断地检测人脸，所以我们应该在这个函数里实现人脸的检测。要注意的是，如果对某一帧进行人脸检测的时间超过 1/30 秒，就会产生掉帧现象。</p>
+<h5 id="人脸检测"><a href="#人脸检测" class="headerlink" title="人脸检测"></a>人脸检测</h5><p>其实你并不需要使用 OpenCV 来做人脸检测，因为 Core Image 已经提供了 CIDetector 类。用它来做人脸检测已经相当好了，并且它已经被优化过，使用起来也很容易：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">CIDetector *faceDetector = [CIDetector detectorOfType:CIDetectorTypeFace context:context options:@&#123;CIDetectorAccuracy: CIDetectorAccuracyHigh&#125;];</div><div class="line"></div><div class="line">NSArray *faces = [faceDetector featuresInImage:image];</div></pre></td></tr></table></figure>
+<p>从该图片中检测到的每一张面孔都在数组 faces 中保存着一个 CIFaceFeature 实例。这个实例中保存着这张面孔的所处的位置和宽高，除此之外，眼睛和嘴的位置也是可选的。</p>
+<p>另一方面，OpenCV 也提供了一套物体检测功能，经过训练后能够检测出任何你需要的物体。该库为多个场景自带了可以直接拿来用的检测参数，如人脸、眼睛、嘴、身体、上半身、下半身和笑脸。检测引擎由一些非常简单的检测器的级联组成。这些检测器被称为 Haar 特征检测器，它们各自具有不同的尺度和权重。在训练阶段，决策树会通过已知的正确和错误的图片进行优化。关于训练与检测过程的详情可参考此<a href="http://www.multimedia-computing.de/mediawiki//images/5/52/MRL-TR-May02-revised-Dec02.pdf" target="_blank" rel="external">原始论文</a>。当正确的特征级联及其尺度与权重通过训练确立以后，这些参数就可被加载并初始化级联分类器了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// 正面人脸检测器训练参数的文件路径</div><div class="line">NSString *faceCascadePath = [[NSBundle mainBundle] pathForResource:@&quot;haarcascade_frontalface_alt2&quot;</div><div class="line">                                                   ofType:@&quot;xml&quot;];</div><div class="line"></div><div class="line">const CFIndex CASCADE_NAME_LEN = 2048;</div><div class="line">char *CASCADE_NAME = (char *) malloc(CASCADE_NAME_LEN);</div><div class="line">CFStringGetFileSystemRepresentation( (CFStringRef)faceCascadePath, CASCADE_NAME, CASCADE_NAME_LEN);</div><div class="line"></div><div class="line">CascadeClassifier faceDetector;</div><div class="line">faceDetector.load(CASCADE_NAME);</div></pre></td></tr></table></figure>
+<p>这些参数文件可在 OpenCV 发行包里的 data/haarcascades 文件夹中找到。</p>
+<p>在使用所需要的参数对人脸检测器进行初始化后，就可以用它进行人脸检测了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">cv::Mat img;</div><div class="line">vector&lt;cv::Rect&gt; faceRects;</div><div class="line">double scalingFactor = 1.1;</div><div class="line">int minNeighbors = 2;</div><div class="line">int flags = 0;</div><div class="line">cv::Size minimumSize(30,30);</div><div class="line">faceDetector.detectMultiScale(img, faceRects,</div><div class="line">                              scalingFactor, minNeighbors, flags</div><div class="line">                              cv::Size(30, 30) );</div></pre></td></tr></table></figure>
+<p>检测过程中，已训练好的分类器会用不同的尺度遍历输入图像的每一个像素，以检测不同大小的人脸。参数 scalingFactor 决定每次遍历分类器后尺度会变大多少倍。参数 minNeighbors 指定一个符合条件的人脸区域应该有多少个符合条件的邻居像素才被认为是一个可能的人脸区域；如果一个符合条件的人脸区域只移动了一个像素就不再触发分类器，那么这个区域非常可能并不是我们想要的结果。拥有少于 minNeighbors 个符合条件的邻居像素的人脸区域会被拒绝掉。如果 minNeighbors 被设置为 0，所有可能的人脸区域都会被返回回来。参数 flags 是 OpenCV 1.x 版本 API 的遗留物，应该始终把它设置为 0。最后，参数 minimumSize 指定我们所寻找的人脸区域大小的最小值。faceRects 向量中将会包含对 img 进行人脸识别获得的所有人脸区域。识别的人脸图像可以通过 cv::Mat 的 () 运算符提取出来，调用方式很简单：cv::Mat faceImg = img(aFaceRect)。</p>
+<p>不管是使用 CIDetector 还是 OpenCV 的 CascadeClassifier，只要我们获得了至少一个人脸区域，我们就可以对图像中的人进行识别了。</p>
+<h5 id="人脸识别"><a href="#人脸识别" class="headerlink" title="人脸识别"></a>人脸识别</h5><p>OpenCV 自带了三个人脸识别算法：Eigenfaces，Fisherfaces 和局部二值模式直方图 (LBPH)。如果你想知道它们的工作原理及相互之间的区别，请阅读 OpenCV 的<a href="http://docs.opencv.org/2.4/modules/contrib/doc/facerec/facerec_tutorial.html#local-binary-patterns-histograms" target="_blank" rel="external">详细文档</a>。</p>
+<p>针对于我们的 demo app，我们将采用 LBPH 算法。因为它会根据用户的输入自动更新，而不需要在每添加一个人或纠正一次出错的判断的时候都要重新进行一次彻底的训练。</p>
+<p>要使用 LBPH 识别器，我们也用 Objective-C++ 把它封装起来。这个封装中暴露以下函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">+ (FJFaceRecognizer *)faceRecognizerWithFile:(NSString *)path;</div><div class="line">- (NSString *)predict:(UIImage*)img confidence:(double *)confidence;</div><div class="line">- (void)updateWithFace:(UIImage *)img name:(NSString *)name;</div></pre></td></tr></table></figure>
+<p>像下面这样用工厂方法来创建一个 LBPH 实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">+ (FJFaceRecognizer *)faceRecognizerWithFile:(NSString *)path &#123;</div><div class="line">    FJFaceRecognizer *fr = [FJFaceRecognizer new];</div><div class="line">    fr-&gt;_faceClassifier = createLBPHFaceRecognizer();</div><div class="line">    fr-&gt;_faceClassifier-&gt;load(path.UTF8String);</div><div class="line">    return fr;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>预测函数可以像下面这样实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (NSString *)predict:(UIImage*)img confidence:(double *)confidence &#123;</div><div class="line">    cv::Mat src = [img cvMatRepresentationGray];</div><div class="line">    int label;</div><div class="line">    self-&gt;_faceClassifier-&gt;predict(src, label, *confidence);</div><div class="line">    return _labelsArray[label];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>请注意，我们要使用一个类别方法把 UIImage 转化为 cv::Mat。此转换本身倒是相当简单直接：使用 CGBitmapContextCreate 创建一个指向 cv::Image 中的 data 指针所指向的数据的 CGContextRef。当我们在此图形上下文中绘制此 UIImage 的时候，cv::Image 的 data 指针所指就是所需要的数据。更有趣的是，我们能对一个 Objective-C 类创建一个 Objective-C++ 的类别，并且确实管用。</p>
+<p>另外，OpenCV 的人脸识别器仅支持整数标签，但是我们想使用人的名字作标签，所以我们得通过一个 NSArray 属性来对二者实现简单的转换。</p>
+<p>一旦识别器给了我们一个识别出来的标签，我们把此标签给用户看，这时候就需要用户给识别器一个反馈。用户可以选择，“是的，识别正确”，也可以选择，“不，这是 Y，不是 X”。在这两种情况下，我们都可以通过人脸图像和正确的标签来更新 LBPH 模型，以提高未来识别的性能。使用用户的反馈来更新人脸识别器的方式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">- (void)updateWithFace:(UIImage *)img name:(NSString *)name &#123;</div><div class="line">    cv::Mat src = [img cvMatRepresentationGray];</div><div class="line">    NSInteger label = [_labelsArray indexOfObject:name];</div><div class="line">    if (label == NSNotFound) &#123;</div><div class="line">        [_labelsArray addObject:name];</div><div class="line">        label = [_labelsArray indexOfObject:name];</div><div class="line">    &#125;</div><div class="line">    vector&lt;cv::Mat&gt; images = vector&lt;cv::Mat&gt;();</div><div class="line">    images.push_back(src);</div><div class="line">    vector&lt;int&gt; labels = vector&lt;int&gt;();</div><div class="line">    labels.push_back((int)label);</div><div class="line">    self-&gt;_faceClassifier-&gt;update(images, labels);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里，我们又做了一次了从 UIImage 到 cv::Mat、int 到 NSString 标签的转换。我们还得如 OpenCV 的 FaceRecognizer::update API所期望的那样，把我们的参数放到 std::vector 实例中去。</p>
+<p>如此“预测，获得反馈，更新循环”，就是文献上所说的<a href="http://zh.wikipedia.org/wiki/%E7%9B%A3%E7%9D%A3%E5%BC%8F%E5%AD%B8%E7%BF%92" target="_blank" rel="external">监督式学习</a>。</p>
+<hr>
+<p>英文原文 <a href="https://www.objc.io/issues/21-camera-and-photos/face-recognition-with-opencv/" target="_blank" rel="external"> Face Recognition with OpenCV</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/转/" rel="tag">#转</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/15/URL-Loading-System/" rel="next" title="URL Loading System">
+                <i class="fa fa-chevron-left"></i> URL Loading System
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Leii" />
+          <p class="site-author-name" itemprop="name">Leii</p>
+          <p class="site-description motion-element" itemprop="description">iOS/Unity/Design</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Leii/" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://leiiii.lofter.com/" target="_blank" title="Lofter">
+                  
+                    <i class="fa fa-fw fa-paint-brush"></i>
+                  
+                  Lofter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#OpenCV-概述"><span class="nav-number">1.</span> <span class="nav-text">OpenCV 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#概念"><span class="nav-number">1.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#模块"><span class="nav-number">1.2.</span> <span class="nav-text">模块</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基础类和操作"><span class="nav-number">1.3.</span> <span class="nav-text">基础类和操作</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#cv-Mat"><span class="nav-number">1.3.1.</span> <span class="nav-text">cv::Mat</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#cv-Algorithm"><span class="nav-number">1.3.2.</span> <span class="nav-text">cv::Algorithm</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在-iOS-上使用-OpenCV"><span class="nav-number">2.</span> <span class="nav-text">在 iOS 上使用 OpenCV</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#添加-OpenCV-到你的工程中"><span class="nav-number">2.1.</span> <span class="nav-text">添加 OpenCV 到你的工程中</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Objective-C"><span class="nav-number">2.2.</span> <span class="nav-text">Objective-C++</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Demo：人脸检测与识别"><span class="nav-number">3.</span> <span class="nav-text">Demo：人脸检测与识别</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#视频拍摄"><span class="nav-number">3.1.</span> <span class="nav-text">视频拍摄</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#人脸检测"><span class="nav-number">3.2.</span> <span class="nav-text">人脸检测</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#人脸识别"><span class="nav-number">3.3.</span> <span class="nav-text">人脸识别</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leii</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

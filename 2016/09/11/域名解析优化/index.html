@@ -1,0 +1,686 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="转," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Leii's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="总结了部分关于传统DNS解析会存在的一些问题和HTTPDNS的解决方案，更详细的介绍可以看原文 阿里云官方博客
+DNS概念根域、顶级域、二级域:
+DNS系统一般采用树状结构进行组织，以ru.wikipedia.org为例，org为顶级域名，wikipedia为二级域名，ru为三级域名
+权威DNS：
+权威DNS即最终决定域名解析结果的服务器，开发者可以在权威DNS上配置、变更、删除具体域名的对应解析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[转]域名解析使用HTTPDNS优化">
+<meta property="og:url" content="http://leii.me/2016/09/11/域名解析优化/index.html">
+<meta property="og:site_name" content="Leii's Blog">
+<meta property="og:description" content="总结了部分关于传统DNS解析会存在的一些问题和HTTPDNS的解决方案，更详细的介绍可以看原文 阿里云官方博客
+DNS概念根域、顶级域、二级域:
+DNS系统一般采用树状结构进行组织，以ru.wikipedia.org为例，org为顶级域名，wikipedia为二级域名，ru为三级域名
+权威DNS：
+权威DNS即最终决定域名解析结果的服务器，开发者可以在权威DNS上配置、变更、删除具体域名的对应解析">
+<meta property="og:image" content="https://yqfile.alicdn.com/6c4402618b6f9580255ba88ea28fa518947629ae.png?_=0.3877227769572087">
+<meta property="og:updated_time" content="2016-09-22T09:26:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[转]域名解析使用HTTPDNS优化">
+<meta name="twitter:description" content="总结了部分关于传统DNS解析会存在的一些问题和HTTPDNS的解决方案，更详细的介绍可以看原文 阿里云官方博客
+DNS概念根域、顶级域、二级域:
+DNS系统一般采用树状结构进行组织，以ru.wikipedia.org为例，org为顶级域名，wikipedia为二级域名，ru为三级域名
+权威DNS：
+权威DNS即最终决定域名解析结果的服务器，开发者可以在权威DNS上配置、变更、删除具体域名的对应解析">
+<meta name="twitter:image" content="https://yqfile.alicdn.com/6c4402618b6f9580255ba88ea28fa518947629ae.png?_=0.3877227769572087">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://leii.me/2016/09/11/域名解析优化/"/>
+
+  <title> [转]域名解析使用HTTPDNS优化 | Leii's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Leii's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [转]域名解析使用HTTPDNS优化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-11T22:43:38+08:00" content="2016-09-11">
+              2016-09-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Base/" itemprop="url" rel="index">
+                    <span itemprop="name">Base</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>总结了部分关于传统DNS解析会存在的一些问题和HTTPDNS的解决方案，更详细的介绍可以看原文 <a href="http://www.cnblogs.com/aliyunblogs/p/5749177.html" target="_blank" rel="external">阿里云官方博客</a></p>
+<h4 id="DNS概念"><a href="#DNS概念" class="headerlink" title="DNS概念"></a>DNS概念</h4><p>根域、顶级域、二级域:</p>
+<p>DNS系统一般采用树状结构进行组织，以ru.wikipedia.org为例，org为顶级域名，wikipedia为二级域名，ru为三级域名</p>
+<p>权威DNS：</p>
+<p>权威DNS即最终决定域名解析结果的服务器，开发者可以在权威DNS上配置、变更、删除具体域名的对应解析结果信息。</p>
+<p>递归DNS：</p>
+<p>递归DNS又称为Local DNS，它没有域名解析结果的决定权，但代理了用户向权威DNS获取域名解析结果的过程。递归DNS上有缓存模块，当目标域名存在缓存解析结果并且TTL未过期时（每个域名都有TTL时间，即有效生存时间，若域名解析结果缓存的时间超过TTL，需要重新向权威DNS获取解析结果），递归DNS会返回缓存结果，否则，递归DNS会一级一级地查询各个层级域名的权威DNS直至获取最终完整域名的解析结果。</p>
+<p>公共DNS：</p>
+<p>公共DNS是递归DNS的一种特例，它是一种全网开放的递归DNS服务，而传统的递归DNS信息一般由运营商分发给用户。一个比较典型的公共DNS即Google的8.8.8.8，我们可以通过在操作系统配置文件中配置公共DNS来代替Local DNS完成域名解析流程。</p>
+<p>以访问www.taobao.com为例，一次完整的域名解析流程包括：</p>
+<p>终端向Local DNS发起域名解析请求；<br>Local DNS在获取到域名解析请求后首先从Root hints获取根域名服务器的地址（Root hints包含了互联网DNS根服务器的地址信息）；<br>获取了根域名服务器地址后Local DNS向根域名服务器发起DNS解析请求，根域名服务器返回com顶级域名服务器地址；<br>随后Local DNS向com域名服务器发起解析请求，并得到taobao.com二级域名服务器的地址；<br>Local DNS向taobao.com二级域名服务器发起解析请求，并最终获得了www.taobao.com的IP地址信息；<br>Local DNS将递归查询获得的IP地址信息缓存并返回给客户端；</p>
+<blockquote>
+<p>Local DNS服务器包含缓存模块，在实际域名解析过程中Local DNS服务器会首先查询缓存，缓存命中且解析结果TTL未过期的情况下直接返回，否则才启动递归查询的流程。</p>
+</blockquote>
+<h4 id="传统的域名解析面临的问题"><a href="#传统的域名解析面临的问题" class="headerlink" title="传统的域名解析面临的问题"></a>传统的域名解析面临的问题</h4><p>了解了域名解析的基本概念和整体流程，我们再一起来探究一下传统域名解析存在的一系列问题。</p>
+<h5 id="域名劫持"><a href="#域名劫持" class="headerlink" title="域名劫持"></a>域名劫持</h5><p>域名劫持一直是困扰许多开发者的问题之一，其表现即域名A应该返回的DNS解析结果IP1被恶意替换为了IP2，导致A的访问失败或访问了一个不安全的站点。下面我们一起看看几种常见的域名劫持的场景。</p>
+<p>一种可能的域名劫持方式即黑客侵入了宽带路由器并对终端用户的Local DNS进行篡改，指向黑客自己伪造的Local DNS，进而通过控制Local DNS的逻辑返回错误的IP信息进行域名劫持。另一方面，由于DNS解析主要是基于UDP协议，除了上述攻击行为外，攻击者还可以监听终端用户的域名解析请求，并在Local DNS返回正确结果之前将伪造的DNS解析响应传递给终端用户，进而控制终端用户的域名访问行为。</p>
+<p>上述攻击行为的影响面相对比较有限，另一种我们最常碰到的域名劫持现象是缓存污染。我们知道在接收到域名解析请求时，Local DNS首先会查找缓存，如果缓存命中就会直接返回缓存结果，不再进行递归DNS查询。这时候如果Local DNS针对部分域名的缓存进行更改，比如将缓存结果指向第三方的广告页，就会导致用户的访问请求被引导到这些广告页地址上。</p>
+<p>对比第一种攻击，这类缓存污染往往能带来更明显的群体伤害，比如某个省份某个运营商的用户群可能因为该地区Local DNS的缓存污染而导致访问服务异常。这类缓存污染行为往往是间歇性、局部性发生的，没有明显的规律，导致开发者很难对其进行量化、评估、预防。</p>
+<p>有的同学可能会问，“我使用了HTTPS，是否就可以避免域名劫持的问题”，答案是否定的。域名解析环节发生在网络加密请求交互之前，试想一下，如果客户端还没有服务端的确切地址信息，我们又如何知道应该和谁进行加密的握手协商与通信呢？</p>
+<h5 id="调度不精准"><a href="#调度不精准" class="headerlink" title="调度不精准"></a>调度不精准</h5><p>除了域名劫持问题，基于传统Local DNS的域名解析还会带来域名调度精准性的问题。对于类似CDN域名访问这类需要按地域、运营商进行智能解析调度的场景，精准调度的诉求是十分强烈的。</p>
+<p>关于调度不精准的原因，我们主要可以从两个方面来探究一下。第一个常见的问题即解析转发。</p>
+<p>部分Local DNS供应商为了降低运营成本，会将请求到自己节点的域名解析请求转发给其他供应商的Local DNS节点，如上图所示。假如用户请求解析一个CDN域名cdn.aliyun.com，用户分配到的Local DNS A为了节省成本，把该次请求转发给了另一运营商的Local DNS B，权威DNS在进行域名解析时会根据Local DNS的IP信息进行智能调度，即权威DNS会根据Local DNS B的IP78.29.29.1进行调度，分配与78.29.29.1相同运营商并且地理位置最近的CDN节点78.29.29.2，然而这个CDN节点对于终端135.35.35.1而言并不是最优的CDN节点，他们分属不同的运营商，并且地理位置上可能相隔很远。这类解析转发行为会严重影响域名解析的精准性并对用户业务访问延迟带来影响。</p>
+<p>除了解析转发对调度精准性带来的影响外，Local DNS的布署情况同样影响着域名智能解析的精准性。</p>
+<h5 id="解析生效滞后"><a href="#解析生效滞后" class="headerlink" title="解析生效滞后"></a>解析生效滞后</h5><p>部分业务场景下开发者对域名解析结果变更的生效时间非常敏感（这部分变更操作是开发者在权威DNS上完成的），比如当业务服务器受到攻击时，我们需要最快速地将业务IP切换到另一组集群上，这样的诉求在传统域名解析体系下是无法完成的。</p>
+<h5 id="延迟大"><a href="#延迟大" class="headerlink" title="延迟大"></a>延迟大</h5><p>DNS首次查询或缓存过期后的查询，需要递归遍历多个DNS服务器以获取最终的解析结果，这增加了网络请求的前置延时时间。特别是在移动互联网场景下，移动网络质量参差不齐，弱网环境的RTT时间可能高达数百毫秒，对于一次普通的业务请求而言，上述延时是非常沉重的负担。另一方面，弱网环境下的解析超时、解析失败等现象屡见不鲜，如何合理优化DNS解析对于整体网络访问质量的提升至关重要。</p>
+<h4 id="HTTPDNS解决方案"><a href="#HTTPDNS解决方案" class="headerlink" title="HTTPDNS解决方案"></a>HTTPDNS解决方案</h4><h5 id="防域名劫持"><a href="#防域名劫持" class="headerlink" title="防域名劫持"></a>防域名劫持</h5><p>HTTPDNS使用HTTP协议进行域名解析，代替现有基于UDP的DNS协议，域名解析请求直接发送到HTTPDNS服务端，从而绕过运营商的Local DNS，如下图所示。</p>
+<p><img src="https://yqfile.alicdn.com/6c4402618b6f9580255ba88ea28fa518947629ae.png?_=0.3877227769572087" alt="tu1"></p>
+<p>HTTPDNS代替了传统的LocalDNS完成递归解析的功能，基于HTTP协议的设计可以适用于几乎所有的网络环境，同时保留了鉴权、HTTPS等更高安全性的扩展能力，避免恶意攻击劫持行为。另一方面，商业化的HTTPDNS服务（<a href="https://www.aliyun.com/product/httpdns" target="_blank" rel="external">https://www.aliyun.com/product/httpdns</a> ）缓存管理有严格的SLA保障，避免了类似Local DNS的缓存污染的问题。</p>
+<h5 id="精准调度"><a href="#精准调度" class="headerlink" title="精准调度"></a>精准调度</h5><p>传统域名解析的调度精准性问题，本质根源在于Local DNS的部署和分配机制上。由于碎片化的管理方式，这些环节的服务质量同样很难得到保障。HTTPDNS在递归解析实现上优化了与权威DNS的交互，通过edns-client-subnet协议（<a href="https://datatracker.ietf.org/doc/rfc7871" target="_blank" rel="external">https://datatracker.ietf.org/doc/rfc7871</a> ）将终端用户的IP信息直接交付给权威DNS，这样权威DNS就可以忽略Local DNS IP信息，根据终端用户的IP信息进行精准调度，避免Local DNS的坐标干扰（当然上述精准调度方案的前提是权威DNS需要支持edns-client-subnet，可喜的是当前主流的权威DNS服务都已支持该协议）。</p>
+<h5 id="实时生效"><a href="#实时生效" class="headerlink" title="实时生效"></a>实时生效</h5><p>在域名解析生效周期方面，HTTPDNS也有着传统域名解析体系所无法具备的能力。前文中我们提到由于各个地区的Local DNS是独立维护的，服务质量参差不齐，缓存实现不一，因此导致的解析变更全网生效滞后的问题，在商业化的HTTPDNS服务上就不会存在（HTTPDNS严格遵循DNS TTL限制进行缓存更新）。另一方面，即便我们假设Local DNS严格遵循域名TTL时间进行缓存管理（这里我们假设开发者配置的域名TTL时间为5min），当开发者业务受到攻击并需要快速进行切换时，Local DNS也会遵循域名TTL，在持续5min的时间段内返回旧IP信息，这5min的业务影响对于中大型企业而言是一个不小的损失（对于电商类的大型企业，5min的访问异常可能意味着几百万的交易额下跌）。以阿里云HTTPDNS服务（<a href="https://www.aliyun.com/product/httpdns" target="_blank" rel="external">https://www.aliyun.com/product/httpdns</a> ）为例，HTTPDNS在快速生效方面有专有的方案，配合阿里云的权威DNS服务云解析（ <a href="https://wanwang.aliyun.com/domain/dns" target="_blank" rel="external">https://wanwang.aliyun.com/domain/dns</a> ），用户在权威DNS变更的解析结果将快速同步给HTTPDNS，覆盖原有的缓存记录，帮助用户实现秒级的域名解析切换。</p>
+<p>在DNS解析延迟方面，由于HTTPDNS基于HTTP协议，而HTTP基于TCP协议，对比传统的UDP传输多了一些冗余的握手环节，因此从原理上而言网络请求方面的开销并没有降低。但在实际使用过程中，我们可以通过端上的策略来实现一个零延迟DNS解析的方案。接下来我们一起来看看HTTPDNS服务在移动端的最佳实践方案。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/转/" rel="tag">#转</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/10/证书与打包与APNs/" rel="next" title="证书与打包与APNs">
+                <i class="fa fa-chevron-left"></i> 证书与打包与APNs
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/15/URL-Loading-System/" rel="prev" title="URL Loading System">
+                URL Loading System <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Leii" />
+          <p class="site-author-name" itemprop="name">Leii</p>
+          <p class="site-description motion-element" itemprop="description">iOS/Unity/Design</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Leii/" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://leiiii.lofter.com/" target="_blank" title="Lofter">
+                  
+                    <i class="fa fa-fw fa-paint-brush"></i>
+                  
+                  Lofter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#DNS概念"><span class="nav-number">1.</span> <span class="nav-text">DNS概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#传统的域名解析面临的问题"><span class="nav-number">2.</span> <span class="nav-text">传统的域名解析面临的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#域名劫持"><span class="nav-number">2.1.</span> <span class="nav-text">域名劫持</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#调度不精准"><span class="nav-number">2.2.</span> <span class="nav-text">调度不精准</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解析生效滞后"><span class="nav-number">2.3.</span> <span class="nav-text">解析生效滞后</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#延迟大"><span class="nav-number">2.4.</span> <span class="nav-text">延迟大</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTPDNS解决方案"><span class="nav-number">3.</span> <span class="nav-text">HTTPDNS解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#防域名劫持"><span class="nav-number">3.1.</span> <span class="nav-text">防域名劫持</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#精准调度"><span class="nav-number">3.2.</span> <span class="nav-text">精准调度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#实时生效"><span class="nav-number">3.3.</span> <span class="nav-text">实时生效</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Leii</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
