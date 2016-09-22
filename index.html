@@ -515,7 +515,7 @@
       
         
           
-            <p>AFNetWorking与Alamofire现在分别是OC与Swift开发最流行的网络请求第三方库(当然AFNetWorking也有swift版本)，他们都是基于对Foundation中的NSURLConnect以及所以NSURLSession的封装，所以我们会先NSURLConnect和NSURLSession开始分析。</p>
+            <p>AFNetWorking与Alamofire现在分别是OC与Swift开发最流行的网络请求第三方库，他们都是基于对Foundation中的NSURLConnect以及所以NSURLSession的封装，所以我们会先NSURLConnect和NSURLSession开始分析。</p>
 <h4 id="NSURLConnect与NSURLSession"><a href="#NSURLConnect与NSURLSession" class="headerlink" title="NSURLConnect与NSURLSession"></a>NSURLConnect与NSURLSession</h4><p>NSURLConnect是早期苹果提供的用于</p>
 
           
@@ -724,11 +724,26 @@
           
             <p>Hybrid App优势明显，发版不用审核，页面可以随时调整和修复，通用于3个平台节省开发成本等，很多公司都在用，类型主要分Web主体型、多View混合型、单View混合型。</p>
 <p>我们公司则经历了从最早的Web主体型APP向多view混合型的过渡，公司早期人员少，业务变化快的情况下，业务代码都放在前端非常方便，不过后期随着用户量的增多，对性能和用户体验开始精益求精，将部分高频的页面native化。</p>
-<p>Hybrid APP的核心就是Native和H5之间的交互</p>
-<p>H5调用native用的是webview的shouldStartLoadWithRequest方法里面捕获url，解析出需要的参数，看是否有约定的异步桥接的字符串，然后传给一个统一的处理方法。native调用h5用的是UIWebView的 stringByEvaluatingJavaScriptFromString方法。</p>
-<p>除此之外我们还用了同步桥接，主要是通过NSURLProtocol的拦截，先在canInitWithRequest方法里判断是否要拦截，然后再startLoading里实现拦截，并标示该request为已经处理过了，防止无限循环执行，[NSURLProtocol setProperty:@YES forKey:URLProtocolHandledKey inRequest:mutableReqeust];<br>通过url里面是否包含约定的同步桥接字符串，如果有就执行同步桥接。</p>
-<p>同时因为有大量的操作是在网络连接的部分，所以Foundation库的URL加载系统也是经常要用到的，比如下图这些类：</p>
-<p><img src="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/URLLoadingSystem/Art/nsobject_hierarchy_2x.png" alt="url loading system"></p>
+<p>Hybrid APP的核心就是Native和H5之间的交互，native端需要提供一些通用的设备功能让H5可以调用，比如：</p>
+<p>1，Alert组件、loading组件、NavigationBar、tabbar等</p>
+<p>2，获取定位、获取通讯录、获取陀螺仪、获取相册相机权限、获取设备信息（iOS版本、iPhone型号）、获取网络\定位\push状态</p>
+<p>3，对本地缓存数据的增删查改(有的直接通过cookie、session来传递数据)</p>
+<p>4，页面的跳转（关闭或新拉起页面）</p>
+<p>5，[非通用]加密、支付、动画、地图、分享等功能</p>
+<p>以上这些native的功能H5可以通过桥接来执行</p>
+<p>H5主要完成如下工作：</p>
+<p>(1) 创建了一个用于发送消息的iFrame(通过创建一个隐藏的ifrmae，并设置它的URL 来发出一个请求，从而触发UIWebView的shouldStartLoadWithRequest回调协议)</p>
+<p>(2) 创建了一个核心对象，如 WebViewJavascriptBridge，并给它定义了几个方法，这些方法大部分是公开的API方法</p>
+<p>(3) 创建了一个事件：WebViewJavascriptBridgeReady，并dispatch(触发)了它。</p>
+<p>native的主要工作是通过UIWebViewDelegate协议的方法shouldStartLoadWithRequest：来获取这个请求并执行相应的native方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType &#123;</div><div class="line">//异步桥接</div><div class="line">    if ([url.absoluteString rangeOfString:@&quot;customScheme://operation&quot;].location != NSNotFound) &#123;</div><div class="line">        [self doWebBridgeOperation:[url.query stringByURLDecodingStringParameter]];</div><div class="line">        return NO;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上述方法通过判断url是否有自定义的scheme来决定是否执行桥接方法，如果是的话则执行相应的方法，参数可以通过url query带过去，然后返回NO，表示不会拉起这个url的webview页面。</p>
+<p>以上是目前比较主流的桥接方案，除此之外我们还提供了同步桥接，前端可以通过ajax同步请求来触发native的相应方法，这种方法更方便H5的调用，但是执行时会阻塞页面，主要是通过自定义NSURLProtocol的拦截来实现，方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">// override</div><div class="line">+ (BOOL)canInitWithRequest:(NSURLRequest *)request &#123;</div><div class="line">    </div><div class="line">    </div><div class="line">    // step 1, check the request did marked</div><div class="line">    id prop = [NSURLProtocol propertyForKey:REQUEST_TRACKING_KEY inRequest:request];</div><div class="line">    if (prop != nil) &#123;</div><div class="line">        return NO; // aviod loading cycle</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    // step 2, check the scheme of request</div><div class="line">    NSString *scheme = [request.URL scheme];</div><div class="line">    if (scheme == nil) return NO; // the request schema can not be nil</div><div class="line">    </div><div class="line">    scheme = [scheme lowercaseString];</div><div class="line">    if (!([scheme isEqualToString:@&quot;http&quot;]</div><div class="line">          || [scheme isEqualToString:@&quot;https&quot;])) &#123;</div><div class="line">        return NO; // for now, the scheme should be &apos;http&apos; or &apos;https&apos;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>先在canInitWithRequest方法里判断是否要拦截，通过propertyForKey来标记这个方法是否处理过，如果这个方法已经处理过，则不会继续处理，避免循环加载，如果scheme不是http 或者https 也不做处理。如果条件都符合则返回YES，执行startLoading：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">// override</div><div class="line">- (void)startLoading &#123;</div><div class="line">    NSURL *requestURL = self.request.URL;</div><div class="line">	//拦截同步请求</div><div class="line">    if (url &amp;&amp; [url.absoluteString rangeOfString:customSyncBridgeParam].location != NSNotFound) &#123;</div><div class="line">    NSData* resultBridgeData = [self doSyncBridgeOperation:[url.query stringByURLDecodingStringParameter]];</div><div class="line">   	    // notify did finish load data</div><div class="line">        [self.client URLProtocol:self didLoadData:resultBridgeData];</div><div class="line">        </div><div class="line">        // notify did finish loading</div><div class="line">        [self.client URLProtocolDidFinishLoading:self];</div><div class="line">        </div><div class="line">        [NSURLProtocol setProperty:@(YES) forKey:REQUEST_TRACKING_KEY inRequest:request];</div><div class="line">        </div><div class="line">        return;</div><div class="line">    &#125;    </div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过url里面是否包含约定的同步桥接字符串，如果有就执行同步桥接。</p>
+<p>通过NSURLProtocol我们也可以在startLoading里面自定义request的header、超时时间等，还能替换掉原来的url，比如要加载本地资源：拦截请求后只对特定的类型替换为本地缓存。比如更新静态资源请求是下载zip包，如果本地也存在此zip包，那么更新请求会被拦截导致更新失败。还有一点先在DocumentDirectory中查找缓存文件，如果不存在再在NSBundle.mainBundle()中查找。</p>
 
           
         
