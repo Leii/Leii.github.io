@@ -86,36 +86,18 @@
 
 
 
-<meta name="description" content="APNs 是 Apple Push Notification service 的简称，是苹果提供的Push服务器，Push流程如下：
-
-1、应用程序注册消息推送。
-2、iOS从APNs Server获取device token，应用程序接收device token。
-3、应用程序将device token发送给PUSH服务端程序。
-4、服务端程序向APNs服务发送消息。
-5、APNs服务将消息发送">
+<meta name="description" content="苹果在9月22号又更新了有关token和通知的功能[news] 大概意思是现在发送通知可以通过token验证而不需要创建cer证书了，token不会过期而且方便创建，可以用来给你所有的app发送通知（这里的token应该和app打开时didRegisterForRemoteNotificationsWithDeviceToken获取的token不一样）APNs 是 Apple Push Notif">
 <meta property="og:type" content="article">
 <meta property="og:title" content="证书与打包与APNs">
 <meta property="og:url" content="http://leii.me/2016/09/10/证书与打包与APNs/index.html">
 <meta property="og:site_name" content="Leii's Blog">
-<meta property="og:description" content="APNs 是 Apple Push Notification service 的简称，是苹果提供的Push服务器，Push流程如下：
-
-1、应用程序注册消息推送。
-2、iOS从APNs Server获取device token，应用程序接收device token。
-3、应用程序将device token发送给PUSH服务端程序。
-4、服务端程序向APNs服务发送消息。
-5、APNs服务将消息发送">
+<meta property="og:description" content="苹果在9月22号又更新了有关token和通知的功能[news] 大概意思是现在发送通知可以通过token验证而不需要创建cer证书了，token不会过期而且方便创建，可以用来给你所有的app发送通知（这里的token应该和app打开时didRegisterForRemoteNotificationsWithDeviceToken获取的token不一样）APNs 是 Apple Push Notif">
 <meta property="og:image" content="http://img.blog.csdn.net/20131210220624265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYWJlbF90dQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
 <meta property="og:image" content="http://cc.cocimg.com/api/uploads/20160425/1461567499300714.jpg">
-<meta property="og:updated_time" content="2016-09-22T09:28:37.000Z">
+<meta property="og:updated_time" content="2016-09-26T22:21:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="证书与打包与APNs">
-<meta name="twitter:description" content="APNs 是 Apple Push Notification service 的简称，是苹果提供的Push服务器，Push流程如下：
-
-1、应用程序注册消息推送。
-2、iOS从APNs Server获取device token，应用程序接收device token。
-3、应用程序将device token发送给PUSH服务端程序。
-4、服务端程序向APNs服务发送消息。
-5、APNs服务将消息发送">
+<meta name="twitter:description" content="苹果在9月22号又更新了有关token和通知的功能[news] 大概意思是现在发送通知可以通过token验证而不需要创建cer证书了，token不会过期而且方便创建，可以用来给你所有的app发送通知（这里的token应该和app打开时didRegisterForRemoteNotificationsWithDeviceToken获取的token不一样）APNs 是 Apple Push Notif">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20131210220624265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYWJlbF90dQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
 
 
@@ -338,7 +320,7 @@
       
 
       
-        <p>APNs 是 Apple Push Notification service 的简称，是苹果提供的Push服务器，Push流程如下：</p>
+        <h2 id="苹果在9月22号又更新了有关token和通知的功能-news-大概意思是现在发送通知可以通过token验证而不需要创建cer证书了，token不会过期而且方便创建，可以用来给你所有的app发送通知（这里的token应该和app打开时didRegisterForRemoteNotificationsWithDeviceToken获取的token不一样）"><a href="#苹果在9月22号又更新了有关token和通知的功能-news-大概意思是现在发送通知可以通过token验证而不需要创建cer证书了，token不会过期而且方便创建，可以用来给你所有的app发送通知（这里的token应该和app打开时didRegisterForRemoteNotificationsWithDeviceToken获取的token不一样）" class="headerlink" title="苹果在9月22号又更新了有关token和通知的功能[news] 大概意思是现在发送通知可以通过token验证而不需要创建cer证书了，token不会过期而且方便创建，可以用来给你所有的app发送通知（这里的token应该和app打开时didRegisterForRemoteNotificationsWithDeviceToken获取的token不一样）"></a>苹果在9月22号又更新了有关token和通知的功能<a href="https://developer.apple.com/news/?id=09222016a" target="_blank" rel="external">[news]</a> 大概意思是现在发送通知可以通过token验证而不需要创建cer证书了，token不会过期而且方便创建，可以用来给你所有的app发送通知（这里的token应该和app打开时didRegisterForRemoteNotificationsWithDeviceToken获取的token不一样）</h2><p>APNs 是 Apple Push Notification service 的简称，是苹果提供的Push服务器，Push流程如下：</p>
 <p><img src="http://img.blog.csdn.net/20131210220624265?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYWJlbF90dQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="pic 1"></p>
 <p>1、应用程序注册消息推送。</p>
 <p>2、iOS从APNs Server获取device token，应用程序接收device token。</p>
@@ -478,7 +460,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -551,7 +533,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#苹果在9月22号又更新了有关token和通知的功能-news-大概意思是现在发送通知可以通过token验证而不需要创建cer证书了，token不会过期而且方便创建，可以用来给你所有的app发送通知（这里的token应该和app打开时didRegisterForRemoteNotificationsWithDeviceToken获取的token不一样）"><span class="nav-number">1.</span> <span class="nav-text">苹果在9月22号又更新了有关token和通知的功能[news] 大概意思是现在发送通知可以通过token验证而不需要创建cer证书了，token不会过期而且方便创建，可以用来给你所有的app发送通知（这里的token应该和app打开时didRegisterForRemoteNotificationsWithDeviceToken获取的token不一样）</span></a></li></ol></div>
             
           </div>
         </section>
