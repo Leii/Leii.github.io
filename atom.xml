@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://leii.me/"/>
-  <updated>2016-10-02T00:12:59.000Z</updated>
+  <updated>2016-10-02T00:17:11.000Z</updated>
   <id>http://leii.me/</id>
   
   <author>
@@ -17,10 +17,10 @@
   
   <entry>
     <title>GLSL笔记[一]</title>
-    <link href="http://leii.me/2016/10/02/GLSL%E7%AC%94%E8%AE%B0%E4%B8%80/"/>
-    <id>http://leii.me/2016/10/02/GLSL笔记一/</id>
-    <published>2016-10-02T00:03:29.000Z</published>
-    <updated>2016-10-02T00:12:59.000Z</updated>
+    <link href="http://leii.me/2016/10/01/GLSL%E7%AC%94%E8%AE%B0%E4%B8%80/"/>
+    <id>http://leii.me/2016/10/01/GLSL笔记一/</id>
+    <published>2016-10-01T00:03:29.000Z</published>
+    <updated>2016-10-02T00:17:11.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>计算机图形学是我们大学专业的必修课，因为是系主任亲自教的当时学的还挺认真的，然而在大学里课程与实践应用脱节比较大，不能学以致用，导致学完忘的也快，直到毕业后发现在游戏开发、以及美图视频类APP中都有很广的应用，又重新翻出课本去看，最近比较空写笔记总结一下。本着要知其然并知其所以然的精神从GPU的历史开始：</p>
@@ -42,37 +42,37 @@
 <li>支持绘制到纹理功能(Render to Texture,RTT)</li>
 </ul>
 <p>（其中说了3遍的vertex programmability 和 fragment programmability是本文主线）<br>GPU采用流式并行计算模式，可对每个数据独立计算，但是在依赖其他数据的运算不如CPU。</p>
-<h4 id="GPU绘制管线"><a href="#GPU绘制管线" class="headerlink" title="GPU绘制管线"></a>GPU绘制管线</h4><p>图形绘制管线分为3个主要阶段：应用程序阶段、几何阶段、光栅阶段。</p>
-<h5 id="1，应用程序阶段"><a href="#1，应用程序阶段" class="headerlink" title="1，应用程序阶段"></a>1，应用程序阶段</h5><p>主要用高级编程语言开发，与CPU内存打交道，如碰撞检测、场景图建立、空间八叉树更新、视锥裁剪等经典算法都在此阶段执行。该阶段的末端，几何体数据（顶点坐标、法向量、纹理坐标、纹理等）通过数据总线传到图形硬件。数据总线是一个可以共享的通道，用于多个设备之间传送数据，端口是在两个设备之间传送 数据的通道;带宽用来描述端口或者总线上的吞吐量,可以用每秒字节(b/s) 来度量,数据总线和端口(如加速图形端口,Accelerated Graphic Port,AGP)将 不同的功能模块“粘接”在一起。由于端口和数据总线均具有数据传输能力,因此 通常也将端口认为是数据总线。</p>
-<h5 id="2，几何阶段"><a href="#2，几何阶段" class="headerlink" title="2，几何阶段"></a>2，几何阶段</h5><p>这个阶段的主要工作是“变换三维顶点坐标”和“光照计算”，显卡信息中通常会有一个表示“T&amp;L”的硬件部分，即“Transform&amp;Lighting”。</p>
+<h2 id="GPU绘制管线"><a href="#GPU绘制管线" class="headerlink" title="GPU绘制管线"></a>GPU绘制管线</h2><p>图形绘制管线分为3个主要阶段：应用程序阶段、几何阶段、光栅阶段。</p>
+<h3 id="1，应用程序阶段"><a href="#1，应用程序阶段" class="headerlink" title="1，应用程序阶段"></a>1，应用程序阶段</h3><p>主要用高级编程语言开发，与CPU内存打交道，如碰撞检测、场景图建立、空间八叉树更新、视锥裁剪等经典算法都在此阶段执行。该阶段的末端，几何体数据（顶点坐标、法向量、纹理坐标、纹理等）通过数据总线传到图形硬件。数据总线是一个可以共享的通道，用于多个设备之间传送数据，端口是在两个设备之间传送 数据的通道;带宽用来描述端口或者总线上的吞吐量,可以用每秒字节(b/s) 来度量,数据总线和端口(如加速图形端口,Accelerated Graphic Port,AGP)将 不同的功能模块“粘接”在一起。由于端口和数据总线均具有数据传输能力,因此 通常也将端口认为是数据总线。</p>
+<h3 id="2，几何阶段"><a href="#2，几何阶段" class="headerlink" title="2，几何阶段"></a>2，几何阶段</h3><p>这个阶段的主要工作是“变换三维顶点坐标”和“光照计算”，显卡信息中通常会有一个表示“T&amp;L”的硬件部分，即“Transform&amp;Lighting”。</p>
 <blockquote>
-<p>输入计算机的是一系列三维坐标点，GPU会帮我们转换为二维屏幕上的点，达到“跃然纸面”的效果。<br>坐标类型有以下几种：Object Space 模型坐标空间，World Space 世界坐标空间，Eye Space 观察坐标空间，Clip and Project Space 屏幕坐标空间。<br>转换顺序为：CPU[3D APP or Game -&gt; 3D API(OpenGL/DirectX)] -&gt; GPU[Object Coordinates -&gt; World Coordinates -&gt; Eye Coordinates -&gt; Clip and Project Coordinates] -&gt; Primitive Assembly -&gt; Triangle setup</p>
+<p>输入计算机的是一系列三维坐标点，GPU会帮我们转换为二维屏幕上的点，达到“跃然纸面”的效果。<br>坐标类型有以下几种：Object Space 模型坐标空间，World Space 世界坐标空间，Eye Space 观察坐标空间，Clip and Project Space 屏幕坐标空间。<br>转换顺序为：CPU[3D APP or Game -&gt; 3D API(OpenGL/DirectX)] -&gt; GPU[Object Coordinates -&gt; World Coordinates -&gt; Eye Coordinates -&gt; Clip and Project Coordinates]</p>
 </blockquote>
-<h6 id="2-1-Object-Space-gt-World-Space"><a href="#2-1-Object-Space-gt-World-Space" class="headerlink" title="2.1 Object Space -&gt; World Space"></a>2.1 Object Space -&gt; World Space</h6><p>object space coordinates 是模型文件中的顶点值，建模时得到的，如3DMAX导出的.max文件就包含模型空间坐标，它与其他物体没有任何参照关系（与world space coordinate的主要区别），当模型导入计算机后会给它一个相对坐标原点的位置，这个过程就是模型空间坐标转换为世界空间坐标，由一个四阶矩阵控制，通常称之为world matrix。 (光照计算通常是在世界坐标空间中进行的)</p>
-<h6 id="2-2-World-Space-gt-Eye-Space"><a href="#2-2-World-Space-gt-Eye-Space" class="headerlink" title="2.2 World Space -&gt; Eye Space"></a>2.2 World Space -&gt; Eye Space</h6><p>3D游戏中屏幕显示的内容随着视点的变化而变化，是因为GPU将物体顶点坐标从world space 转换为 eye space。eye space 即以camera为原点，由视线方向、视角和远近平面组成的一个梯形的三维空间，称之为viewing frustum视锥，超出这个梯形体的场景数据会被去除 frustum culling 视锥裁剪。</p>
-<h6 id="2-3-Eye-Space-gt-Project-and-clip-Space"><a href="#2-3-Eye-Space-gt-Project-and-clip-Space" class="headerlink" title="2.3 Eye Space -&gt; Project and clip Space"></a>2.3 Eye Space -&gt; Project and clip Space</h6><p>转变为屏幕坐标的过程主要为下面3步：</p>
+<h4 id="2-1-Object-Space-gt-World-Space"><a href="#2-1-Object-Space-gt-World-Space" class="headerlink" title="2.1 Object Space -&gt; World Space"></a>2.1 Object Space -&gt; World Space</h4><p>object space coordinates 是模型文件中的顶点值，建模时得到的，如3DMAX导出的.max文件就包含模型空间坐标，它与其他物体没有任何参照关系（与world space coordinate的主要区别），当模型导入计算机后会给它一个相对坐标原点的位置，这个过程就是模型空间坐标转换为世界空间坐标，由一个四阶矩阵控制，通常称之为world matrix。 (光照计算通常是在世界坐标空间中进行的)</p>
+<h4 id="2-2-World-Space-gt-Eye-Space"><a href="#2-2-World-Space-gt-Eye-Space" class="headerlink" title="2.2 World Space -&gt; Eye Space"></a>2.2 World Space -&gt; Eye Space</h4><p>3D游戏中屏幕显示的内容随着视点的变化而变化，是因为GPU将物体顶点坐标从world space 转换为 eye space。eye space 即以camera为原点，由视线方向、视角和远近平面组成的一个梯形的三维空间，称之为viewing frustum视锥，超出这个梯形体的场景数据会被去除 frustum culling 视锥裁剪。</p>
+<h4 id="2-3-Eye-Space-gt-Project-and-clip-Space"><a href="#2-3-Eye-Space-gt-Project-and-clip-Space" class="headerlink" title="2.3 Eye Space -&gt; Project and clip Space"></a>2.3 Eye Space -&gt; Project and clip Space</h4><p>转变为屏幕坐标的过程主要为下面3步：</p>
 <p>1，用透视变化矩阵把顶点从视锥中变换到裁剪空间的CVV（规范立方体）</p>
 <p>2，在CVV中进行图元裁剪</p>
 <p>3，屏幕映射：将经过前述过程得到的坐标映射到屏幕坐标系上。<br>    （把顶点从view frustum不规则图形投影到CVV这个过程称为投影，投影分平行投影和透视投影） </p>
 <p>Primitive Assembly，图元装配，即将顶点根据原始的连接关系，还原出网格结构，网格由顶点和索引组成,在之前的流水线中是对顶点的处理, 在这个阶段是根据索引将顶点链接在一起,组成线、面单元。之后就是对超出屏 幕外的三角形进行裁剪,想象一下:一个三角形其中一个顶点在画面外,另外两 个顶点在画面内,这是我们在屏幕上看到的就是一个四边形。然后将该四边形切 成两个小的三角形。 此外还有一个操作涉及到三角形的顶点顺序(其实也就是三角形的法向量朝 向),根据右手定则来决定三角面片的法向量,如果该法向量朝向视点(法向量 与到视点的方向的点积为正),则该面是正面。一般是顶点按照逆时针排列。如 果该面是反面,则进行背面去除操作(Back-face Culling)。在 OpenGL 中有专门 的函数 enable 和 disable 背面去除操作。所有的裁剪剔除计算都是为了减少需要 绘制的顶点个数。 </p>
 <p>处理三角形的过程被称为 Triangle Setup。到目前位置,我们得到了一堆在 屏幕坐标上的三角面片,这些面片是用于做光栅化的(Rasterizing)。 </p>
-<h5 id="3，光栅化阶段"><a href="#3，光栅化阶段" class="headerlink" title="3，光栅化阶段"></a>3，光栅化阶段</h5><h6 id="3-1-光栅化"><a href="#3-1-光栅化" class="headerlink" title="3.1 光栅化:"></a>3.1 光栅化:</h6><p>决定哪些像素被集合图元覆盖的过程(Rasterization is the process of determining the set of pixels covered by a geometric primitive)。经过上面诸多坐标 转换之后,现在我们得到了每个点的屏幕坐标值(Screen coordinate),也知道我 们需要绘制的图元(点、线、面)。但此时还存在两个问题：</p>
+<h3 id="3，光栅化阶段"><a href="#3，光栅化阶段" class="headerlink" title="3，光栅化阶段"></a>3，光栅化阶段</h3><h4 id="3-1-光栅化"><a href="#3-1-光栅化" class="headerlink" title="3.1 光栅化:"></a>3.1 光栅化:</h4><p>决定哪些像素被集合图元覆盖的过程(Rasterization is the process of determining the set of pixels covered by a geometric primitive)。经过上面诸多坐标 转换之后,现在我们得到了每个点的屏幕坐标值(Screen coordinate),也知道我 们需要绘制的图元(点、线、面)。但此时还存在两个问题：</p>
 <p>问题一:点的屏幕坐标值是浮点数,但像素都是由整数点来表示的,如果确 定屏幕坐标值所对应的像素? </p>
 <p>问题二:在屏幕上需要绘制的有点、线、面,如何根据两个已经确定位置的 2 个像素点绘制一条线段,如果根据已经确定了位置的 3 个像素点绘制一个三角 形面片? </p>
 <p>答：问题一，四舍五入，例如,一条线段的位置是(10.48,20.51),转换为像<br>素位置则是(10,21) 。</p>
 <p>问题二，涉及到画线算法和区域图元填充算法，通常的画线算法有DDA算法和Bresenham画线算法。区域图元算法填充有扫描线多边形填充算法和边界填充算法。</p>
 <p>这个过程结束之后，顶点以及绘制图元（线、面）已经对应到像素，接下来要做的就是处理像素：给像素赋予颜色值。</p>
-<h6 id="3-2-像素处理"><a href="#3-2-像素处理" class="headerlink" title="3.2 像素处理"></a>3.2 像素处理</h6><p>Pixel operation又称为Raster operation，是在更新帧缓存之前执行的最后一系列针对每个片段的操作，目的是计算每个像素的颜色值，被遮挡面通过一个被称为深度测试的过程而消除掉。主要有以下过程：</p>
+<h4 id="3-2-像素处理"><a href="#3-2-像素处理" class="headerlink" title="3.2 像素处理"></a>3.2 像素处理</h4><p>Pixel operation又称为Raster operation，是在更新帧缓存之前执行的最后一系列针对每个片段的操作，目的是计算每个像素的颜色值，被遮挡面通过一个被称为深度测试的过程而消除掉。主要有以下过程：</p>
 <p>1，消除遮挡面。</p>
 <p>2，纹理操作，也就是根据像素的纹理坐标，查询相应的纹理值。</p>
 <p>3，Blending 混色，根据已经画好的颜色，计算透明度混合为新的颜色输出，称之为alpha混合，为了绘制透明的物体，需要对物体进行排序：首先绘制不透明的物体，然后再不透明的物体上方对透明物体按照又后到前的顺序进行混合处理。排序会用到z buffer 。</p>
 <p>4，Filering(滤镜)，再将颜色通过某种滤镜运算载输出新的颜色值。</p>
-<h5 id="4，图形硬件"><a href="#4，图形硬件" class="headerlink" title="4，图形硬件"></a>4，图形硬件</h5><p>主要介绍GPU中数据的存放硬件，以及各类缓冲区的具体含义和用途，如：z buffer（深度缓冲区）、stencil buffer（模板缓冲区）、frame buffer （帧缓冲区）和color buffer（颜色缓冲区）</p>
-<h6 id="4-1-寄存器"><a href="#4-1-寄存器" class="headerlink" title="4.1 寄存器"></a>4.1 寄存器</h6><p>内存能单独存在而寄存器不能，寄存器是有限存储容量的高速存储，用来暂存指令、数据和地址。shader编程是基于计算机硬件的，包括GPU上的寄存器类型，glsl和hlsl的着色虚拟机版本就是就是基于GPU的寄存器和指令集而区分的。</p>
-<h6 id="4-2-Z-Buffer-与Z-值"><a href="#4-2-Z-Buffer-与Z-值" class="headerlink" title="4.2 Z Buffer 与Z 值"></a>4.2 Z Buffer 与Z 值</h6><p>又称深度缓冲区，放的是视点到每个像素点的距离，Z值在【0，1】区间，默认最接近眼睛的顶点Z值是0.0，远裁剪面上的顶点Z值是1.0，使用 z buffer可以用来判断空间点的遮挡关系，Z 值并非真正的笛卡儿空间坐标系中的欧几里德距离(Euclidean distance), 而是一种“顶点到视点距离”的相对度量。 </p>
+<h3 id="4，图形硬件"><a href="#4，图形硬件" class="headerlink" title="4，图形硬件"></a>4，图形硬件</h3><p>主要介绍GPU中数据的存放硬件，以及各类缓冲区的具体含义和用途，如：z buffer（深度缓冲区）、stencil buffer（模板缓冲区）、frame buffer （帧缓冲区）和color buffer（颜色缓冲区）</p>
+<h4 id="4-1-寄存器"><a href="#4-1-寄存器" class="headerlink" title="4.1 寄存器"></a>4.1 寄存器</h4><p>内存能单独存在而寄存器不能，寄存器是有限存储容量的高速存储，用来暂存指令、数据和地址。shader编程是基于计算机硬件的，包括GPU上的寄存器类型，glsl和hlsl的着色虚拟机版本就是就是基于GPU的寄存器和指令集而区分的。</p>
+<h4 id="4-2-Z-Buffer-与Z-值"><a href="#4-2-Z-Buffer-与Z-值" class="headerlink" title="4.2 Z Buffer 与Z 值"></a>4.2 Z Buffer 与Z 值</h4><p>又称深度缓冲区，放的是视点到每个像素点的距离，Z值在【0，1】区间，默认最接近眼睛的顶点Z值是0.0，远裁剪面上的顶点Z值是1.0，使用 z buffer可以用来判断空间点的遮挡关系，Z 值并非真正的笛卡儿空间坐标系中的欧几里德距离(Euclidean distance), 而是一种“顶点到视点距离”的相对度量。 </p>
 <p>投影到屏幕坐标的图元内部的点是由已知顶点信息插值而来，所以内部的点的Z值也是插值而来，而透视投影的点做线性插值不符合实际的位置，应该是随着点原来的位置离眼睛越远则偏差越大，为了避免或减轻上述的情况,在设置视点相机远裁减面和近裁减面时,两者 的比值应尽量小于 1000。 </p>
-<h6 id="4-3-Stencil-Buffer"><a href="#4-3-Stencil-Buffer" class="headerlink" title="4.3 Stencil Buffer"></a>4.3 Stencil Buffer</h6><p>模板缓冲区，是一个额外的buffer，通常附加到z buffer中，Z buffer 和 stencil buffer 通常在 显存中共享同一片区域。Stencil buffer 对大部分人而言应该比较陌生，这是一个 用来“做记号”的 buffer，每个像素对应一个 stencil buffer(其实就是对应一个 Z buffer)。例如：在一个像素的 stencil buffer 中存放 1，表示该像素对应的空间点处于阴影体(shadow volume)中。 </p>
-<h6 id="4-4-Frame-Buffer"><a href="#4-4-Frame-Buffer" class="headerlink" title="4.4 Frame Buffer"></a>4.4 Frame Buffer</h6><p>帧缓冲区，用于存放显示输出的数据，这个buffer的数据一般是像素颜色值。有时候也被认为是color buffer与 z buffer的组合。frame buffer 通常都在显卡上,但是有时显卡会集成到主板上,所以这种情况下 frame buffer 被放在内存区域(general main memory)。</p>
+<h4 id="4-3-Stencil-Buffer"><a href="#4-3-Stencil-Buffer" class="headerlink" title="4.3 Stencil Buffer"></a>4.3 Stencil Buffer</h4><p>模板缓冲区，是一个额外的buffer，通常附加到z buffer中，Z buffer 和 stencil buffer 通常在 显存中共享同一片区域。Stencil buffer 对大部分人而言应该比较陌生，这是一个 用来“做记号”的 buffer，每个像素对应一个 stencil buffer(其实就是对应一个 Z buffer)。例如：在一个像素的 stencil buffer 中存放 1，表示该像素对应的空间点处于阴影体(shadow volume)中。 </p>
+<h4 id="4-4-Frame-Buffer"><a href="#4-4-Frame-Buffer" class="headerlink" title="4.4 Frame Buffer"></a>4.4 Frame Buffer</h4><p>帧缓冲区，用于存放显示输出的数据，这个buffer的数据一般是像素颜色值。有时候也被认为是color buffer与 z buffer的组合。frame buffer 通常都在显卡上,但是有时显卡会集成到主板上,所以这种情况下 frame buffer 被放在内存区域(general main memory)。</p>
 <hr>
 <p>参考：GPU编程与CG语言之阳春白雪与下里巴人</p>
 ]]></content>
@@ -84,6 +84,10 @@
     
     </summary>
     
+      <category term="CG" scheme="http://leii.me/categories/CG/"/>
+    
+    
+      <category term="笔记" scheme="http://leii.me/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
