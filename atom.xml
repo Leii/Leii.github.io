@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://leii.me/"/>
-  <updated>2016-10-03T14:09:51.000Z</updated>
+  <updated>2016-10-03T14:10:27.000Z</updated>
   <id>http://leii.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://leii.me/2016/10/02/Shader%E7%AC%94%E8%AE%B0%E4%BA%8C/"/>
     <id>http://leii.me/2016/10/02/Shader笔记二/</id>
     <published>2016-10-02T01:19:58.000Z</published>
-    <updated>2016-10-03T14:09:51.000Z</updated>
+    <updated>2016-10-03T14:10:27.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Shader-Language"><a href="#Shader-Language" class="headerlink" title="Shader Language"></a>Shader Language</h2><p>shader language，着色语言，是基于物体本身属性和光照条件，计算每个像素点的颜色值。</p>
 <p>shader language 被定义为高级语言，但是不能独立于硬件，现阶段shader language还是完全依赖于GPU架构的，在shader language之前基于图形硬件的编程只能靠汇编语言。shader language目前主流的语言有3种：基于OpenGL 的 GLSL，基于Direct3D的HLSL，还有NVIDIA公司的Cg语言。</p>
@@ -177,12 +177,30 @@ float4x2 mat3;// 表示 4*2 阶矩阵,包含 8 个 float 类型数据
     <link href="http://leii.me/2016/09/29/%E5%BC%80%E5%8F%91%E6%89%8B%E6%B8%B8%E4%B8%8E%E5%BC%80%E5%8F%91APP%E7%9A%84%E5%87%A0%E7%82%B9%E5%8C%BA%E5%88%AB/"/>
     <id>http://leii.me/2016/09/29/开发手游与开发APP的几点区别/</id>
     <published>2016-09-28T16:21:31.000Z</published>
-    <updated>2016-09-28T16:21:31.000Z</updated>
+    <updated>2016-10-03T18:41:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>从高中自己做的FLASH小游戏到现在全职做iOS应用的开发，在游戏和应用上都做过了很多尝试，比如做过的游戏有：拼图游戏、射击游戏、基于物理引擎的游戏、消方块类游戏、SLG游戏、赛车游戏等，用到的工具/引擎有FLASH、cocos2d-iphone、cocos2d-X、Unity，还有公司自己用JAVA写的安卓游戏引擎。</p>
+<p>商用上架的手机应用是从2013年开始写的，到现在为止写过的类型有股票类、漫画阅览器、类36Kr信息发布平台（一个家政O2O APP），电商类APP、LBS类APP等。</p>
+<p>虽然都称不上专家，不过对这两个方向的开发还是有比较多的个人体会的，所以试着对两者做个比较（主要讨论cocos2d-X、Unity3D、iOS、安卓，其他游戏引擎和手机操作系统不够了解）：</p>
+<p>1，游戏引擎与基础框架，目前国内主流的手机游戏引擎有cocos2d-X和Unity3D，而iOS与Android APP开发主要用到iOS Frameworks 与 Application Framework，</p>
+<p>2，游戏引擎注重跨平台，但是不同的引擎功能上差别大；应用基础框架只限于自己的平台，但是功能上iOS安卓都大同小异。</p>
+<p>3，游戏在客户端的逻辑比较重（因为要自定义很多控件和复杂的交互），应用更多的逻辑放在服务端处理</p>
+<p>4，游戏本质上是娱乐产品，给用户提供是APP本身，应用是服务窗口，用作信息的传递和展示</p>
+<p>5，多人交互这种强联网类型的游戏主要用长连接，应用主要是短连接</p>
+<p>6，游戏的美术主要分工有：原画、UI、3D、动画、特效、交互等，应用的美术主要是UI和交互</p>
+<p>7，游戏在显示层面的工作更多，所以经常需要用到动画库图形学等，应用在网络层面的工作更多，比如近几年hybrid大热，让native+web的开发成为标配</p>
+<p>8，大部分游戏属于小团队开发，产品周期短，所以在工程化以及多人合作开发上的工具和方案都明显比应用要少，特别是Unity在协同开发问题很多</p>
+<p>9，Unity和cocos2d的热更新主要都是通过Lua实现，而iOS热修复主流用的是JSPatch（安卓用Xposed多一点好像）</p>
+]]></content>
     
     <summary type="html">
     
+      &lt;p&gt;从高中自己做的FLASH小游戏到现在全职做iOS应用的开发，在游戏和应用上都做过了很多尝试，比如做过的游戏有：拼图游戏、射击游戏、基于物理引擎的游戏、消方块类游戏、SLG游戏、赛车游戏等，用到的工具/引擎有FLASH、cocos2d-iphone、cocos2d-X、Uni
+    
     </summary>
     
+    
+      <category term="笔记" scheme="http://leii.me/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
