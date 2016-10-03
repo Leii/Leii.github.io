@@ -260,8 +260,179 @@
             
               
                 
-                <a class="post-title-link" href="/2016/10/01/GLSL笔记一/" itemprop="url">
-                  GLSL笔记[一]
+                <a class="post-title-link" href="/2016/10/02/Shader笔记二/" itemprop="url">
+                  Shader笔记[二]
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-02T09:19:58+08:00" content="2016-10-02">
+              2016-10-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/CG/" itemprop="url" rel="index">
+                    <span itemprop="name">CG</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Shader-Language"><a href="#Shader-Language" class="headerlink" title="Shader Language"></a>Shader Language</h2><p>shader language，着色语言，是基于物体本身属性和光照条件，计算每个像素点的颜色值。</p>
+<p>shader language 被定义为高级语言，但是不能独立于硬件，现阶段shader language还是完全依赖于GPU架构的，在shader language之前基于图形硬件的编程只能靠汇编语言。shader language目前主流的语言有3种：基于OpenGL 的 GLSL，基于Direct3D的HLSL，还有NVIDIA公司的Cg语言。</p>
+<h3 id="1-Shader-Language-原理"><a href="#1-Shader-Language-原理" class="headerlink" title="1 Shader Language 原理"></a>1 Shader Language 原理</h3><p>使用shader language 编写的程序称之为shader program着色程序，着色程序分为vertex shader program 和 fragment shader program（顶点着色与片段着色）。GPU上有可编程顶点处理器和可编程片段处理器，其中又分为多个可编程单元，分别能运行顶点程序和片段程序。顶点和片段处理器都拥有非常强大的并行计算能力,并且非常擅长于矩阵 (不高于 4 阶)计算,片段处理器还可以高速查询纹理信息(目前顶点处理器还 不行,这是顶点处理器的一个发展方向)。 </p>
+<p>输入寄存器存放输入的图 元信息;输出寄存器存放处理后的图元信息;纹理 buffer 存放纹理数据,目前 大多数的可编程图形硬件只支持片段处理器处理纹理;从外部宿主程序输入的常 量放在常量寄存器中;临时寄存器存放着色程序在执行过程中产生的临时数据。 </p>
+<h3 id="2-Vertex-Shader-Program-amp-Fragment-Shader-Program"><a href="#2-Vertex-Shader-Program-amp-Fragment-Shader-Program" class="headerlink" title="2 Vertex Shader Program &amp; Fragment Shader Program"></a>2 Vertex Shader Program &amp; Fragment Shader Program</h3><p>顶点着色程序从输入寄存器中提取图元信息（顶点位置、法向量、纹理坐标等），并完成顶点的空间转换、法向量空间转换、光照计算等操作，最后将计算好的数据传送到指定寄存器中；然后片段着色器从中获取纹理坐标、光照信息等数据，并根据这些信息以及从应用程序传递的纹理信息进行每个片段的颜色计算，最后将处理后的数据传递给光栅化操作模块。</p>
+<p>顶点着色程序通常是和片段着色程序配合使用的，前者的输出是后者的输入，不过也可以只有顶点着色程序，这样的话就只对输入的顶点做操作，顶点内部的点则按照硬件默认的方式进行自动插值。例如, 输入一个三角面片,顶点着色程序对其进行 phong 光照计算,只计算三个顶点的 光照颜色,而三角面片内部点的颜色按照硬件默认的算法(Gourand 明暗处理或 者快速 phong 明暗处理)进行插值,如果图形硬件比较先进,默认的处理算法较 好(快速 phong 明暗处理),则效果也会较好;如果图形硬件使用 Gourand 明暗 处理算法,则会出现马赫带效应(条带化)。 </p>
+<p>而片段着色程序是对没个片段进行独立的颜色计算，并且算法自己编写，不但可控性好，而且可以达到很多自定义的效果。</p>
+<p>顶点着色程序主要进行几何方面的运算，而片段着色程序主要针对最终的颜色值进行计算。<br>片段着色程序还有一个突出的特点是：检索纹理的能力。对于GPU来说，纹理等价于数组，这意味着，如果要做通用计算,例如数组排序、字符串检索等，就必须使用到片段着色程序。 </p>
+<blockquote>
+<p> 什么是片断?片断和像素有什么不一样?所谓片断就是所有的三维顶点 在光栅化之后的数据集合,这些数据还没有经过深度值比较,而屏幕显示的像素 都是经过深度比较的。 </p>
+</blockquote>
+<h3 id="3-3种Shader-Language-比较"><a href="#3-3种Shader-Language-比较" class="headerlink" title="3 3种Shader Language 比较"></a>3 3种Shader Language 比较</h3><p>目前有3种主流的着色器语言：基于OpenGL 的GLSL，基于Direct3D的HLSL(High Level Shading Language)，还有NVIDIA公司的Cg (C for Graphic)语言。</p>
+<p>GLSL 与 HLSL 分别提基于 OpenGL 和 Direct3D 的接口,两者不能混用 ,Cg 可以被 OpenGL 和 Direct3D 支持。 Cg 语言和 OpenGL、DirectX 并不是同一层次的语言,而是 OpenGL 和 DirectX 的上层 。Unity shader 所使用的语言是Gg语言。</p>
+<p>Cg 语言通常采用动态编译的方式,即,在宿主程序运行时利用 Cg 运行库( Cg Runtime library)动态编译 Cg 代码,使用动态编译的方式,可以将 Cg 程序当作一 个脚本,随时修改随时运行,节省大量的时间 </p>
+<p>Cg 程序的编译不但依赖于宿主程序所使用的三维编程接口,而且依赖于图 形硬件环境,因为图形硬件自身的限制,不一定支持某种 Cg 语句,例如,如果 你所使用的 GPU 并不支持循环控制指令,那么在 Cg 程序中编写的循环控制语 句将无法通过编译。被特定的图形硬件环境或 AIP 所支持的 Cg 语言子集,被称 为 Cg Profiles。需要注意的是: profile 分为顶点程序的 profile 和片段程序的 profile,这是因为顶点着色器和片段着色器原本就不是工作在同一个硬件。 </p>
+<p>一个Cg profile 定义了一个“被特定图形硬件或API所支持的Cg 语言子集”，</p>
+<h3 id="4-CG-语言基础"><a href="#4-CG-语言基础" class="headerlink" title="4 CG 语言基础"></a>4 CG 语言基础</h3><h4 id="4-1-数据类型"><a href="#4-1-数据类型" class="headerlink" title="4.1 数据类型"></a>4.1 数据类型</h4><p>7种常见的基本数据类型：float 、half、 int、 fixed、 bool、 sampler *(纹理对象的句柄)、string</p>
+<p>内置的向量数据类型：float4、bool4等，表示float或bool类型的4元向量，向量最长不能超过4元，即可以声明float1、float3但是写 float5 array 就会编译错误。向量初始化方式一般为：</p>
+<pre><code>float4 array = float4(1.0, 2.0, 3.0, 4.0);
+</code></pre><p>还可以使用短的构建长的向量：</p>
+<pre><code>float2 a = float2(1.0, 2.0);
+float4 b = float4(a, 1.0, 2.0);    
+</code></pre><p>Cg还提供了矩阵数据类型，最大维数不超过4*4。如：</p>
+<pre><code>float1x1 matrix1;//等价于 float matirx 1; x 是字符,并不是乘号! 
+float2x3 matrix2;// 表示 2*3 阶矩阵,包含 6 个 float 类型数据 
+float4x2 mat3;// 表示 4*2 阶矩阵,包含 8 个 float 类型数据 
+</code></pre><blockquote>
+<p>注意:Cg 中向量、矩阵与数组是完全不同,向量和矩阵是内置的数据类型 (矩阵基于向量),而数组则是一种数据结构,不是内置数据类型!这一点和 C\C++中不太一样,在 C\C++中,这三者同属于数据结构,数组可以构建向量和 矩阵。 </p>
+</blockquote>
+<h4 id="4-2-数组与结构体"><a href="#4-2-数组与结构体" class="headerlink" title="4.2 数组与结构体"></a>4.2 数组与结构体</h4><p>着色程序中，数组通常的使用目的是:作为从外部应用程序传入大量参数 到 Cg 的顶点程序中的形参接口,例如与皮肤形变相关的矩阵数组,或者光照参 数数组等。 </p>
+<p>进行数组变量声明时,一定要指定数组长度,除非是作为函数参数而声明的 形参数组。并且在当前的 profiles 中,数组的长度和所引用的数组元素的地址必 须在编译时就知道。 </p>
+<p>Cg语言支持结构体(structure),实际上Cg中的结构体的声明、使用和C++ 非常类似(只是类似,不是相同)。一个结构体相当于一种数据类型,可以定义 该类型的变量。引入结构体机制,赋予了 Cg 语言一丝面向对象的色彩。还记得 C++中,结构体与类的区别吗?没有区别,除了默认访问属性在结构体中为 public,类中为 private,所以结构体与类是非常近似的,由此可以看出 shader 语 言的发展趋势还是向着具有面向对象特性的高级语言。不过目前的 Cg 语言中的结构体以展现“封装”功能为主,并不支持继承机制。 </p>
+<p>一般来说,Cg 的源代码都会在文件首部定义二个结构体,分别用于定义输人 和输出的类型,这二个结构体定义与普通的 C 结构定义不同,除了定义结构体 成员的数据类型外,还定义了该成员的绑定语义类型( Binding Semantics),所谓 绑定语义类型是为了与宿主环境进行数据交换的时候识别不同数据类型的。目前 Cg 支持的绑定语义类型包括 POSTION 位置),COLOR(颜色),NORMAL(法向 量),Texcoord(纹理坐标)等类型。 </p>
+<h4 id="4-3-CG表达式与控制语句"><a href="#4-3-CG表达式与控制语句" class="headerlink" title="4.3 CG表达式与控制语句"></a>4.3 CG表达式与控制语句</h4><p>cg的操作符与C类似，其中有</p>
+<pre><code>关系操作符：&lt; != &lt;= ==等
+逻辑操作符：&amp;&amp; || !等
+数学操作符：++ *= % 等
+移位操作符： &gt;&gt; &lt;&lt;
+</code></pre><p>除此之外还有比较特殊的swizzle 操作符（.）将一个向量的成员取出组成一根新的向量，如<br>    float4(a, b, c, d).xyz  等价于 float3(a, b, c)<br>    float4(a, b, c, d).xyy  等价于 float3(a, b, b)<br>    float4(a, b, c, d).wzyx  等价于 float4(d, c, b, a) </p>
+<blockquote>
+<p>注意:swizzle操作符只能对结构体和向量使用,不能对数组使用 </p>
+</blockquote>
+<p>Cg中的控制流语句和 循环语句与C语言类似:条件语句有:if、if-else;循环语句有:while、for。break 语句可以和在for语句中使用。 </p>
+<h4 id="4-4-输入-输出"><a href="#4-4-输入-输出" class="headerlink" title="4.4 输入\输出"></a>4.4 输入\输出</h4><p>Cg的关键字大多数是和C/C++一样，比如int float，不过它也有独特的关键字，这些关键字用于指定输入图元的数据含义（位置信息、法向量信息等），本质上也对应着图元数据存放的硬件资源（寄存器或者纹理），称之为语义词（Semantics），通常也根据其用法称之为绑定语义词(binding semantics)。 </p>
+<p>除语义词外,Cg 中还提供了三个关键字,in、out、inout,用于表示函数的 输入参数的传递方式,称为输入\输出关键字,这组关键字可以和语义词合用表 达硬件上不同的存储位置,即同一个语义词,使用 in 关键字修辞和 out 关键词修 辞,表示的图形硬件上不同的寄存器。 </p>
+<p>Cg 语言还提供两个修辞符:uniform,用于指定变量的数据初始化方式;const 关键字的含义与 C\C++中相同,表示被修辞变量为常量变量。 </p>
+<p>Cg 语言将输入数据流分为两类 </p>
+<p>1，Varying inputs,即数据流输入图元信息的各种组成要素。从应用程序输入 到 GPU 的数据除了顶点位置数据,还有顶点的法向量数据,纹理坐标数据 等。Cg 语言提供了一组语义词,用以表明参数是由顶点的哪些数据初始化 的。 </p>
+<p>2，Uniform inputs,表示一些与三维渲染有关的离散信息数据,这些数据通 常由应用程序传入,并通常不会随着图元信息的变化而变化,如材质对光的 反射信息、运动矩阵等。Uniform 修辞一个参数,表示该参数的值由外部应 用程序初始化并传入;例如在参数列表中写: </p>
+<p>输入\输出修辞符  in\out\inout  分别表示修辞一个形参只是用于输入 ，修辞一个形参只是用于输出的 以及修辞一个形参既用于输入也用于输出,这是典型的引用传递。 也可以使用 return 语句来代替 out 修辞符的使用。输入\输出修辞符通常和语义词一起使用,表示顶点着色程序和片段着色程序的输入输出。</p>
+<h4 id="4-5-语义词-Semantic-与语义绑定-Binding-Semantics"><a href="#4-5-语义词-Semantic-与语义绑定-Binding-Semantics" class="headerlink" title="4.5 语义词(Semantic)与语义绑定(Binding Semantics)"></a>4.5 语义词(Semantic)与语义绑定(Binding Semantics)</h4><p>语义概念的提出和图形流水线工作机制大有关系。从前面所讲的 GPU 处理 流程中可以看出，一个阶段处理数据，然后传输给下一个阶段，那么每个阶段之 间的接口是如何确定的呢?例如：顶点处理器的输入数据是处于模型空间的顶点 数据(位置、法向量)，输出的是投影坐标和光照颜色，片段处理器要将光照颜 色做为输入，问题是“片段处理器怎么知道光照颜色值的存放位置”?<br>在高级语言中(C/C++)，数据从接口的一端流向另一端,是因为提供了数 据存放的内存位置(通常是指针信息)，由于 Cg 语言并不支持指针机制,且图 形硬件处理过程中,数据通常暂存在寄存器中，故而在 Cg 语言中，通过引入语 义绑定(binding semantics)机制，指定数据存放的位置,实际上就是将输入\输 出数据和寄存器做一个映射关系(在 OpenGL Cg profiles 中是这样的,但在 DirectX-based Cg profiles 中则并没有这种映射关系)。根据输入语义,图形处理 器从某个寄存器取数据，然后再将处理好的数据,根据输出语义,放到指定的寄存器。 </p>
+<p>常用的语义词有：POSITION NORMAL BINORMAL BLENDINDICES TEXCOORD0- TEXCOORD7    PSIZE TANGENT BLENDWEIGHT </p>
+<p>如： in float4 modelPos: POSITION 表示该参数的数据是顶点位置坐标（通常位于模型空间），属于输入参数，语义词POSITION是输入语义，如果在OpenGL中则对应为接受应用程序传递的顶点数据的寄存器。</p>
+<p>顶点着色程序必须声明一个输出变量并绑定POSITION语义词，该变量中 的数据将被用于,且只被用于光栅化 。<br>为了保持顶点程序输出语义和片段程序输入语义的一致性,通常使用相同的 struct类型数据作为两者之间的传递,这是一种非常方便的写法,推荐使用。例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">struct VertexIn &#123;</div><div class="line">	float4 position : 	POSITION;</div><div class="line">	float4 normal : NORMAL;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">struct VertexScreen &#123;</div><div class="line">	float4 oPosition : POSITION;</div><div class="line">	float4 objectPos : TEXCOORD0;</div><div class="line">	float4 objectNormal : TEXCOORD1;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>【待续……】</p>
+<hr>
+<p>参考：GPU编程与CG语言之阳春白雪与下里巴人</p>
+<p>计算机图形学</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/01/Shader笔记一/" itemprop="url">
+                  Shader笔记[一]
                 </a>
               
             
@@ -375,7 +546,7 @@
 <h4 id="4-3-Stencil-Buffer"><a href="#4-3-Stencil-Buffer" class="headerlink" title="4.3 Stencil Buffer"></a>4.3 Stencil Buffer</h4><p>模板缓冲区，是一个额外的buffer，通常附加到z buffer中，Z buffer 和 stencil buffer 通常在 显存中共享同一片区域。Stencil buffer 对大部分人而言应该比较陌生，这是一个 用来“做记号”的 buffer，每个像素对应一个 stencil buffer(其实就是对应一个 Z buffer)。例如：在一个像素的 stencil buffer 中存放 1，表示该像素对应的空间点处于阴影体(shadow volume)中。 </p>
 <h4 id="4-4-Frame-Buffer"><a href="#4-4-Frame-Buffer" class="headerlink" title="4.4 Frame Buffer"></a>4.4 Frame Buffer</h4><p>帧缓冲区，用于存放显示输出的数据，这个buffer的数据一般是像素颜色值。有时候也被认为是color buffer与 z buffer的组合。frame buffer 通常都在显卡上,但是有时显卡会集成到主板上,所以这种情况下 frame buffer 被放在内存区域(general main memory)。</p>
 <hr>
-<p>参考：GPU编程与CG语言之阳春白雪与下里巴人</p>
+<p>参考：GPU编程与CG语言之阳春白雪与下里巴人<br>     计算机图形学</p>
 
           
         
@@ -534,99 +705,6 @@
             <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2016-09-28T21:46:32+08:00" content="2016-09-28">
               2016-09-28
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/27/OC发送消息的几种方式/" itemprop="url">
-                  OC发送消息的几种方式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-27T17:59:37+08:00" content="2016-09-27">
-              2016-09-27
             </time>
           </span>
 
@@ -1491,8 +1569,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/06/12/iOS常用判断/" itemprop="url">
-                  iOS常用判断
+                <a class="post-title-link" href="/2016/06/27/OC发送消息的几种方式/" itemprop="url">
+                  OC发送消息的几种方式
                 </a>
               
             
@@ -1505,30 +1583,11 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-12T17:26:25+08:00" content="2016-06-12">
-              2016-06-12
+            <time itemprop="dateCreated" datetime="2016-06-27T17:59:37+08:00" content="2016-06-27">
+              2016-06-27
             </time>
           </span>
 
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
           
 
           
@@ -1554,15 +1613,7 @@
       
         
           
-            <p>[用到就记录下来…]</p>
-<h4 id="判断一个对象中是否包含某个属性"><a href="#判断一个对象中是否包含某个属性" class="headerlink" title="判断一个对象中是否包含某个属性"></a>判断一个对象中是否包含某个属性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">+ (BOOL) getVariableWithClass:(Class) myClass varName:(NSString *)name&#123;       </div><div class="line">	unsigned int outCount, i;</div><div class="line">  	Ivar *ivars = class_copyIvarList(myClass, &amp;outCount);</div><div class="line">  	for (i = 0; i &lt; outCount; i++) &#123;</div><div class="line">    	Ivar property = ivars[i];</div><div class="line">    	NSString *keyName = [NSString 		stringWithCString:ivar_getName(property) encoding:NSUTF8StringEncoding];</div><div class="line">	    keyName = [keyName stringByReplacingOccurrencesOfString:@&quot;_&quot; withString:@&quot;&quot;];</div><div class="line">    	if ([keyName isEqualToString:name]) &#123;</div><div class="line">      	return YES;</div><div class="line">    	&#125;</div><div class="line">  	&#125;</div><div class="line">  	return NO;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="判断字符串是否为纯数字组成"><a href="#判断字符串是否为纯数字组成" class="headerlink" title="判断字符串是否为纯数字组成"></a>判断字符串是否为纯数字组成</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (BOOL)isPureInt:(NSString*)string&#123;</div><div class="line">    NSScanner* scan = [NSScanner scannerWithString:string];</div><div class="line">    int val;</div><div class="line">    return[scan scanInt:&amp;val] &amp;&amp; [scan isAtEnd];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="判断当天是星期几"><a href="#判断当天是星期几" class="headerlink" title="判断当天是星期几"></a>判断当天是星期几</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (void)weekDayJudge</div><div class="line">&#123;</div><div class="line">    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];</div><div class="line">    NSDate *now;</div><div class="line">    NSDateComponents *comps = [[NSDateComponents alloc] init];</div><div class="line">    NSInteger unitFlags =NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |</div><div class="line">    NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;</div><div class="line">    now=[NSDate date];</div><div class="line">    comps = [calendar components:unitFlags fromDate:now];</div><div class="line"></div><div class="line">    NSLog(@&quot;weekday is %ld&quot;,(long)[comps weekday]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="iOS-判断是否开启定位"><a href="#iOS-判断是否开启定位" class="headerlink" title="iOS 判断是否开启定位"></a>iOS 判断是否开启定位</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">+ (BOOL)isLocationServiceOpen &#123;</div><div class="line">    if ([ CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) &#123;</div><div class="line">        return NO;</div><div class="line">    &#125; else</div><div class="line">        return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="iOS-判断是否允许消息通知"><a href="#iOS-判断是否允许消息通知" class="headerlink" title="iOS 判断是否允许消息通知"></a>iOS 判断是否允许消息通知</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">+ (BOOL)isMessageNotificationServiceOpen &#123;</div><div class="line">    if (SYSTEM_VERSION_GREATER_THAN(@&quot;8.0&quot;)) &#123;</div><div class="line">        return [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];</div><div class="line">    &#125; else &#123;</div><div class="line">        return UIRemoteNotificationTypeNone != [[UIApplication sharedApplication] enabledRemoteNotificationTypes];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h5 id="判断是否属于或包含某个类、对象、方法、协议"><a href="#判断是否属于或包含某个类、对象、方法、协议" class="headerlink" title="判断是否属于或包含某个类、对象、方法、协议"></a>判断是否属于或包含某个类、对象、方法、协议</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.  isKindOfClass:Class</div><div class="line">2.  isMemberOfClass:Class</div><div class="line">3.  respondToSelector:selector</div><div class="line">4.  conformsToProtocol:protocol</div></pre></td></tr></table></figure>
-<h4 id="获取当前屏幕最顶层显示的viewcontroller"><a href="#获取当前屏幕最顶层显示的viewcontroller" class="headerlink" title="获取当前屏幕最顶层显示的viewcontroller"></a>获取当前屏幕最顶层显示的viewcontroller</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (UIViewController *)getPresentedViewController</div><div class="line">&#123;</div><div class="line">    UIViewController *appRootVC = [UIApplication sharedApplication].keyWindow.rootViewController;</div><div class="line">    UIViewController *topVC = appRootVC;</div><div class="line">    if (topVC.presentedViewController) &#123;</div><div class="line">        topVC = topVC.presentedViewController;</div><div class="line">    &#125;</div><div class="line">    return topVC;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
+            
           
         
       
@@ -1635,7 +1686,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">17</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
