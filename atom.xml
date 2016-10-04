@@ -177,11 +177,11 @@ float4x2 mat3;// 表示 4*2 阶矩阵,包含 8 个 float 类型数据
     <link href="http://leii.me/2016/09/29/%E5%BC%80%E5%8F%91%E6%89%8B%E6%B8%B8%E4%B8%8E%E5%BC%80%E5%8F%91APP%E7%9A%84%E5%87%A0%E7%82%B9%E5%8C%BA%E5%88%AB/"/>
     <id>http://leii.me/2016/09/29/开发手游与开发APP的几点区别/</id>
     <published>2016-09-28T16:21:31.000Z</published>
-    <updated>2016-10-04T01:10:49.000Z</updated>
+    <updated>2016-10-04T05:34:38.000Z</updated>
     
     <content type="html"><![CDATA[<p>从高中自己做的FLASH小游戏到现在全职做iOS应用的开发，在游戏和应用上都做过了很多尝试，做过的游戏有：拼图游戏、射击游戏、基于物理引擎的游戏、消方块类游戏、SLG游戏、赛车游戏等，用到的工具/引擎有FLASH、cocos2d-iphone、cocos2d-X、Unity，还有公司自己用JAVA写的安卓游戏引擎。</p>
 <p>商用上架的手机应用是从2013年开始写的，到现在为止写过的类型有：股票类、漫画阅览器、类36Kr信息发布平台（一个家政O2O APP），电商类APP、LBS类APP等。</p>
-<p>虽然都称不上专家，不过对这两个方向的开发还是有比较多的个人体会的，所以试着对两者做个比较：</p>
+<p>虽然都称不上专家，不过对这两个方向的开发还是一点的个人体会的，所以试着对两者做个比较：</p>
 <p>1，游戏引擎与基础框架，目前国内主流的手机游戏引擎有cocos2d-X和Unity3D，iOS开发时用到系统的Cocoa Touch层和Media层较多，而安卓开发主要用Application Framework这一层</p>
 <p>2，游戏引擎注重跨平台，但是不同的引擎功能上差别大；应用基础框架只限于自己的平台，但是功能上iOS安卓大同小异</p>
 <p>3，游戏在客户端的逻辑比较重（因为要自定义很多控件和复杂的交互），应用更多的逻辑放在服务端处理</p>
@@ -191,6 +191,7 @@ float4x2 mat3;// 表示 4*2 阶矩阵,包含 8 个 float 类型数据
 <p>7，游戏在显示层面的工作更多，所以经常需要用到动画库图形学等，应用在网络层面的工作更多，比如近几年hybrid大热，让native+web的开发成为标配</p>
 <p>8，大部分游戏属于小团队开发，产品周期短，所以在工程化以及多人合作开发上的工具和方案都明显比应用要少，特别是Unity在协同开发问题很多，而应用的开发都有比较成熟的项目管理工具（比如iOS的CocoaPod）和组件化方案</p>
 <p>9，Unity和cocos2d的热更新主要都是通过Lua实现，iOS主流的热修复工具是JSPatch</p>
+<p>zzl</p>
 ]]></content>
     
     <summary type="html">
@@ -209,12 +210,80 @@ float4x2 mat3;// 表示 4*2 阶矩阵,包含 8 个 float 类型数据
     <link href="http://leii.me/2016/09/28/iOS%E8%BF%91%E5%87%A0%E4%B8%AA%E7%89%88%E6%9C%AC%E7%9A%84%E4%B8%BB%E8%A6%81%E6%9B%B4%E6%96%B0%E7%82%B9/"/>
     <id>http://leii.me/2016/09/28/iOS近几个版本的主要更新点/</id>
     <published>2016-09-28T13:46:32.000Z</published>
-    <updated>2016-09-28T13:46:32.000Z</updated>
+    <updated>2016-10-04T07:33:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>每个版本的iOS更新都会给开发者们带来很多想象和发挥的空间，有的功能可能创造了新的用户场景或者解决了用户诟病很久的问题，当然也有些功能不能被市场接受而无人问津（比如SpriteKit、SceneKit），因为很多成熟的APP都会兼容最近的3个版本的iOS系统，所以有的很棒的新功能出现，被大量主流APP所应用到线上需要几年的时间所以记录下之前版本的更新点以便于在做版本兼容的时候查看，本文主要整理API方面的更新</p>
+</blockquote>
+<h2 id="iOS10-："><a href="#iOS10-：" class="headerlink" title="iOS10 ："></a>iOS10 ：</h2><h3 id="1，SiriKit"><a href="#1，SiriKit" class="headerlink" title="1，SiriKit"></a>1，SiriKit</h3><p> 支持音频、视频、消息发送接收、搜索照片、预订行程、管理锻炼等等。</p>
+<p>主要头文件入口是#import<intents intents.h="">、#import <intentsui intentsui.h=""></intentsui></intents></p>
+<h3 id="2，Proactive-Suggestions"><a href="#2，Proactive-Suggestions" class="headerlink" title="2，Proactive Suggestions"></a>2，Proactive Suggestions</h3><p> 系统预先建议，头文件主要有：</p>
+<p><uikit uitextinputtraits.h=""> 输入框</uikit></p>
+<p><mediaplayer mpplayablecontentmanager.h=""> 视频类</mediaplayer></p>
+<p><mapkit mkdirectionsrequest.h=""> 地图类</mapkit></p>
+<h3 id="3，User-Notifications-用户通知"><a href="#3，User-Notifications-用户通知" class="headerlink" title="3，User Notifications 用户通知"></a>3，User Notifications 用户通知</h3><p>（我在“证书与打包与APNs”这篇博文里有详细介绍）</p>
+<p>头文件是<usernotifications usernotifications.h=""></usernotifications></p>
+<h3 id="4，Messages-新交互"><a href="#4，Messages-新交互" class="headerlink" title="4，Messages 新交互"></a>4，Messages 新交互</h3><p>Integrating with the Messages App 与系统短信 app交互，可以模拟发消息收消息，发邮件表情包等，提供了UI界面。</p>
+<p>头文件入口在<messages messages.h=""></messages></p>
+<h3 id="5，Speech-Recognition-语音识别转文字"><a href="#5，Speech-Recognition-语音识别转文字" class="headerlink" title="5，Speech Recognition 语音识别转文字"></a>5，Speech Recognition 语音识别转文字</h3><p>头文件入口在<speech speech.h=""></speech></p>
+<h3 id="6，Wide-Color-宽域颜色"><a href="#6，Wide-Color-宽域颜色" class="headerlink" title="6，Wide Color 宽域颜色"></a>6，Wide Color 宽域颜色</h3><p> 大多数的 core字打头的图形框架 还有AVFoundation 都大大提高了对扩展像素和宽色域色彩空间的支持。通过图形堆栈扩展这种方式比以往支持广色域的显示设备更加容易。现在对UIKit扩展可以在sRGB的色彩空间下工作，性能更好，也可以在更广泛的色域来搭配sRGB颜色。</p>
+<p>UIColor类里新增了两个方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">+ (UIColor *)colorWithDisplayP3Red:(CGFloat)displayP3Red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha NS_AVAILABLE_IOS(10_0);</div><div class="line">- (UIColor *)initWithDisplayP3Red:(CGFloat)displayP3Red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha NS_AVAILABLE_IOS(10_0);</div></pre></td></tr></table></figure>
+<h3 id="7，Adapting-to-the-True-Tone-Display-真彩色显示"><a href="#7，Adapting-to-the-True-Tone-Display-真彩色显示" class="headerlink" title="7，Adapting to the True Tone Display 真彩色显示"></a>7，Adapting to the True Tone Display 真彩色显示</h3><p>真彩色的显示会根据光感应器来进行自动的调节来达到特定环境下的显示与性能平衡效果。 如果需要这个功能的话需要再info.plist里配置<br>UIWhitePointAdaptivityStyle<br>共有五种选择：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">UIWhitePointAdaptivityStyleStandard 标准</div><div class="line">UIWhitePointAdaptivityStyleReading 阅读</div><div class="line">UIWhitePointAdaptivityStylePhoto 图片</div><div class="line">UIWhitePointAdaptivityStyleVideo 视频</div><div class="line">UIWhitePointAdaptivityStyleGame 游戏</div></pre></td></tr></table></figure>
+<h3 id="8，App-Search-Enhancements-应用搜索增强"><a href="#8，App-Search-Enhancements-应用搜索增强" class="headerlink" title="8，App Search Enhancements 应用搜索增强"></a>8，App Search Enhancements 应用搜索增强</h3><p>应用程序内搜索，搜索传递，考虑私人差异，结果可视化。 使用CSSearchQuery类，调用Core Spotlight的api，可以让你不必自己维护自己的搜索索引，关于对搜索关键字的处理，还有考虑到不同类别差异导致搜索结果的排序都是苹果帮你处理。</p>
+<p>头文件是<corespotlight cssearchquery.h=""></corespotlight></p>
+<h3 id="9，Widget-Enhancements-锁屏部件增强"><a href="#9，Widget-Enhancements-锁屏部件增强" class="headerlink" title="9，Widget Enhancements 锁屏部件增强"></a>9，Widget Enhancements 锁屏部件增强</h3><p>现在锁屏界面有了新的设计，建议我们废弃以前的notificationCenterVibrancyEffect 改用widgetPrimaryVibrancyEffect或者widgetSecondaryVibrancyEffect，并且窗口的小部件可以让你描述有多少东西可用，支持紧凑和扩展两种形态。</p>
+<p><notificationcenter notificationcenter.h=""> 里面有三个头文件</notificationcenter></p>
+<p><img src="http://images2015.cnblogs.com/blog/717809/201606/717809-20160621170857694-1224766609.png" alt="headers"></p>
+<h3 id="10，Security-and-Privacy-Enhancements-安全和保密性增强"><a href="#10，Security-and-Privacy-Enhancements-安全和保密性增强" class="headerlink" title="10，Security and Privacy Enhancements 安全和保密性增强"></a>10，Security and Privacy Enhancements 安全和保密性增强</h3><p>安全方面在iOS10中引入了更多修改和补充，具体有以下几点：<br>1.在info.plist文件新增了一个key，NSAllowsArbitraryLoadsInWebContent，允许任意web页面加载，同时苹果会用ATS保护你的app。<br>2.使用改进后的SecKey API 而不是过时的 CDSA API。<br>3.安全传输API中不再支持SSLv3， 建议你们尽快停用SHA1和3DES加密算法。<br>4.剪贴板的扩展，因为wwdc2016演示了可以跨设备复制粘贴啊，那肯定要做一些限制可见（#import <uikit uipasteboard.h="">）<br>5.这点最重要的，建议尽快适配， 所有和用户权限相关的地方必须在info.plist里配置里面包括</uikit></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">NSBluetoothPeripheralUsageDescription</div><div class="line">NSCalendarsUsageDescription</div><div class="line">NSCameraUsageDescription</div><div class="line">NSContactsUsageDescription</div><div class="line">NSHealthShareUsageDescription</div><div class="line">NSHealthUpdateUsageDescription</div><div class="line">NSHomeKitUsageDescription</div><div class="line">NSLocationAlwaysUsageDescription</div><div class="line">NSLocationWhenInUseUsageDescription</div><div class="line">NSMicrophoneUsageDescription</div><div class="line">NSMotionUsageDescription</div><div class="line">NSPhotoLibraryUsageDescription</div><div class="line">NSRemindersUsageDescription</div><div class="line">NSSiriUsageDescription</div><div class="line">NSSpeechRecognitionUsageDescription</div><div class="line">NSVideoSubscriberAccountUsageDescription</div><div class="line">NSVoIPUsageDescription</div></pre></td></tr></table></figure>
+<h3 id="11，HomeKit-再次更新"><a href="#11，HomeKit-再次更新" class="headerlink" title="11，HomeKit 再次更新"></a>11，HomeKit 再次更新</h3><p>可以使你的手机连接支持homeKit的智能硬件，（没有的话你可以使用HomeKit Accessroy Simulator来模拟home中的智能电器），Demo教程看<a href="http://www.cocoachina.com/ios/20150324/11411.html" target="_blank" rel="external">这里</a> </p>
+<p><a href="https://developer.apple.com/reference/homekit?language=objc" target="_blank" rel="external">官方文档</a></p>
+<h2 id="iOS9"><a href="#iOS9" class="headerlink" title="iOS9"></a>iOS9</h2><h3 id="1，Multitasking"><a href="#1，Multitasking" class="headerlink" title="1，Multitasking"></a>1，Multitasking</h3><p>iPad支持新的Multitasking，包括Slide Over, Split View和Picture in Picture，视频需要迁移到 AVKit 的框架</p>
+<h3 id="2，XCUITest"><a href="#2，XCUITest" class="headerlink" title="2，XCUITest"></a>2，XCUITest</h3><p>XCUI 使用 Accessibility 标记来确定 view，但因为是 Apple 自家的东西，它可以自动记录你的操作流程，所以你只需要书写最后的验证部分就可以了，比其他的 UI 测试工具方便很多。</p>
+<h3 id="3，Search"><a href="#3，Search" class="headerlink" title="3，Search"></a>3，Search</h3><p>主要是spotlight开放了部分api，可以搜索app中的内容。</p>
+<h3 id="4，SceneKit-SpriteKit-and-Metal的更新"><a href="#4，SceneKit-SpriteKit-and-Metal的更新" class="headerlink" title="4，SceneKit, SpriteKit, and Metal的更新"></a>4，SceneKit, SpriteKit, and Metal的更新</h3><p>还有GameplayKit，ReplayKit（游戏录像），Model I/O。</p>
+<h3 id="5，HomeKit，CloudKit，HealthKit-等"><a href="#5，HomeKit，CloudKit，HealthKit-等" class="headerlink" title="5，HomeKit，CloudKit，HealthKit 等"></a>5，HomeKit，CloudKit，HealthKit 等</h3><p>这几个框架的更新。</p>
+<h3 id="6，Swift-2"><a href="#6，Swift-2" class="headerlink" title="6，Swift 2"></a>6，Swift 2</h3><p>更新并开源</p>
+<h3 id="7，bitcode"><a href="#7，bitcode" class="headerlink" title="7，bitcode"></a>7，bitcode</h3><p>bitcode是被编译程序的一种中间形式的代码。包含bitcode配置的程序将会在App store上被编译和链接。bitcode允许苹果在后期重新优化我们程序的二进制文件，而不需要我们重新提交一个新的版本到App store上。</p>
+<h3 id="8，App-Transport-Security"><a href="#8，App-Transport-Security" class="headerlink" title="8，App Transport Security"></a>8，App Transport Security</h3><p>NSAllowsArbitraryLoads默认使用了HTTPS协议进行传输</p>
+<h3 id="9，RUL-scheme"><a href="#9，RUL-scheme" class="headerlink" title="9，RUL scheme"></a>9，RUL scheme</h3><p>iOS9需要将你要在外部调用的URL scheme列为白名单，才可以完成跳转</p>
+<h3 id="10，Contacts-Framework"><a href="#10，Contacts-Framework" class="headerlink" title="10，Contacts Framework"></a>10，Contacts Framework</h3><p>新增Contacts Framework，与此同时废除AddressBookUI Framework</p>
+<h3 id="11，-Watch-Connectivity"><a href="#11，-Watch-Connectivity" class="headerlink" title="11， Watch Connectivity"></a>11， Watch Connectivity</h3><p>由于watchOS 2的架构变化，用来对iPhone和Watch进行双向通信</p>
+<h3 id="12，Safari-Services-Framework"><a href="#12，Safari-Services-Framework" class="headerlink" title="12，Safari Services Framework"></a>12，Safari Services Framework</h3><p>可以让Safari以一个Controller的形式加载你的网页，和系统的Safari完全共享Cookie和Autofill等特性，最重要的，Safari的JavaScript引擎。在你的app需要展示一个WebView又不需要太多定制的时候，用它来替换掉你现在在用的UIWebView或者WKWebView。</p>
+<h3 id="13，UIKit方面的一些提升，比如UIStackView，NSDataAsset"><a href="#13，UIKit方面的一些提升，比如UIStackView，NSDataAsset" class="headerlink" title="13，UIKit方面的一些提升，比如UIStackView，NSDataAsset"></a>13，UIKit方面的一些提升，比如UIStackView，NSDataAsset</h3><h3 id="14，Objective-C-（2015）语言的新特性："><a href="#14，Objective-C-（2015）语言的新特性：" class="headerlink" title="14，Objective-C （2015）语言的新特性："></a>14，Objective-C （2015）语言的新特性：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">1、Nullability</div><div class="line"></div><div class="line">@property (nonatomic, strong) NSArray *__nonull names;</div><div class="line">@property (nonatomic, strong, nonnull) NSarray *names;</div><div class="line"></div><div class="line">2、Lightweight Generics * 泛型</div><div class="line"></div><div class="line">NSMutableArray&lt;NSString *&gt; *names;</div><div class="line">NSMutableDictionary&lt;NSString *, NSNumber *&gt; *book;</div><div class="line">NSMutableArray&lt;ObjectType&gt; :</div><div class="line">限制数组只能装字符串，有确定的类型。可以用点语法。自定义泛型。</div><div class="line">泛型的类型可以自己定义，自定义的类添加泛型。协变性，和继承有关系。小类型（子类）-&gt;大类型（父类）__covariant 该怎么去学习。泛型好处取出不是id类型，可以用点语法。</div><div class="line"></div><div class="line">3、__kindof</div><div class="line"></div><div class="line">返回值是id的问题，错了么有警告，潜在问题。所以要写清楚类型。</div><div class="line">做SDK的时候，实现别人看不到。cell 的类型不确定，所以用id。返回不用强制转换。</div><div class="line">返回值可以是他，也可以是他的子类。不用强制转换。方便开发。</div></pre></td></tr></table></figure>
+<h2 id="iOS-8"><a href="#iOS-8" class="headerlink" title="iOS 8"></a>iOS 8</h2><h3 id="1，自定义键盘"><a href="#1，自定义键盘" class="headerlink" title="1，自定义键盘"></a>1，自定义键盘</h3><p>支持第三方输入法，你可以为用户提供带有不同输入法和布局的自定义键盘。</p>
+<h3 id="2，UIActionSheet-and-UIAlertView-的升级"><a href="#2，UIActionSheet-and-UIAlertView-的升级" class="headerlink" title="2，UIActionSheet and UIAlertView 的升级"></a>2，UIActionSheet and UIAlertView 的升级</h3><p>在iOS8里面，官方提供了新的类UIAlertController来替换UIActionSheet and UIAlertView。</p>
+<h3 id="3，Today"><a href="#3，Today" class="headerlink" title="3，Today"></a>3，Today</h3><p>应用可在通知中心的Today视图中展示插件，快速更新或者启动任务，查看包裹寄送情况、最近的上网记录或者即时新闻。</p>
+<h3 id="4，Storage-Provider"><a href="#4，Storage-Provider" class="headerlink" title="4，Storage Provider"></a>4，Storage Provider</h3><p>开发者可提供一个能被其他应用访问的文档储存位置。使用文档选择器view controller的应用可以打开由storage provider管理的文档，或者把文档移动到storage provider。</p>
+<h3 id="5，touchID"><a href="#5，touchID" class="headerlink" title="5，touchID"></a>5，touchID</h3><p>你可以选择Touch ID登陆第三方应用程序，不需要输入密码，你的指纹数据是被保护的，在没有被允许的情况下别的程序是访问不到它的。</p>
+<h3 id="6，分享"><a href="#6，分享" class="headerlink" title="6，分享"></a>6，分享</h3><p>通过提供更多分享选项，iOS 8允许你的应用把照片、视频、网站以及其他内容分享至社交网站或者其他实体。</p>
+<h3 id="7，Custom-Actions"><a href="#7，Custom-Actions" class="headerlink" title="7，Custom Actions"></a>7，Custom Actions</h3><p>在Action页面创建自定义action按钮，以便用户给文档添加水印、更新愿望列表，或者把文本转换成不同的语言等。</p>
+<h3 id="8，App-Extensions"><a href="#8，App-Extensions" class="headerlink" title="8，App Extensions"></a>8，App Extensions</h3><p>应用扩展允许开发者扩展应用的自定义功能和内容，能够让用户在使用其他app时使用该项功能。你可以开发一个应用扩展来执行某些特定的任务，用户使用该扩展后就可以在多个上下文环境中执行该任务。</p>
+<h3 id="9，PhotoKit"><a href="#9，PhotoKit" class="headerlink" title="9，PhotoKit"></a>9，PhotoKit</h3><p>PhotoKit为使用照片和视频资源提供了新的API，包括由Photos app管理的iCloud Photos资产,所以你可以在“Camera roll”中直接编辑照片，无需提前导入。PhotoKit还包含一个线程安全架构用以获取、缓存缩略图和全尺寸图片，请求资产更改，遵守其他应用所做的变化，以及对资产内容进行可恢复的编辑。</p>
+<h3 id="10，Manual-Camera-Controls"><a href="#10，Manual-Camera-Controls" class="headerlink" title="10，Manual Camera Controls"></a>10，Manual Camera Controls</h3><p>AVFoundation框架让拍照变得前所未有的容易。你的应用可以直接控制相机对焦、白平衡以及曝光设置等。应用程序也可以通过包围曝光 (Bracket Exposure)使用不同的曝光设置自动拍摄照片。</p>
+<h3 id="11，HealthKit"><a href="#11，HealthKit" class="headerlink" title="11，HealthKit"></a>11，HealthKit</h3><p>HealthKit允许提供健康和健身服务的应用在一个地方访问共享的健康相关信息。用户的健康信息储存在一个集中的安全的地方，用户可以决定和你的应用分享哪些数据。你的应用可访问任何共享的健康相关的信息，并提供关于用户的信息，无需提供对特定健身跟踪设备的专门支持。信息可来自连接至iOS设备的设备，或者由用户手动输入。</p>
+<h3 id="12，Metal"><a href="#12，Metal" class="headerlink" title="12，Metal"></a>12，Metal</h3><p>Metal可以使开发者低成本最大限度地发挥A7 GPU的性能，实现了难以令人置信的复杂图形渲染和计算任务，消除了传统图形API中的多个性能瓶颈。Metal提供了精简的API，统一的图形和着色语言以及一个基于Xcode 的工具。许多游戏引擎制造商都已经宣布支持 Metal，比如 Crytek、Unity以及Epic Games。Metal可以将应用的表现和性能带到一个新的水</p>
+<hr>
+<p>参考：</p>
+<p><a href="http://www.cnblogs.com/dsxniubility/p/5596973.html" target="_blank" rel="external">对iOS10新增Api的详细探究</a></p>
+<p><a href="http://www.cocoachina.com/ios/20150324/11411.html" target="_blank" rel="external">HomeKit 开发指南（中文版）</a></p>
+<p><a href="https://onevcat.com/2015/06/ios9-sdk/" target="_blank" rel="external">开发者所需要知道的 iOS 9 SDK 新特性</a></p>
+<p><a href="http://www.cocoachina.com/special/ios8/" target="_blank" rel="external">iOS8开发者手册</a></p>
+]]></content>
     
     <summary type="html">
     
+      &lt;blockquote&gt;
+&lt;p&gt;每个版本的iOS更新都会给开发者们带来很多想象和发挥的空间，有的功能可能创造了新的用户场景或者解决了用户诟病很久的问题，当然也有些功能不能被市场接受而无人问津（比如SpriteKit、SceneKit），因为很多成熟的APP都会兼容最近的3个版本的
+    
     </summary>
     
+      <category term="iOS" scheme="http://leii.me/categories/iOS/"/>
+    
+    
+      <category term="笔记" scheme="http://leii.me/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
