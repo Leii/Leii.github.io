@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="Leii's Blog">
 <meta property="og:description" content="每个版本的iOS更新都会给开发者们带来很多想象和发挥的空间，有的功能可能创造了新的用户场景或者解决了用户诟病很久的问题，当然也有些功能不能被市场接受而无人问津（比如SpriteKit、SceneKit），因为很多成熟的APP都会兼容最近的3个版本的iOS系统，所以有的很棒的新功能出现，被大量主流APP所应用到线上需要几年的时间所以记录下之前版本的更新点以便于在做版本兼容的时候查看，本文主要整理A">
 <meta property="og:image" content="http://images2015.cnblogs.com/blog/717809/201606/717809-20160621170857694-1224766609.png">
-<meta property="og:updated_time" content="2016-10-04T07:33:22.000Z">
+<meta property="og:updated_time" content="2016-10-04T07:38:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS近几个版本的主要更新点">
 <meta name="twitter:description" content="每个版本的iOS更新都会给开发者们带来很多想象和发挥的空间，有的功能可能创造了新的用户场景或者解决了用户诟病很久的问题，当然也有些功能不能被市场接受而无人问津（比如SpriteKit、SceneKit），因为很多成熟的APP都会兼容最近的3个版本的iOS系统，所以有的很棒的新功能出现，被大量主流APP所应用到线上需要几年的时间所以记录下之前版本的更新点以便于在做版本兼容的时候查看，本文主要整理A">
@@ -323,25 +323,25 @@
 <p>每个版本的iOS更新都会给开发者们带来很多想象和发挥的空间，有的功能可能创造了新的用户场景或者解决了用户诟病很久的问题，当然也有些功能不能被市场接受而无人问津（比如SpriteKit、SceneKit），因为很多成熟的APP都会兼容最近的3个版本的iOS系统，所以有的很棒的新功能出现，被大量主流APP所应用到线上需要几年的时间所以记录下之前版本的更新点以便于在做版本兼容的时候查看，本文主要整理API方面的更新</p>
 </blockquote>
 <h2 id="iOS10-："><a href="#iOS10-：" class="headerlink" title="iOS10 ："></a>iOS10 ：</h2><h3 id="1，SiriKit"><a href="#1，SiriKit" class="headerlink" title="1，SiriKit"></a>1，SiriKit</h3><p> 支持音频、视频、消息发送接收、搜索照片、预订行程、管理锻炼等等。</p>
-<p>主要头文件入口是#import<intents intents.h="">、#import <intentsui intentsui.h=""></intentsui></intents></p>
+<p>主要头文件入口是#import’<intents intents.h="">‘、#import ‘<intentsui intentsui.h="">‘</intentsui></intents></p>
 <h3 id="2，Proactive-Suggestions"><a href="#2，Proactive-Suggestions" class="headerlink" title="2，Proactive Suggestions"></a>2，Proactive Suggestions</h3><p> 系统预先建议，头文件主要有：</p>
-<p><uikit uitextinputtraits.h=""> 输入框</uikit></p>
-<p><mediaplayer mpplayablecontentmanager.h=""> 视频类</mediaplayer></p>
-<p><mapkit mkdirectionsrequest.h=""> 地图类</mapkit></p>
+<p>‘<uikit uitextinputtraits.h="">‘ 输入框</uikit></p>
+<p>‘<mediaplayer mpplayablecontentmanager.h="">‘ 视频类</mediaplayer></p>
+<p>‘<mapkit mkdirectionsrequest.h="">‘ 地图类</mapkit></p>
 <h3 id="3，User-Notifications-用户通知"><a href="#3，User-Notifications-用户通知" class="headerlink" title="3，User Notifications 用户通知"></a>3，User Notifications 用户通知</h3><p>（我在“证书与打包与APNs”这篇博文里有详细介绍）</p>
-<p>头文件是<usernotifications usernotifications.h=""></usernotifications></p>
+<p>头文件是’<usernotifications usernotifications.h="">‘</usernotifications></p>
 <h3 id="4，Messages-新交互"><a href="#4，Messages-新交互" class="headerlink" title="4，Messages 新交互"></a>4，Messages 新交互</h3><p>Integrating with the Messages App 与系统短信 app交互，可以模拟发消息收消息，发邮件表情包等，提供了UI界面。</p>
-<p>头文件入口在<messages messages.h=""></messages></p>
-<h3 id="5，Speech-Recognition-语音识别转文字"><a href="#5，Speech-Recognition-语音识别转文字" class="headerlink" title="5，Speech Recognition 语音识别转文字"></a>5，Speech Recognition 语音识别转文字</h3><p>头文件入口在<speech speech.h=""></speech></p>
+<p>头文件入口在’<messages messages.h="">‘</messages></p>
+<h3 id="5，Speech-Recognition-语音识别转文字"><a href="#5，Speech-Recognition-语音识别转文字" class="headerlink" title="5，Speech Recognition 语音识别转文字"></a>5，Speech Recognition 语音识别转文字</h3><p>头文件入口在’<speech speech.h="">‘</speech></p>
 <h3 id="6，Wide-Color-宽域颜色"><a href="#6，Wide-Color-宽域颜色" class="headerlink" title="6，Wide Color 宽域颜色"></a>6，Wide Color 宽域颜色</h3><p> 大多数的 core字打头的图形框架 还有AVFoundation 都大大提高了对扩展像素和宽色域色彩空间的支持。通过图形堆栈扩展这种方式比以往支持广色域的显示设备更加容易。现在对UIKit扩展可以在sRGB的色彩空间下工作，性能更好，也可以在更广泛的色域来搭配sRGB颜色。</p>
 <p>UIColor类里新增了两个方法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">+ (UIColor *)colorWithDisplayP3Red:(CGFloat)displayP3Red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha NS_AVAILABLE_IOS(10_0);</div><div class="line">- (UIColor *)initWithDisplayP3Red:(CGFloat)displayP3Red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha NS_AVAILABLE_IOS(10_0);</div></pre></td></tr></table></figure>
 <h3 id="7，Adapting-to-the-True-Tone-Display-真彩色显示"><a href="#7，Adapting-to-the-True-Tone-Display-真彩色显示" class="headerlink" title="7，Adapting to the True Tone Display 真彩色显示"></a>7，Adapting to the True Tone Display 真彩色显示</h3><p>真彩色的显示会根据光感应器来进行自动的调节来达到特定环境下的显示与性能平衡效果。 如果需要这个功能的话需要再info.plist里配置<br>UIWhitePointAdaptivityStyle<br>共有五种选择：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">UIWhitePointAdaptivityStyleStandard 标准</div><div class="line">UIWhitePointAdaptivityStyleReading 阅读</div><div class="line">UIWhitePointAdaptivityStylePhoto 图片</div><div class="line">UIWhitePointAdaptivityStyleVideo 视频</div><div class="line">UIWhitePointAdaptivityStyleGame 游戏</div></pre></td></tr></table></figure>
 <h3 id="8，App-Search-Enhancements-应用搜索增强"><a href="#8，App-Search-Enhancements-应用搜索增强" class="headerlink" title="8，App Search Enhancements 应用搜索增强"></a>8，App Search Enhancements 应用搜索增强</h3><p>应用程序内搜索，搜索传递，考虑私人差异，结果可视化。 使用CSSearchQuery类，调用Core Spotlight的api，可以让你不必自己维护自己的搜索索引，关于对搜索关键字的处理，还有考虑到不同类别差异导致搜索结果的排序都是苹果帮你处理。</p>
-<p>头文件是<corespotlight cssearchquery.h=""></corespotlight></p>
+<p>头文件是’<corespotlight cssearchquery.h="">‘</corespotlight></p>
 <h3 id="9，Widget-Enhancements-锁屏部件增强"><a href="#9，Widget-Enhancements-锁屏部件增强" class="headerlink" title="9，Widget Enhancements 锁屏部件增强"></a>9，Widget Enhancements 锁屏部件增强</h3><p>现在锁屏界面有了新的设计，建议我们废弃以前的notificationCenterVibrancyEffect 改用widgetPrimaryVibrancyEffect或者widgetSecondaryVibrancyEffect，并且窗口的小部件可以让你描述有多少东西可用，支持紧凑和扩展两种形态。</p>
-<p><notificationcenter notificationcenter.h=""> 里面有三个头文件</notificationcenter></p>
+<p>‘<notificationcenter notificationcenter.h="">‘ 里面有三个头文件</notificationcenter></p>
 <p><img src="http://images2015.cnblogs.com/blog/717809/201606/717809-20160621170857694-1224766609.png" alt="headers"></p>
 <h3 id="10，Security-and-Privacy-Enhancements-安全和保密性增强"><a href="#10，Security-and-Privacy-Enhancements-安全和保密性增强" class="headerlink" title="10，Security and Privacy Enhancements 安全和保密性增强"></a>10，Security and Privacy Enhancements 安全和保密性增强</h3><p>安全方面在iOS10中引入了更多修改和补充，具体有以下几点：<br>1.在info.plist文件新增了一个key，NSAllowsArbitraryLoadsInWebContent，允许任意web页面加载，同时苹果会用ATS保护你的app。<br>2.使用改进后的SecKey API 而不是过时的 CDSA API。<br>3.安全传输API中不再支持SSLv3， 建议你们尽快停用SHA1和3DES加密算法。<br>4.剪贴板的扩展，因为wwdc2016演示了可以跨设备复制粘贴啊，那肯定要做一些限制可见（#import <uikit uipasteboard.h="">）<br>5.这点最重要的，建议尽快适配， 所有和用户权限相关的地方必须在info.plist里配置里面包括</uikit></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">NSBluetoothPeripheralUsageDescription</div><div class="line">NSCalendarsUsageDescription</div><div class="line">NSCameraUsageDescription</div><div class="line">NSContactsUsageDescription</div><div class="line">NSHealthShareUsageDescription</div><div class="line">NSHealthUpdateUsageDescription</div><div class="line">NSHomeKitUsageDescription</div><div class="line">NSLocationAlwaysUsageDescription</div><div class="line">NSLocationWhenInUseUsageDescription</div><div class="line">NSMicrophoneUsageDescription</div><div class="line">NSMotionUsageDescription</div><div class="line">NSPhotoLibraryUsageDescription</div><div class="line">NSRemindersUsageDescription</div><div class="line">NSSiriUsageDescription</div><div class="line">NSSpeechRecognitionUsageDescription</div><div class="line">NSVideoSubscriberAccountUsageDescription</div><div class="line">NSVoIPUsageDescription</div></pre></td></tr></table></figure>
