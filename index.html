@@ -260,6 +260,111 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/04/开发手游与开发APP的几点区别/" itemprop="url">
+                  开发手游与开发APP的几点区别
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-04T00:21:31+08:00" content="2016-10-04">
+              2016-10-04
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>从高中自己做的FLASH小游戏到现在全职做iOS应用的开发，在游戏和应用上都做过了很多尝试，挖过了各种坑，游戏方面的坑有：拼图游戏、射击游戏、基于物理引擎的游戏、消方块类游戏、SLG游戏、赛车游戏等，其中用到的工具/引擎有FLASH、cocos2d-iphone、cocos2d-X、Unity3D，还有公司自己用JAVA写的安卓游戏引擎。</p>
+<p>商用上架的手机应用是从2013年开始写的，到现在为止写过的类型有：股票类、漫画阅览器、类36Kr信息发布平台（一个家政O2O APP），电商类APP、LBS类APP等。</p>
+<p>虽然都称不上专家，不过挖了那么久的坑也有不少体会，所以基于自己有限的经验对两者做个比较，也方便自己总结知识点：</p>
+<p>1，游戏引擎与系统基础框架，目前国内主流的手机游戏引擎有cocos2d-X和Unity3D，iOS开发时用到系统的Cocoa Touch层和Media层的API较多，而安卓开发主要用到Application Framework这一层的API。</p>
+<p>2，游戏引擎注重跨平台，但是不同的引擎功能上差别大；应用基础框架只限于自己的平台，但是功能上iOS安卓大同小异。苹果后来自己研发了用于游戏的API SpriteKit和SceneKit因为不能跨平台用的厂家很少。</p>
+<p>3，游戏在客户端的逻辑比较重（因为要自定义很多控件和复杂的交互），应用更多的逻辑放在服务端处理</p>
+<p>4，游戏本质上是娱乐产品，给用户提供是APP本身，应用是提供服务的窗口，用作信息的传递和展示</p>
+<p>5，多人交互这种强联网类型的游戏主要用长连接（不过也要分具体游戏场景），应用主要是短连接</p>
+<p>6，游戏的美术主要分工有：原画、UI、3D、动画、特效、交互等，应用的美术主要是UI和交互</p>
+<p>7，游戏在显示层面的工作更多，经常需要用到动画库图形学等，应用在网络层面的工作更多，比如近几年hybrid大热，让native+web的开发成为标配</p>
+<p>8，大部分游戏属于小团队开发，产品周期短，所以在工程化以及多人合作开发上的工具和方案都明显比应用要少，特别是Unity在协同开发问题很多，而应用的开发都有比较成熟的项目管理工具（比如iOS的CocoaPod）和组件化方案</p>
+<p>9，Unity和cocos2d的热更新主要都是通过Lua实现，iOS主流的热修复工具是JSPatch</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/02/Shader笔记二/" itemprop="url">
                   Shader笔记[二]
                 </a>
@@ -547,111 +652,6 @@ float4x2 mat3;// 表示 4*2 阶矩阵,包含 8 个 float 类型数据
 <h4 id="4-4-Frame-Buffer"><a href="#4-4-Frame-Buffer" class="headerlink" title="4.4 Frame Buffer"></a>4.4 Frame Buffer</h4><p>帧缓冲区，用于存放显示输出的数据，这个buffer的数据一般是像素颜色值。有时候也被认为是color buffer与 z buffer的组合。frame buffer 通常都在显卡上,但是有时显卡会集成到主板上,所以这种情况下 frame buffer 被放在内存区域(general main memory)。</p>
 <hr>
 <p>参考：GPU编程与CG语言之阳春白雪与下里巴人<br>     计算机图形学</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/29/开发手游与开发APP的几点区别/" itemprop="url">
-                  开发手游与开发APP的几点区别
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-29T00:21:31+08:00" content="2016-09-29">
-              2016-09-29
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>从高中自己做的FLASH小游戏到现在全职做iOS应用的开发，在游戏和应用上都做过了很多尝试，挖过了各种坑，游戏方面的坑有：拼图游戏、射击游戏、基于物理引擎的游戏、消方块类游戏、SLG游戏、赛车游戏等，其中用到的工具/引擎有FLASH、cocos2d-iphone、cocos2d-X、Unity，还有公司自己用JAVA写的安卓游戏引擎。</p>
-<p>商用上架的手机应用是从2013年开始写的，到现在为止写过的类型有：股票类、漫画阅览器、类36Kr信息发布平台（一个家政O2O APP），电商类APP、LBS类APP等。</p>
-<p>虽然都称不上专家，不过挖了那么久的坑也有不少体会，所以基于自己有限的经验对两者做个比较，也方便自己总结知识点：</p>
-<p>1，游戏引擎与系统基础框架，目前国内主流的手机游戏引擎有cocos2d-X和Unity3D，iOS开发时用到系统的Cocoa Touch层和Media层的API较多，而安卓开发主要用到Application Framework这一层的API。</p>
-<p>2，游戏引擎注重跨平台，但是不同的引擎功能上差别大；应用基础框架只限于自己的平台，但是功能上iOS安卓大同小异。苹果后来自己研发了用于游戏的API SpriteKit和SceneKit因为不能跨平台用的厂家很少。</p>
-<p>3，游戏在客户端的逻辑比较重（因为要自定义很多控件和复杂的交互），应用更多的逻辑放在服务端处理</p>
-<p>4，游戏本质上是娱乐产品，给用户提供是APP本身，应用是提供服务的窗口，用作信息的传递和展示</p>
-<p>5，多人交互这种强联网类型的游戏主要用长连接（不过也要分具体游戏场景），应用主要是短连接</p>
-<p>6，游戏的美术主要分工有：原画、UI、3D、动画、特效、交互等，应用的美术主要是UI和交互</p>
-<p>7，游戏在显示层面的工作更多，经常需要用到动画库图形学等，应用在网络层面的工作更多，比如近几年hybrid大热，让native+web的开发成为标配</p>
-<p>8，大部分游戏属于小团队开发，产品周期短，所以在工程化以及多人合作开发上的工具和方案都明显比应用要少，特别是Unity在协同开发问题很多，而应用的开发都有比较成熟的项目管理工具（比如iOS的CocoaPod）和组件化方案</p>
-<p>9，Unity和cocos2d的热更新主要都是通过Lua实现，iOS主流的热修复工具是JSPatch</p>
 
           
         
