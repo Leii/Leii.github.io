@@ -101,10 +101,10 @@ float4x2 mat3;// 表示 4*2 阶矩阵,包含 8 个 float 类型数据
     <link href="http://leii.me/2016/10/01/Shader%E7%AC%94%E8%AE%B0%E4%B8%80/"/>
     <id>http://leii.me/2016/10/01/Shader笔记一/</id>
     <published>2016-10-01T00:03:29.000Z</published>
-    <updated>2016-10-15T01:25:41.000Z</updated>
+    <updated>2016-10-16T09:50:56.000Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
-<p>计算机图形学是我们大学专业的必修课，然而在大学里课程与实践应用脱节比较大，不能学以致用，导致学完忘的也快，直到毕业后发现在游戏开发、以及美图视频类APP中都有很广的应用，又重新翻出课本去看，最近比较空写笔记总结一下。本着要知其然并知其所以然的精神从GPU的历史开始：</p>
+<p>计算机图形学在游戏开发、以及美图视频类APP中都有很广的应用，最近比较空写笔记总结一下。本着要知其然并知其所以然的精神从GPU的历史开始：</p>
 </blockquote>
 <p>Graphics Processing Unit 是70年代末被提出来，用作图片的合成，80年代末，基于数字信号处理芯片（digital signal processor chip）的GPU研发出来，91年，研制出第一个单芯片2D加速器，98年NVIDIA公司研发modern GPU。 </p>
 <p>Modern GPU的发展：</p>
@@ -161,7 +161,9 @@ float4x2 mat3;// 表示 4*2 阶矩阵,包含 8 个 float 类型数据
     <summary type="html">
     
       &lt;blockquote&gt;
-&lt;p&gt;计算机图形学是我们大学专业的必修课，然而在大学里课程与实践应用脱节比较大，不能学以致用，导致学完忘的也快，直到毕业后发现在游戏开发、以及美图视频类APP中都有很广的应用，又重新翻出课本去看，最近比较空写笔记总结一下。本着要知其然并知其所以然的精神从
+&lt;p&gt;计算机图形学在游戏开发、以及美图视频类APP中都有很广的应用，最近比较空写笔记总结一下。本着要知其然并知其所以然的精神从GPU的历史开始：&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Graphics Processing Unit 是70年代末被提
     
     </summary>
     
